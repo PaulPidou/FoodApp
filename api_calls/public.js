@@ -1,12 +1,12 @@
 const api_ip = "192.168.43.163:3000"
 
-const getRecipeFromId = async function(id) {
+export const getRecipeFromId = async function(id) {
     return {
 
     }
 }
 
-const getRecipesFromKeywords = async function(keywords) {
+export const getRecipesFromKeywords = async function(keywords) {
     /*return await fetch('http://' + api_ip + '/api/public/recipes/by/keywords',
         {
             method: 'POST',
@@ -35,9 +35,4 @@ const getRecipesFromKeywords = async function(keywords) {
             totalTime: '80'
         }
     ]
-}
-
-module.exports = {
-    getRecipeFromId,
-    getRecipesFromKeywords
 }

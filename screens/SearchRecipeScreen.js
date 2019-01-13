@@ -1,55 +1,50 @@
 import React from 'react';
 import {ScrollView, Text, Platform} from 'react-native';
-import {
-    Container,
-    Header,
-    Left,
-    Right,
-    Content,
-    List,
-    ListItem,
-    Body,
-    Thumbnail,
-    Button,
-    Icon,
-    Input
-} from 'native-base';
+import {Container, Header, Left, Right, Content, List, ListItem, Body, Button, Icon, Input} from 'native-base';
+import {Avatar} from "react-native-elements";
 
 import GenericStyles from '../constants/Style'
+import {getRecipesFromKeywords} from '../api_calls/public'
 
 export default class SearchRecipeScreen extends React.Component {
     constructor(props) {
         super(props);
-        this.setRecipes = this.setRecipes.bind(this)
         this.state = {
             recipes: []
-        };
+        }
     }
 
     static navigationOptions = {
         header: null
-    };
+    }
 
-    setRecipes(data) {
-        this.setState({recipes: data})
+    async handleSearch(keywords) {
+        console.log(keywords)
+        const recipes = await getRecipesFromKeywords(keywords)
+        this.setState({recipes})
     }
 
     renderList() {
         return this.state.recipes.map((item) => {
-            const source = item._source
             return (
-                <ListItem thumbnail>
+                <ListItem
+                    avatar
+                    key={item._id}
+                >
                     <Left>
-                        <Thumbnail square source={{ uri: 'Image URL' }} />
+                        <Avatar
+                            size="large"
+                            rounded
+                            title={item.title.charAt(0)}
+                            activeOpacity={0.7}
+                        />
                     </Left>
                     <Body>
-                    <Text>{source.title}</Text>
-                    <Text note numberOfLines={1}>Its time to build a difference . .</Text>
+                    <Text>{item.title}</Text>
+                    <Text note numberOfLines={1}>{item.difficulty}, {item.budget}</Text>
                     </Body>
                     <Right>
-                        <Button transparent>
-                            <Text>View</Text>
-                        </Button>
+                        <Text>{item.totalTime} min</Text>
                     </Right>
                 </ListItem>
             );
@@ -73,6 +68,7 @@ export default class SearchRecipeScreen extends React.Component {
                     <Input
                         autoFocus = {true}
                         placeholder={'Je recherche des recettes...'}
+                        onSubmitEditing={(event) => this.handleSearch(event.nativeEvent.text)}
                     />
                 </Header>
                 <Content>
