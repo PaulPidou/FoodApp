@@ -167,16 +167,35 @@ export default class ShoppingListScreen extends React.Component {
     showActionSheet() {
         if ( this.actionSheet !== null ) {
             this.actionSheet._root.showActionSheet({
-                title: "Que voulez-vous faire ?",
+                title: "Que voulez-vous faire ? (ne concerne que les aliments cochés)",
                 options: [
-                    "Transférer les ingrédients dans le frigidaire",
-                    "Supprimer les ingrédients de la liste de courses",
-                    "Garder les ingrédients dans la liste de courses",
+                    "Transférer les aliments dans le frigidaire",
+                    "Supprimer les aliments de la liste de courses",
+                    "Garder les aliments dans la liste de courses",
                     "Annuler"
                 ],
                 cancelButtonIndex: 3
-            }, (i) => console.log(i));
+            }, (index) => this.handleActionSheetOptions(index))
         }
+    }
+
+    handleActionSheetOptions(index) {
+        switch(index) {
+            case 0:
+                console.log('Transfer')
+                break
+            case 1:
+                console.log('Delete')
+                break
+            case 2:
+                console.log('Keep')
+                break
+            case 3:
+                return
+            default:
+                return
+        }
+        this.setState({shoppingMode: false, checkedIngredients: []})
     }
 
     renderList() {
