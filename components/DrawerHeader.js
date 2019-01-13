@@ -23,7 +23,6 @@ export default class DrawerHeader extends React.Component {
                         {this.props.name}
                     </Title>
                 </Right>
-
             </Header>
         );
     }
