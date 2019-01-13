@@ -9,7 +9,7 @@ import {getShoppingList} from "../api_calls/user";
 
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.actionSheet = null;
         this.state = {
             selected: false,
@@ -17,7 +17,7 @@ export default class ShoppingListScreen extends React.Component {
             shoppingMode: false,
             checkedIngredients: [],
             ingredients: null
-        };
+        }
     }
 
     static navigationOptions = {
