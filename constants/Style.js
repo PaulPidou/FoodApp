@@ -1,10 +1,13 @@
-import {StyleSheet} from "react-native";
+import {Platform, StyleSheet} from "react-native";
 import {Constants} from "expo";
 
 const GenericStyles = StyleSheet.create({
     header: {
         backgroundColor: "#fff",
         marginTop: Constants.statusBarHeight
+    },
+    headerTab: {
+        backgroundColor: "#fff",
     },
     headerLeft: {
         flex: 0,
@@ -15,6 +18,13 @@ const GenericStyles = StyleSheet.create({
     },
     icon : {
         color: '#007aff'
+    },
+    tabIcon : {
+        color: '#007aff',
+        margin: 10
+    },
+    tabText: {
+        fontFamily: (Platform.OS === 'ios' ? 'System' : 'Roboto_medium')
     },
     settingIcon: {
         backgroundColor: '#007AFF'

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Platform, ScrollView} from 'react-native';
-import {Container, Content, Left, Body, Right, Button, Icon, Header, Title, Spinner} from 'native-base';
+import {Platform, ScrollView, Text} from 'react-native';
+import {Container, Content, Left, Right, Button, Icon, Header, Tabs, Tab, TabHeading, Spinner, H1} from 'native-base';
 
 import GenericStyles from "../constants/Style";
 import {getRecipeFromId} from '../api_calls/public'
@@ -49,8 +49,12 @@ export default class RecipeScreen extends React.Component {
                     />
                 </Button>
             )
-        return (
-            <Header style={GenericStyles.header}>
+        return ([
+            <Header
+                key={'header'}
+                style={GenericStyles.header}
+                hasTabs
+            >
                 <Left style={GenericStyles.headerLeft}>
                     <Button
                         transparent
@@ -61,25 +65,63 @@ export default class RecipeScreen extends React.Component {
                         />
                     </Button>
                 </Left>
-                <Body>
-                <Title style={GenericStyles.headerTitle}>{this.state.recipeId}</Title>
-                </Body>
                 <Right>{rightButton}</Right>
-            </Header>
-        )
+            </Header>,
+            <Tabs
+                key={'tabs'}
+                tabBarUnderlineStyle={{backgroundColor: '#007AFF'}}
+                tabContainerStyle={{elevation:0}}
+            >
+                <Tab
+                    heading={
+                    <TabHeading style={GenericStyles.headerTab}>
+                        <Icon
+                            style={GenericStyles.tabIcon}
+                            name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'} />
+                        <Text style={GenericStyles.tabText}>Recette</Text>
+                    </TabHeading>}>
+                    <Text>Tab1</Text>
+                </Tab>
+                <Tab
+                    heading={
+                    <TabHeading style={GenericStyles.headerTab}>
+                        <Icon
+                            style={GenericStyles.tabIcon}
+                            name={Platform.OS === 'ios' ? 'ios-nutrition' : 'md-nutrition'} />
+                        <Text style={GenericStyles.tabText}>Ingrédients</Text>
+                    </TabHeading>}>
+                    <Text>Tab2</Text>
+                </Tab>
+                <Tab heading={
+                    <TabHeading
+                        style={GenericStyles.headerTab}
+                    >
+                        <Icon
+                            style={GenericStyles.tabIcon}
+                            name={Platform.OS === 'ios' ? 'ios-restaurant' : 'md-restaurant'} />
+                        <Text style={GenericStyles.tabText}>Ustensiles</Text>
+                    </TabHeading>}>
+                    <Text>Tab3</Text>
+                </Tab>
+            </Tabs>
+        ])
     }
 
     render() {
+        const recipe = this.state.recipe
         let content;
-        if (this.state.recipe === null) {
+        if (recipe === null) {
             content = (<Spinner color='#007aff' />)
         } else {
-            content = (<ScrollView></ScrollView>)
+            content = (
+                <ScrollView>
+                    <H1>{recipe.title}</H1>
+                </ScrollView>)
         }
         return (
             <Container>
                 {this.header()}
-                <Content>{content}</Content>
+                <Content padder>{content}</Content>
             </Container>
         )
     }

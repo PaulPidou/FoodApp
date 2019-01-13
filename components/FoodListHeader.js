@@ -55,6 +55,6 @@ export default class FoodListHeader extends React.Component {
                     </Button>
                 </Right>
             </Header>
-        );
+        )
     }
 }
