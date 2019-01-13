@@ -24,15 +24,20 @@ export default class FoodListHeader extends React.Component {
                 </Title>
                 </Body>
                 <Right style={GenericStyles.headerFoodListComponent}>
-                    <Button
-                        transparent
-                        onPress={() => {this.props.activateSelectedHeader()}}
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
-                        />
-                    </Button>
+                    {
+                        this.props.origin === 'shoppinglist' && (
+                            <Button
+                                transparent
+                                onPress={() => {
+                                    this.props.startShopping()
+                                }}
+                            >
+                                <Icon
+                                    style={GenericStyles.icon}
+                                    name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
+                                />
+                            </Button>)
+                    }
                     <Button
                         transparent>
                         <Icon

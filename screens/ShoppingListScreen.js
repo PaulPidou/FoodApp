@@ -1,6 +1,6 @@
 import React from 'react';
 import {Platform, ScrollView, Text, Alert} from 'react-native';
-import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner} from 'native-base';
+import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet} from 'native-base';
 import {Avatar} from "react-native-elements";
 
 import GenericStyles from "../constants/Style";
@@ -10,9 +10,11 @@ import {getShoppingList} from "../api_calls/user";
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {
         super(props);
+        this.actionSheet = null;
         this.state = {
             selected: false,
             selectedIngredients: [],
+            shoppingMode: false,
             checkedIngredients: [],
             ingredients: null
         };
@@ -50,13 +52,20 @@ export default class ShoppingListScreen extends React.Component {
         }
     }
 
-    activateSelectedHeader = () => { this.setState({ selected: true }) }
+    startShopping = () => { this.setState({ shoppingMode: true }) }
 
     _updateStateArray(itemID, arrayName) {
         const isSelected = this.state[arrayName].includes(itemID)
         const newArray = isSelected
             ? this.state[arrayName].filter(id => id !== itemID) : [...this.state[arrayName], itemID]
-        this.setState({ [arrayName]: newArray })
+        if(arrayName === 'selectedIngredients') {
+            this.setState({
+                selected: newArray.length > 0,
+                [arrayName]: newArray
+            })
+        } else {
+            this.setState({ [arrayName]: newArray })
+        }
     }
 
     selectedHeader() {
@@ -81,28 +90,18 @@ export default class ShoppingListScreen extends React.Component {
                             name={Platform.OS === 'ios' ? 'ios-filing' : 'md-filing'}
                         />
                     </Button>
-                    <Button
-                        transparent
-                        onPress={() => this.setState({selectedIngredients: this.state.checkedIngredients})}
-                        style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-checkbox-outline' : 'md-checkbox-outline'}
-                        />
-                    </Button>
                 </Left>
                 <Right>
                     <Button transparent>
                         <Icon
                             style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
+                            name={Platform.OS === 'ios' ? 'ios-egg' : 'md-egg'}
                         />
                     </Button>
                     <Button transparent>
                         <Icon
                             style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-egg' : 'md-egg'}
+                            name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
                         />
                     </Button>
                     <Button
@@ -124,7 +123,60 @@ export default class ShoppingListScreen extends React.Component {
                     </Button>
                 </Right>
             </Header>
-        );
+        )
+    }
+
+    shoppingHeader() {
+        return (
+            <Header style={GenericStyles.header}>
+                <Left style={{flex: 1, flexDirection: 'row'}}>
+                    <Button transparent
+                            onPress={() => this.setState({shoppingMode: false, checkedIngredients: []})}
+                            style={{flex: 0}}
+                    >
+                        <Icon
+                            style={GenericStyles.icon}
+                            name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
+                        />
+                    </Button>
+                </Left>
+                <Right>
+                    <Button
+                        transparent
+                        onPress={() => this.showActionSheet()}
+
+                    >
+                        <Icon
+                            style={GenericStyles.icon}
+                            name={Platform.OS === 'ios' ? 'ios-flag' : 'md-flag'}
+                        />
+                    </Button>
+                    <Button
+                        transparent
+                        onPress={() => this.props.navigation.navigate('SearchIngredient', {origin: 'shoppinglist'})} >
+                        <Icon
+                            style={GenericStyles.icon}
+                            name='add'
+                        />
+                    </Button>
+                </Right>
+            </Header>
+        )
+    }
+
+    showActionSheet() {
+        if ( this.actionSheet !== null ) {
+            this.actionSheet._root.showActionSheet({
+                title: "Que voulez-vous faire ?",
+                options: [
+                    "Transférer les ingrédients dans le frigidaire",
+                    "Supprimer les ingrédients de la liste de courses",
+                    "Garder les ingrédients dans la liste de courses",
+                    "Annuler"
+                ],
+                cancelButtonIndex: 3
+            }, (i) => console.log(i));
+        }
     }
 
     renderList() {
@@ -145,14 +197,23 @@ export default class ShoppingListScreen extends React.Component {
                     onLongPress={() => this.handleLongPress(item._id)}
                 >
                     <Left style={{height: 30}}>
-                        <Avatar
-                            size="small"
-                            rounded
-                            title={title}
-                            icon={icon}
-                            activeOpacity={0.7}
-                            onPress={() => this.handleLongPress(item._id)}
-                        />
+                        {
+                            this.state.shoppingMode ? (
+                                <Button
+                                    transparent
+                                    onPress={() => {this._updateStateArray(item._id, 'checkedIngredients')}}
+                                >
+                                    <Icon name={iconLeft} />
+                                </Button>) : (
+                                    <Avatar
+                                        size="small"
+                                        rounded
+                                        title={title}
+                                        icon={icon}
+                                        activeOpacity={0.7}
+                                        onPress={() => this.handleLongPress(item._id)}
+                                    />)
+                        }
                     </Left>
                     <Body>
                     <Text
@@ -161,43 +222,44 @@ export default class ShoppingListScreen extends React.Component {
                         {(item.quantity || item.unit) && ': '}
                         {item.quantity} {item.unit}</Text>
                     </Body>
-                    <Right>
-                        <Button
-                            transparent
-                            onPress={() => {this._updateStateArray(item._id, 'checkedIngredients')}}
-                        >
-                            <Icon name={iconLeft} />
-                        </Button>
-                    </Right>
                 </ListItem>
             );
         });
     }
 
     render() {
+        let header;
         let content;
+
+        if(this.state.selected) {
+            header = this.selectedHeader()
+        } else if(this.state.shoppingMode) {
+            header = this.shoppingHeader()
+        } else {
+            header = (
+                <FoodListHeader
+                    navigation={this.props.navigation}
+                    name={'Liste de courses'}
+                    origin={'shoppinglist'}
+                    startShopping={this.startShopping}
+                />
+            )
+        }
+
         if (this.state.ingredients === null) {
             content = (<Spinner color='#007aff' />)
         } else if (this.state.ingredients.length === 0) {
             content = (<Text>Votre liste de courses est vide, commencez dès maintenant à la compléter !</Text>)
         } else {
-            content = (
-                <ScrollView>
-                    <List>{this.renderList()}</List>
-                </ScrollView>
-            )
+            content = (<ScrollView><List>{this.renderList()}</List></ScrollView>)
         }
         return (
             <Container>
-                {this.state.selected ? this.selectedHeader() :
-                    <FoodListHeader
-                        navigation={this.props.navigation}
-                        name={'Liste de courses'}
-                        origin={'shoppinglist'}
-                        activateSelectedHeader={this.activateSelectedHeader}
-                    />
-                }
-                <Content>{content}</Content>
+                {header}
+                <Content>
+                    {content}
+                    <ActionSheet ref={(c) => { this.actionSheet = c; }} />
+                    </Content>
             </Container>
         )
     }

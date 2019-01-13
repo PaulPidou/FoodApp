@@ -32,7 +32,7 @@ export default class ShoppingListScreen extends React.Component {
 
     handlePress(item) {
         if(this.state.selected) {
-            this._updateStateArray(item._id, 'selectedIngredients')
+            this._updateStateArray(item._id)
         } else {
             this.props.navigation.navigate('AddIngredient', {ingredient: item.ingredientName, origin: 'fridge',
                 quantity: item.quantity ? item.quantity.toString() : null, unit: item.unit ? item.unit.toString() : null,
@@ -42,7 +42,7 @@ export default class ShoppingListScreen extends React.Component {
 
     handleLongPress(itemID) {
         if(this.state.selected) {
-            this._updateStateArray(itemID, 'selectedIngredients')
+            this._updateStateArray(itemID)
         } else {
             this.setState({
                 selected: true,
@@ -53,11 +53,14 @@ export default class ShoppingListScreen extends React.Component {
 
     activateSelectedHeader = () => { this.setState({ selected: true }) }
 
-    _updateStateArray(itemID, arrayName) {
-        const isSelected = this.state[arrayName].includes(itemID)
+    _updateStateArray(itemID) {
+        const isSelected = this.state.selectedIngredients.includes(itemID)
         const newArray = isSelected
-            ? this.state[arrayName].filter(id => id !== itemID) : [...this.state[arrayName], itemID]
-        this.setState({ [arrayName]: newArray })
+            ? this.state.selectedIngredients.filter(id => id !== itemID) : [...this.state.selectedIngredients, itemID]
+        this.setState({
+            selected: newArray.length > 0,
+            selectedIngredients: newArray
+        })
     }
 
     selectedHeader() {
@@ -87,13 +90,13 @@ export default class ShoppingListScreen extends React.Component {
                     <Button transparent>
                         <Icon
                             style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
+                            name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
                         />
                     </Button>
                     <Button transparent>
                         <Icon
                             style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
+                            name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
                         />
                     </Button>
                     <Button
