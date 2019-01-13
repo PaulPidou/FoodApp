@@ -13,7 +13,7 @@ export default class HomeScreen extends React.Component {
         this.state = {
             selected: false,
             selectedRecipes: [],
-            recipes: null
+            recipes: []
         };
     }
 
@@ -34,7 +34,7 @@ export default class HomeScreen extends React.Component {
         if(this.state.selected) {
             this._updateSelectedRecipes(itemID)
         } else {
-            this.props.navigation.navigate("RecipeDetails", {recipeId: itemID})
+            this.props.navigation.navigate("RecipeDetails", {recipeId: itemID, origin: 'home'})
         }
     }
 

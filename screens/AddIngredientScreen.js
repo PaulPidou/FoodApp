@@ -30,7 +30,7 @@ export default class ShoppingListScreen extends React.Component {
         this.props.navigation.navigate(screen)
     }
 
-    header(props) {
+    header() {
         return (
             <Header style={GenericStyles.header}>
                 <Left style={GenericStyles.headerLeft}>
@@ -45,7 +45,7 @@ export default class ShoppingListScreen extends React.Component {
                 </Left>
                 <Body>
                 <Title style={GenericStyles.headerTitle}>{
-                    props.navigation.state.params.ingredient.charAt(0).toUpperCase() + props.navigation.state.params.ingredient.slice(1)
+                    this.props.navigation.state.params.ingredient.charAt(0).toUpperCase() + this.props.navigation.state.params.ingredient.slice(1)
                 }</Title>
                 </Body>
             </Header>
@@ -55,7 +55,7 @@ export default class ShoppingListScreen extends React.Component {
     render() {
         return (
             <Container>
-                {this.header(this.props)}
+                {this.header()}
                 <Content>
                     <Form>
                         <Item stackedLabel>
