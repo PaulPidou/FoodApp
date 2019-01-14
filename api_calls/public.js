@@ -15,29 +15,31 @@ export const getRecipeFromId = async function(id) {
         "picture": "string",
         "ingredients": [
             {
-                "display": "string",
-                "ingredient": "string",
-                "quantity": 0,
-                "unit": "string",
-                "complement": "string",
+                "ingredientID": "123",
+                "display": "10 g de beurre fondu",
+                "ingredient": "beurre",
+                "quantity": 10,
+                "unit": "g",
+                "complement": "fondu",
                 "picture": "string"
             },
             {
-                "display": "string",
-                "ingredient": "string",
-                "quantity": 0,
-                "unit": "string",
-                "complement": "string",
+                "ingredientID": "456",
+                "display": "6 abricot",
+                "ingredient": "abricot",
+                "quantity": 6,
+                "unit": "",
+                "complement": "",
                 "picture": "string"
             }
         ],
         "utensils": [
             {
-                "utensil": "string",
+                "utensil": "1 four",
                 "picture": "string"
             },
             {
-                "utensil": "string",
+                "utensil": "1 pinceau",
                 "picture": "string"
             }
         ],
