@@ -107,7 +107,9 @@ export default class SearchRecipeScreen extends React.Component {
                     </Left>
                     <Body>
                     <Text>{item.title}</Text>
-                    <Text note numberOfLines={1}>{item.difficulty}, {item.budget}</Text>
+                    <Text note numberOfLines={1}>{
+                        item.difficulty.charAt(0).toUpperCase() + item.difficulty.slice(1)
+                    }, {item.budget.charAt(0).toUpperCase() + item.budget.slice(1)}</Text>
                     </Body>
                     <Right>
                         <Text>{item.totalTime} min</Text>

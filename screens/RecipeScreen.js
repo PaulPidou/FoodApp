@@ -53,7 +53,11 @@ export default class RecipeScreen extends React.Component {
         } else {
             content = (
                 <ScrollView>
-                    <H1>{recipe.title}</H1>
+                    <H1 style={{textAlign: 'center', marginTop: 5, color: '#007aff'}}>{recipe.title}</H1>
+                    <Text>{recipe.author && 'Auteur: ' + recipe.author}</Text>
+                    <Text>{
+                        recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)
+                    }, {recipe.budget.charAt(0).toUpperCase() + recipe.budget.slice(1)}</Text>
                 </ScrollView>)
         }
         return content
@@ -192,7 +196,7 @@ export default class RecipeScreen extends React.Component {
             <Tabs
                 key={'tabs'}
                 tabBarUnderlineStyle={{backgroundColor: '#007AFF'}}
-                tabContainerStyle={{elevation:0}}
+                tabContainerStyle={{elevation: 0}}
             >
                 <Tab
                     heading={
