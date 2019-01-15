@@ -1,6 +1,6 @@
 import React from 'react';
 import {Platform} from 'react-native';
-import {Container, Header, Left, Right, Button, Icon, Input} from 'native-base';
+import {Container, Header, Left, Button, Icon, Input} from 'native-base';
 
 import GenericStyles from '../constants/Style'
 import RecipesList from '../components/contents/RecipesList'

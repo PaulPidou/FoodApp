@@ -25,9 +25,9 @@ export default class ShoppingListScreen extends React.Component {
     componentDidMount() {
         this._asyncRequest = getFirdge().then(
             ingredients => {
-                this._asyncRequest = null;
-                this.setState({ingredients});
-            });
+                this._asyncRequest = null
+                this.setState({ingredients})
+            })
     }
 
     handlePress(item) {
@@ -118,7 +118,7 @@ export default class ShoppingListScreen extends React.Component {
                     </Button>
                 </Right>
             </Header>
-        );
+        )
     }
 
     renderList() {
@@ -153,12 +153,12 @@ export default class ShoppingListScreen extends React.Component {
                         <Text>{item.expirationDate && (moment(item.expirationDate).format('DD/MM/YYYY'))}</Text>
                     </Right>
                 </ListItem>
-            );
-        });
+            )
+        })
     }
 
     render() {
-        let content;
+        let content
         if (this.state.ingredients === null) {
             content = (<Spinner color='#007aff' />)
         } else if (this.state.ingredients.length === 0) {

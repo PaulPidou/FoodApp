@@ -1,5 +1,4 @@
 import React from 'react';
-import {Alert, Platform} from 'react-native';
 import {Container,Left, Body, Right, Button, Icon, Header, Title} from 'native-base';
 
 import GenericStyles from "../constants/Style"
@@ -104,8 +103,7 @@ export default class HomeScreen extends React.Component {
                   <SelectedHeader
                       origin={'home'}
                       emptySelected={this.emptySelected}
-                  /> :
-                  this.header()}
+                  /> : this.header()}
               <RecipesList
                   origin={'home'}
                   recipes={this.state.recipes}

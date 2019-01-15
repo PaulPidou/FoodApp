@@ -6,10 +6,10 @@ import {Platform, ScrollView} from "react-native";
 
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             ingredients: this.ingredients
-        };
+        }
     }
 
     ingredients = [
@@ -28,9 +28,9 @@ export default class ShoppingListScreen extends React.Component {
 
     searchFilterFunction(text) {
         const filteredIngredients = this.ingredients.filter(item => {
-            return item.startsWith(text.toLowerCase());
-        });
-        this.setState({ ingredients: filteredIngredients });
+            return item.startsWith(text.toLowerCase())
+        })
+        this.setState({ ingredients: filteredIngredients })
     }
 
     renderList(props) {
@@ -57,7 +57,7 @@ export default class ShoppingListScreen extends React.Component {
                             <Text>{item.charAt(0).toUpperCase() + item.slice(1)}</Text>
                         </ListItem>
                     ]
-                );
+                )
             } else {
                 return (
                     <ListItem
@@ -66,9 +66,9 @@ export default class ShoppingListScreen extends React.Component {
                     >
                         <Text>{item.charAt(0).toUpperCase() + item.slice(1)}</Text>
                     </ListItem>
-                );
+                )
             }
-        });
+        })
     }
 
     render() {
