@@ -2,19 +2,21 @@ import React from 'react';
 import {Alert, Platform} from 'react-native';
 import {Container,Left, Body, Right, Button, Icon, Header, Title} from 'native-base';
 
-import GenericStyles from "../constants/Style";
+import GenericStyles from "../constants/Style"
+import SelectedHeader from '../components/headers/SelectedHeader'
 import RecipesList from '../components/contents/RecipesList'
 import {getRecipesSummary} from '../api_calls/user'
 
 
 export default class HomeScreen extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             selected: false,
             selectedRecipes: [],
             recipes: null
         }
+        this.emptySelected = this.emptySelected.bind(this)
         this.handlePress = this.handlePress.bind(this)
         this.handleLongPress = this.handleLongPress.bind(this)
     }
@@ -29,7 +31,11 @@ export default class HomeScreen extends React.Component {
                 this._asyncRequest = null;
                 this.setState({recipes});
             }
-        );
+        )
+    }
+
+    emptySelected() {
+        this.setState({selected: false, selectedRecipes: []})
     }
 
     handlePress(itemID) {
@@ -61,7 +67,7 @@ export default class HomeScreen extends React.Component {
         })
     }
 
-    normalHeader() {
+    header() {
         return (
             <Header style={GenericStyles.header}>
                 <Left style={GenericStyles.headerLeft}>
@@ -88,50 +94,18 @@ export default class HomeScreen extends React.Component {
                     </Button>
                 </Right>
             </Header>
-        );
-    }
-
-    selectedHeader() {
-        return (
-            <Header style={GenericStyles.header}>
-                <Left style={GenericStyles.headerLeft}>
-                    <Button
-                        transparent
-                        onPress={() => this.setState({selected: false, selectedRecipes: []})}
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
-                        />
-                    </Button>
-                </Left>
-                <Right>
-                    <Button
-                        transparent
-                        onPress={() => {
-                            Alert.alert(
-                                'Confirmation',
-                                'Confirmez vous la suppression ?',
-                                [
-                                    {text: 'Annuler', style: 'cancel'},
-                                    {text: 'Oui', onPress: () => console.log('OK Pressed')},
-                                ]
-                            )}}
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-                        />
-                    </Button>
-                </Right>
-            </Header>
-        );
+        )
     }
 
   render() {
       return (
           <Container>
-              {this.state.selected ? this.selectedHeader() : this.normalHeader()}
+              {this.state.selected ?
+                  <SelectedHeader
+                      origin={'home'}
+                      emptySelected={this.emptySelected}
+                  /> :
+                  this.header()}
               <RecipesList
                   origin={'home'}
                   recipes={this.state.recipes}

@@ -5,6 +5,7 @@ import {Container, Header, Left, Right, Button, Icon, Input} from 'native-base';
 import GenericStyles from '../constants/Style'
 import RecipesList from '../components/contents/RecipesList'
 import {getRecipesFromKeywords} from '../api_calls/public'
+import SelectedHeader from "../components/headers/SelectedHeader";
 
 export default class SearchRecipeScreen extends React.Component {
     constructor(props) {
@@ -16,12 +17,17 @@ export default class SearchRecipeScreen extends React.Component {
             recipes: [],
             firstSearch: true
         }
+        this.emptySelected = this.emptySelected.bind(this)
         this.handlePress = this.handlePress.bind(this)
         this.handleLongPress = this.handleLongPress.bind(this)
     }
 
     static navigationOptions = {
         header: null
+    }
+
+    emptySelected() {
+        this.setState({selected: false, selectedRecipes: []})
     }
 
     handlePress(itemID) {
@@ -59,58 +65,38 @@ export default class SearchRecipeScreen extends React.Component {
         this.setState({recipes, firstSearch: false})
     }
 
-    selectedHeader() {
-        return (
-            <Header style={GenericStyles.header}>
+    header() {
+        return(
+            <Header searchbar style={GenericStyles.header} >
                 <Left style={GenericStyles.headerLeft}>
                     <Button
                         transparent
-                        onPress={() => this.setState({selected: false, selectedRecipes: []})}
-                    >
+                        onPress={() => this.props.navigation.goBack()} >
                         <Icon
                             style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
+                            name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
                         />
                     </Button>
                 </Left>
-                <Right>
-                    <Button
-                        transparent
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-save' : 'md-save'}
-                        />
-                    </Button>
-                </Right>
+                <Input
+                    autoFocus = {!this.state.inputText}
+                    placeholder={'Je recherche des recettes...'}
+                    defaultValue={this.state.inputText}
+                    onChangeText={(text) => this.setState({inputText: text})}
+                    onSubmitEditing={(event) => this.handleSearch(event.nativeEvent.text)}
+                />
             </Header>
-        );
+        )
     }
 
     render() {
         return (
             <Container>
-                {this.state.selected ? this.selectedHeader() : (
-                    <Header searchbar style={GenericStyles.header} >
-                        <Left style={GenericStyles.headerLeft}>
-                            <Button
-                                transparent
-                                onPress={() => this.props.navigation.goBack()} >
-                                <Icon
-                                    style={GenericStyles.icon}
-                                    name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
-                                />
-                            </Button>
-                        </Left>
-                        <Input
-                            autoFocus = {!this.state.inputText}
-                            placeholder={'Je recherche des recettes...'}
-                            defaultValue={this.state.inputText}
-                            onChangeText={(text) => this.setState({inputText: text})}
-                            onSubmitEditing={(event) => this.handleSearch(event.nativeEvent.text)}
-                        />
-                    </Header>
-                )}
+                {this.state.selected ?
+                    <SelectedHeader
+                        origin={'search'}
+                        emptySelected={this.emptySelected}
+                    /> : this.header()}
                 <RecipesList
                     origin={'search'}
                     firstSearch={this.state.firstSearch}
