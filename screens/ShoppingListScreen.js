@@ -4,7 +4,7 @@ import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Ri
 import {Avatar} from "react-native-elements";
 
 import GenericStyles from "../constants/Style";
-import FoodListHeader from "../components/FoodListHeader";
+import FoodListHeader from "../components/headers/FoodListHeader";
 import {getShoppingList} from "../api_calls/user";
 
 export default class ShoppingListScreen extends React.Component {

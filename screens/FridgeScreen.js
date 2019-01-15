@@ -5,7 +5,7 @@ import {Avatar} from "react-native-elements";
 import moment from 'moment';
 
 import GenericStyles from "../constants/Style";
-import FoodListHeader from "../components/FoodListHeader";
+import FoodListHeader from "../components/headers/FoodListHeader";
 import {getFirdge} from "../api_calls/user";
 
 export default class ShoppingListScreen extends React.Component {

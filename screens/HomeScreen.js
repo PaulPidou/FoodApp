@@ -1,9 +1,9 @@
 import React from 'react';
-import {Alert, Platform, ScrollView, Text} from 'react-native';
-import {Container, Content, List, ListItem, Left, Body, Right, Button, Icon, Header, Title, Spinner} from 'native-base';
-import {Avatar} from 'react-native-elements'
+import {Alert, Platform} from 'react-native';
+import {Container,Left, Body, Right, Button, Icon, Header, Title} from 'native-base';
 
 import GenericStyles from "../constants/Style";
+import RecipesList from '../components/contents/RecipesList'
 import {getRecipesSummary} from '../api_calls/user'
 
 
@@ -13,8 +13,10 @@ export default class HomeScreen extends React.Component {
         this.state = {
             selected: false,
             selectedRecipes: [],
-            recipes: []
-        };
+            recipes: null
+        }
+        this.handlePress = this.handlePress.bind(this)
+        this.handleLongPress = this.handleLongPress.bind(this)
     }
 
     static navigationOptions = {
@@ -126,61 +128,17 @@ export default class HomeScreen extends React.Component {
         );
     }
 
-    renderList() {
-        return this.state.recipes.map((item) => {
-            const isSelected = this.state.selectedRecipes.includes(item._id)
-            const title = isSelected ? null : item.title.charAt(0)
-            const icon = isSelected ? {name: 'check'} : null
-            return (
-                <ListItem
-                    avatar
-                    key={item._id}
-                    onPress={() => this.handlePress(item._id)}
-                    onLongPress={() => this.handleLongPress(item._id)}
-                >
-                    <Left>
-                        <Avatar
-                            size="large"
-                            rounded
-                            title={title}
-                            icon={icon}
-                            activeOpacity={0.7}
-                            onPress={() => this.handleLongPress(item._id)}
-                        />
-                    </Left>
-                    <Body>
-                        <Text>{item.title}</Text>
-                        <Text note numberOfLines={1}>{
-                            item.difficulty.charAt(0).toUpperCase() + item.difficulty.slice(1)
-                            }, {item.budget.charAt(0).toUpperCase() + item.budget.slice(1)}</Text>
-                    </Body>
-                    <Right>
-                        <Text>{item.totalTime} min</Text>
-                    </Right>
-                </ListItem>
-            );
-        });
-    }
-
   render() {
-        let content;
-      if (this.state.recipes === null) {
-          content = (<Spinner color='#007aff' />)
-      } else if (this.state.recipes.length === 0) {
-          content = (
-              <Text>Votre liste de recettes est vide, commencez dès maintenant à rechercher et sauvegarder des recettes !</Text>
-          )
-      } else {
-          content = (
-              <ScrollView>
-                  <List>{this.renderList()}</List>
-              </ScrollView>
-          )
-      }
       return (
           <Container>
               {this.state.selected ? this.selectedHeader() : this.normalHeader()}
-              <Content>{content}</Content>
+              <RecipesList
+                  origin={'home'}
+                  recipes={this.state.recipes}
+                  selectedRecipes={this.state.selectedRecipes}
+                  handlePress={this.handlePress}
+                  handleLongPress={this.handleLongPress}
+              />
           </Container>
       )
   }

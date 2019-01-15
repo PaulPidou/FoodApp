@@ -1,8 +1,8 @@
 import React from "react";
 import { Header, Left, Button, Icon, Item, Input, Right } from 'native-base';
 
-import GenericStyles from '../constants/Style'
-import {getRecipeFromKeywords} from '../api_calls/public'
+import GenericStyles from '../../constants/Style'
+import {getRecipeFromKeywords} from '../../api_calls/public'
 
 export default class SearchHeader extends React.Component {
     constructor(props) {
