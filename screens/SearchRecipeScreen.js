@@ -5,7 +5,7 @@ import {Container, Header, Left, Button, Icon, Input} from 'native-base';
 import GenericStyles from '../constants/Style'
 import RecipesList from '../components/contents/RecipesList'
 import {getRecipesFromKeywords} from '../api_calls/public'
-import SelectedHeader from "../components/headers/SelectedHeader";
+import SelectedHeader from "../components/headers/SelectedRecipeHeader";
 
 export default class SearchRecipeScreen extends React.Component {
     constructor(props) {

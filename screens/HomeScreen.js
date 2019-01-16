@@ -2,7 +2,7 @@ import React from 'react';
 import {Container,Left, Body, Right, Button, Icon, Header, Title} from 'native-base';
 
 import GenericStyles from "../constants/Style"
-import SelectedHeader from '../components/headers/SelectedHeader'
+import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
 import {getRecipesSummary} from '../api_calls/user'
 

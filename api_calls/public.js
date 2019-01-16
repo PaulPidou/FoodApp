@@ -73,7 +73,7 @@ export const getRecipesFromKeywords = async function(keywords) {
             }),
         });
         */
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    await new Promise(resolve => setTimeout(resolve, 1000))
     return [
         {
             _id : '123',

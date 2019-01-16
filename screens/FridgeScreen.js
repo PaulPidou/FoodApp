@@ -1,21 +1,23 @@
 import React from 'react';
-import {Platform, ScrollView, Text, Alert} from 'react-native';
-import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner} from 'native-base';
+import {ScrollView, Text} from 'react-native';
+import {Body, Container, Content, Left, List, ListItem, Right, Spinner} from 'native-base';
 import {Avatar} from "react-native-elements";
 import moment from 'moment';
 
-import GenericStyles from "../constants/Style";
-import FoodListHeader from "../components/headers/FoodListHeader";
-import {getFirdge} from "../api_calls/user";
+import FoodListHeader from "../components/headers/FoodListHeader"
+import SelectedHeader from "../components/headers/SelectedIngredientHeader"
+import {getFirdge} from "../api_calls/user"
 
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             selected: false,
             selectedIngredients: [],
             ingredients: null
-        };
+        }
+        this.emptySelected = this.emptySelected.bind(this)
+        this.updateSelected = this.updateSelected.bind(this)
     }
 
     static navigationOptions = {
@@ -51,8 +53,6 @@ export default class ShoppingListScreen extends React.Component {
         }
     }
 
-    activateSelectedHeader = () => { this.setState({ selected: true }) }
-
     _updateStateArray(itemID) {
         const isSelected = this.state.selectedIngredients.includes(itemID)
         const newArray = isSelected
@@ -63,63 +63,15 @@ export default class ShoppingListScreen extends React.Component {
         })
     }
 
-    selectedHeader() {
-        return (
-            <Header style={GenericStyles.header}>
-                <Left style={{flex: 1, flexDirection: 'row'}}>
-                    <Button transparent
-                            onPress={() => this.setState({selected: false, selectedIngredients: []})}
-                            style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
-                        />
-                    </Button>
-                    <Button transparent
-                            onPress={() => this.setState({selectedIngredients: this.state.ingredients.map(item => item._id)})}
-                            style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-filing' : 'md-filing'}
-                        />
-                    </Button>
-                </Left>
-                <Right>
-                    <Button transparent>
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
-                        />
-                    </Button>
-                    <Button transparent>
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
-                        />
-                    </Button>
-                    <Button
-                        transparent
-                        onPress={() => {
-                            Alert.alert(
-                                'Confirmation',
-                                'Confirmez vous la suppression ?',
-                                [
-                                    {text: 'Annuler', style: 'cancel'},
-                                    {text: 'Oui', onPress: () => console.log('OK Pressed')},
-                                ]
-                            )}}
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-                        />
-                    </Button>
-                </Right>
-            </Header>
-        )
+    emptySelected() {
+        this.setState({selected: false, selectedIngredients: []})
     }
+
+    updateSelected() {
+        this.setState({selectedIngredients: this.state.ingredients.map(item => item._id)})
+    }
+
+    activateSelectedHeader = () => { this.setState({ selected: true }) }
 
     renderList() {
         return this.state.ingredients.map((item) => {
@@ -172,7 +124,12 @@ export default class ShoppingListScreen extends React.Component {
         }
         return (
             <Container>
-                {this.state.selected ? this.selectedHeader() :
+                {this.state.selected ? (
+                        <SelectedHeader
+                            origin={'fridge'}
+                            emptySelected={this.emptySelected}
+                            updateSelected={this.updateSelected}
+                        />) :
                     <FoodListHeader
                         navigation={this.props.navigation}
                         name={'Frigidaire'}

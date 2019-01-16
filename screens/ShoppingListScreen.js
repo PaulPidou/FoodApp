@@ -1,10 +1,11 @@
 import React from 'react';
-import {Platform, ScrollView, Text, Alert} from 'react-native';
+import {Platform, ScrollView, Text} from 'react-native';
 import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet} from 'native-base';
 import {Avatar} from "react-native-elements";
 
 import GenericStyles from "../constants/Style";
 import FoodListHeader from "../components/headers/FoodListHeader";
+import SelectedHeader from '../components/headers/SelectedIngredientHeader'
 import {getShoppingList} from "../api_calls/user";
 
 export default class ShoppingListScreen extends React.Component {
@@ -18,6 +19,8 @@ export default class ShoppingListScreen extends React.Component {
             checkedIngredients: [],
             ingredients: null
         }
+        this.emptySelected = this.emptySelected.bind(this)
+        this.updateSelected = this.updateSelected.bind(this)
     }
 
     static navigationOptions = {
@@ -52,6 +55,14 @@ export default class ShoppingListScreen extends React.Component {
         }
     }
 
+    emptySelected() {
+        this.setState({selected: false, selectedIngredients: []})
+    }
+
+    updateSelected() {
+        this.setState({selectedIngredients: this.state.ingredients.map(item => item._id)})
+    }
+
     startShopping = () => { this.setState({ shoppingMode: true }) }
 
     _updateStateArray(itemID, arrayName) {
@@ -66,64 +77,6 @@ export default class ShoppingListScreen extends React.Component {
         } else {
             this.setState({ [arrayName]: newArray })
         }
-    }
-
-    selectedHeader() {
-        return (
-            <Header style={GenericStyles.header}>
-                <Left style={{flex: 1, flexDirection: 'row'}}>
-                    <Button transparent
-                        onPress={() => this.setState({selected: false, selectedIngredients: []})}
-                        style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
-                        />
-                    </Button>
-                    <Button transparent
-                        onPress={() => this.setState({selectedIngredients: this.state.ingredients.map(item => item._id)})}
-                        style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-filing' : 'md-filing'}
-                        />
-                    </Button>
-                </Left>
-                <Right>
-                    <Button transparent>
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-egg' : 'md-egg'}
-                        />
-                    </Button>
-                    <Button transparent>
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
-                        />
-                    </Button>
-                    <Button
-                        transparent
-                        onPress={() => {
-                            Alert.alert(
-                                'Confirmation',
-                                'Confirmez vous la suppression ?',
-                                [
-                                    {text: 'Annuler', style: 'cancel'},
-                                    {text: 'Oui', onPress: () => console.log('OK Pressed')},
-                                ]
-                            )}}
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-                        />
-                    </Button>
-                </Right>
-            </Header>
-        )
     }
 
     shoppingHeader() {
@@ -251,7 +204,12 @@ export default class ShoppingListScreen extends React.Component {
         let content;
 
         if(this.state.selected) {
-            header = this.selectedHeader()
+            header = (
+                <SelectedHeader
+                    origin={'shoppinglist'}
+                    emptySelected={this.emptySelected}
+                    updateSelected={this.updateSelected}
+                />)
         } else if(this.state.shoppingMode) {
             header = this.shoppingHeader()
         } else {
