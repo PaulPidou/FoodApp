@@ -7,13 +7,13 @@ import {Platform} from "react-native";
 
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             quantity: props.navigation.state.params.quantity,
             unit: props.navigation.state.params.unit,
             chosenDate: props.navigation.state.params.expirationDate
-        };
-        this._setDate = this._setDate.bind(this);
+        }
+        this._setDate = this._setDate.bind(this)
     }
 
     static navigationOptions = {
