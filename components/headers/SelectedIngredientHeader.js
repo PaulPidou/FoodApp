@@ -5,7 +5,7 @@ import {Left, Right, Header, Button, Icon} from "native-base"
 import {Alert, Platform} from "react-native"
 import GenericStyles from "../../constants/Style"
 
-export default class RecipesList extends React.Component {
+export default class SelectedIngredientHeader extends React.Component {
     render() {
         return (
             <Header style={GenericStyles.header}>
@@ -74,7 +74,7 @@ export default class RecipesList extends React.Component {
     }
 }
 
-RecipesList.propTypes = {
+SelectedIngredientHeader.propTypes = {
     origin: PropTypes.string,
     emptySelected: PropTypes.func,
     updateSelected: PropTypes.func

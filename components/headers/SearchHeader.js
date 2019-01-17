@@ -1,29 +1,30 @@
-import React from "react";
-import { Header, Left, Button, Icon, Item, Input, Right } from 'native-base';
+import React from "react"
+import PropTypes from 'prop-types'
+import {Header, Left, Button, Icon, Item, Input} from 'native-base'
 
 import GenericStyles from '../../constants/Style'
-import {getRecipeFromKeywords} from '../../api_calls/public'
+import {getRecipesFromKeywords} from '../../api_calls/public'
 
 export default class SearchHeader extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             keywords: '',
             recipes: [],
             error: false
         }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleChange(e) {
         this.setState({
             keywords: e.nativeEvent.text
-        });
+        })
     }
 
     async handleSubmit() {
-        this.state.recipes = await getRecipeFromKeywords(this.state.keywords)
+        this.state.recipes = await getRecipesFromKeywords(this.state.keywords)
         this.props.callback(this.state.recipes)
     }
 
@@ -53,6 +54,12 @@ export default class SearchHeader extends React.Component {
                     />
                 </Item>
             </Header>
-        );
+        )
     }
+}
+
+SearchHeader.propTypes = {
+    placeholder: PropTypes.string,
+    icon: PropTypes.string,
+    callback: PropTypes.func
 }

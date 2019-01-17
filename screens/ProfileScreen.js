@@ -1,8 +1,8 @@
-import React from 'react';
-import { Text } from 'react-native';
-import {Body, Button, Container, Content, Header, Icon, Left, Title} from 'native-base';
+import React from 'react'
+import { Text } from 'react-native'
+import {Body, Button, Container, Content, Header, Icon, Left, Title} from 'native-base'
 
-import GenericStyles from "../constants/Style";
+import GenericStyles from "../constants/Style"
 
 export default class ProfileScreen extends React.Component {
     static navigationOptions = {
@@ -31,6 +31,6 @@ export default class ProfileScreen extends React.Component {
                     <Text>Profile</Text>
                 </Content>
             </Container>
-        );
+        )
     }
 }

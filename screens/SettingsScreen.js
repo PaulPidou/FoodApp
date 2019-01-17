@@ -1,8 +1,8 @@
-import React from 'react';
-import {Platform, Text} from 'react-native';
-import {Container, Header, Content, Left, Button, Icon, Body, Title, List, ListItem, Right, Switch, Picker} from 'native-base';
+import React from 'react'
+import {Platform, Text} from 'react-native'
+import {Container, Header, Content, Left, Button, Icon, Body, Title, List, ListItem, Right, Switch, Picker} from 'native-base'
 
-import GenericStyles from "../constants/Style";
+import GenericStyles from "../constants/Style"
 
 export default class SettingsScreen extends React.Component {
     constructor(props) {
@@ -44,7 +44,7 @@ export default class SettingsScreen extends React.Component {
                                 </Button>
                             </Left>
                             <Body>
-                            <Text>Automatiquement ajouter les ingrédients à la liste de courses à la sauvegarde d'une recette</Text>
+                            <Text>Automatiquement ajouter les ingrédients à la liste de courses à la sauvegarde d&apos;une recette</Text>
                             </Body>
                             <Right>
                                 <Switch
@@ -80,6 +80,6 @@ export default class SettingsScreen extends React.Component {
                     </List>
                 </Content>
             </Container>
-        );
+        )
     }
 }

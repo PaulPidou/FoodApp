@@ -1,5 +1,6 @@
-import React from "react";
-import { createDrawerNavigator } from "react-navigation";
+/* eslint-disable react/display-name */
+import React from "react"
+import { createDrawerNavigator } from "react-navigation"
 
 import MainTabNavigator from './MainTabNavigator'
 import ProfileScreen from '../screens/ProfileScreen'
@@ -15,5 +16,6 @@ const DrawerNavigator = createDrawerNavigator(
     {
         contentComponent: props => <SideBar {...props} />
     }
-);
-export default DrawerNavigator;
+)
+
+export default DrawerNavigator

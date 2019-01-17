@@ -1,10 +1,11 @@
-import React from "react";
-import {Left, Right, Header, Button, Icon} from "native-base";
+import React from "react"
+import PropTypes from "prop-types"
+import {Left, Right, Header, Button, Icon} from "native-base"
 
-import {Alert, Platform} from "react-native";
-import GenericStyles from "../../constants/Style";
+import {Alert, Platform} from "react-native"
+import GenericStyles from "../../constants/Style"
 
-export default class RecipesList extends React.Component {
+export default class SelectedRecipeHeader extends React.Component {
     render() {
         return (
             <Header style={GenericStyles.header}>
@@ -62,4 +63,8 @@ export default class RecipesList extends React.Component {
             </Header>
         )
     }
+}
+
+SelectedRecipeHeader.propTypes = {
+    emptySelected: PropTypes.func
 }

@@ -1,10 +1,10 @@
-import React from 'react';
-import {Container, Content, List, ListItem, Input, Button, Text, Header, Left, Icon} from 'native-base';
+import React from 'react'
+import {Container, Content, List, ListItem, Input, Button, Text, Header, Left, Icon} from 'native-base'
 
 import GenericStyles from '../constants/Style'
-import {Platform, ScrollView} from "react-native";
+import {Platform, ScrollView} from "react-native"
 
-export default class ShoppingListScreen extends React.Component {
+export default class SearchIngredientScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -98,6 +98,6 @@ export default class ShoppingListScreen extends React.Component {
                     </ScrollView>
                 </Content>
             </Container>
-        );
+        )
     }
 }

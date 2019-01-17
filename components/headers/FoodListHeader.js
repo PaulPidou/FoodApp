@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from 'prop-types'
 import {Button, Header, Icon, Left, Right, Title, Body} from "native-base"
 
 import GenericStyles from '../../constants/Style'
@@ -57,4 +58,10 @@ export default class FoodListHeader extends React.Component {
             </Header>
         )
     }
+}
+
+FoodListHeader.propTypes = {
+    name: PropTypes.string,
+    origin: PropTypes.string,
+    startShopping: PropTypes.func
 }

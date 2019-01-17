@@ -1,12 +1,8 @@
-import React from "react";
-import {Container, Content, Text, List, ListItem, Icon, Left, Body} from "native-base";
-import {Image, StyleSheet} from "react-native";
+import React from "react"
+import {Container, Content, Text, List, ListItem, Icon, Left, Body} from "native-base"
+import {Image} from "react-native"
 
-const styles = StyleSheet.create({
-    icon : {
-        color: '#007aff'
-    }
-});
+import GenericStyles from '../constants/Style'
 
 export default class SideBar extends React.Component {
     render() {
@@ -23,7 +19,7 @@ export default class SideBar extends React.Component {
                             onPress={() => this.props.navigation.navigate("Home")}>
                             <Left>
                                 <Icon
-                                    style={styles.icon}
+                                    style={GenericStyles.icon}
                                     name='home'
                                 />
                             </Left>
@@ -36,7 +32,7 @@ export default class SideBar extends React.Component {
                             onPress={() => this.props.navigation.navigate("Profile")}>
                             <Left>
                                 <Icon
-                                    style={styles.icon}
+                                    style={GenericStyles.icon}
                                     name='person'
                                 />
                             </Left>
@@ -49,7 +45,7 @@ export default class SideBar extends React.Component {
                             onPress={() => this.props.navigation.navigate("Settings")}>
                             <Left>
                                 <Icon
-                                    style={styles.icon}
+                                    style={GenericStyles.icon}
                                     name='settings'
                                 />
                             </Left>
@@ -60,6 +56,6 @@ export default class SideBar extends React.Component {
                     </List>
                 </Content>
             </Container>
-        );
+        )
     }
 }

@@ -1,5 +1,5 @@
-import {Platform, StyleSheet} from "react-native";
-import {Constants} from "expo";
+import {Platform, StyleSheet} from "react-native"
+import {Constants} from "expo"
 
 const GenericStyles = StyleSheet.create({
     header: {
@@ -38,7 +38,7 @@ const GenericStyles = StyleSheet.create({
         marginLeft: 0,
         alignSelf:'center'
     }
-});
+})
 
 export default GenericStyles
 
