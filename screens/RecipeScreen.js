@@ -1,11 +1,10 @@
 import React from 'react'
-import {Platform, ScrollView, Text} from 'react-native'
-import {Container, Left, Right, Button, Icon, Header, Tabs, Tab, TabHeading, Spinner, H1, List, ListItem, Body} from 'native-base'
+import {Alert, Platform} from 'react-native'
+import {Container, Left, Right, Button, Icon, Header} from 'native-base'
 
-import GenericStyles from "../constants/Style"
+import GenericStyles from '../constants/Style'
+import RecipeTabs from '../components/contents/RecipeTabs'
 import {getRecipeFromId} from '../api_calls/public'
-import {Avatar} from "react-native-elements"
-
 
 export default class RecipeScreen extends React.Component {
     constructor(props) {
@@ -27,105 +26,6 @@ export default class RecipeScreen extends React.Component {
                 this.setState({recipe})
             }
         )
-    }
-
-    recipe() {
-        const recipe = this.state.recipe
-        let content
-        if (recipe === null) {
-            content = (<Spinner color='#007aff' />)
-        } else {
-            content = (
-                <ScrollView>
-                    <H1 style={{textAlign: 'center', marginTop: 5, color: '#007aff'}}>{recipe.title}</H1>
-                    <Text>{recipe.author && 'Auteur: ' + recipe.author}</Text>
-                    <Text>{
-                        recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)
-                    }, {recipe.budget.charAt(0).toUpperCase() + recipe.budget.slice(1)}</Text>
-                </ScrollView>)
-        }
-        return content
-    }
-
-    ingredients() {
-        const recipe = this.state.recipe
-        let content
-        if (recipe === null) {
-            content = (<Spinner color='#007aff' />)
-        } else {
-            content = (
-                <ScrollView>
-                    <List>{
-                        recipe.ingredients.map((item) => {
-                            return (
-                                <ListItem
-                                    icon
-                                    avatar
-                                    key={item.ingredientID}
-                                >
-                                    <Left style={{height: 30}}>
-                                        <Avatar
-                                            size="small"
-                                            rounded
-                                            title={item.ingredient.charAt(0).toUpperCase()}
-                                            activeOpacity={0.7}
-                                        />
-                                    </Left>
-                                    <Body>
-                                    <Text>{item.display}</Text>
-                                    </Body>
-                                </ListItem>
-                            )
-                        })
-                    }</List>
-                </ScrollView>)
-        }
-        return content
-    }
-
-    utensils() {
-        const recipe = this.state.recipe
-        let content
-        if (recipe === null) {
-            content = (<Spinner color='#007aff' />)
-        } else {
-            content = (
-                <ScrollView>
-                    <List>{
-                        recipe.utensils.map((item) => {
-                            return (
-                                <ListItem
-                                    icon
-                                    avatar
-                                    key={item.utensil}
-                                >
-                                    <Left style={{height: 30}}>
-                                        <Avatar
-                                            size="small"
-                                            rounded
-                                            title={this._getUtensilAvatarTitle(item.utensil)}
-                                            activeOpacity={0.7}
-                                        />
-                                    </Left>
-                                    <Body>
-                                    <Text>{item.utensil}</Text>
-                                    </Body>
-                                </ListItem>
-                            )
-                        })
-                    }</List>
-                </ScrollView>)
-        }
-        return content
-    }
-
-    _getUtensilAvatarTitle(utensil) {
-        if(isNaN(utensil.charAt(0))) {
-            return utensil.charAt(0).toUpperCase()
-        } else {
-            const utensilArray = utensil.split(' ')
-            return utensilArray.length > 1 ? utensilArray[1].charAt(0).toUpperCase() : ''
-        }
     }
 
     header() {
@@ -152,16 +52,23 @@ export default class RecipeScreen extends React.Component {
                 <Button
                     key={'trash'}
                     transparent
-                    onPress={() => console.log("Recipe delete")}>
+                    onPress={() => {
+                        Alert.alert(
+                            'Confirmation',
+                            'Confirmez vous la suppression ?',
+                            [
+                                {text: 'Annuler', style: 'cancel'},
+                                {text: 'Oui', onPress: () => console.log('OK Pressed')}
+                            ]
+                        )}}>
                     <Icon
                         style={GenericStyles.icon}
                         name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
                     />
                 </Button>
             ])
-        return ([
+        return (
             <Header
-                key={'header'}
                 style={GenericStyles.header}
                 hasTabs
             >
@@ -176,61 +83,16 @@ export default class RecipeScreen extends React.Component {
                     </Button>
                 </Left>
                 <Right>{rightButton}</Right>
-            </Header>,
-            <Tabs
-                key={'tabs'}
-                tabBarUnderlineStyle={{backgroundColor: '#007AFF'}}
-                tabContainerStyle={{elevation: 0}}
-            >
-                <Tab
-                    heading={
-                    <TabHeading style={GenericStyles.headerTab}>
-                        <Icon
-                            style={GenericStyles.tabIcon}
-                            name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'} />
-                        <Text style={GenericStyles.tabText}>Recette</Text>
-                    </TabHeading>}>
-                    {this.recipe()}
-                </Tab>
-                <Tab
-                    heading={
-                    <TabHeading style={GenericStyles.headerTab}>
-                        <Icon
-                            style={GenericStyles.tabIcon}
-                            name={Platform.OS === 'ios' ? 'ios-nutrition' : 'md-nutrition'} />
-                        <Text style={GenericStyles.tabText}>Ingrédients</Text>
-                    </TabHeading>}>
-                    {this.ingredients()}
-                </Tab>
-                <Tab heading={
-                    <TabHeading
-                        style={GenericStyles.headerTab}
-                    >
-                        <Icon
-                            style={GenericStyles.tabIcon}
-                            name={Platform.OS === 'ios' ? 'ios-restaurant' : 'md-restaurant'} />
-                        <Text style={GenericStyles.tabText}>Ustensiles</Text>
-                    </TabHeading>}>
-                    {this.utensils()}
-                </Tab>
-            </Tabs>
-        ])
+            </Header>)
     }
 
     render() {
-        const recipe = this.state.recipe
-        let content
-        if (recipe === null) {
-            content = (<Spinner color='#007aff' />)
-        } else {
-            content = (
-                <ScrollView>
-                    <H1>{recipe.title}</H1>
-                </ScrollView>)
-        }
         return (
             <Container>
                 {this.header()}
+                <RecipeTabs
+                    recipe={this.state.recipe}
+                />
             </Container>
         )
     }

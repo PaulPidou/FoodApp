@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from 'prop-types'
-import {Button, Header, Icon, Left, Right, Title, Body} from "native-base"
+import {Button, Header, Icon, Left, Right, Title, Body} from 'native-base'
 
 import GenericStyles from '../../constants/Style'
 import {Platform} from "react-native"

@@ -61,8 +61,7 @@ export default class SelectedIngredientHeader extends React.Component {
                                     {text: 'Annuler', style: 'cancel'},
                                     {text: 'Oui', onPress: () => console.log('OK Pressed')},
                                 ]
-                            )}}
-                    >
+                            )}}>
                         <Icon
                             style={GenericStyles.icon}
                             name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}

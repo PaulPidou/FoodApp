@@ -1,6 +1,7 @@
 const api_ip = "192.168.43.163:3000"
 
 export const getRecipeFromId = async function(id) {
+    await new Promise(resolve => setTimeout(resolve, 1000))
     return {
         "_id": 123,
         "title": "Super recipe 1",
