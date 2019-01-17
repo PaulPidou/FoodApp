@@ -1,33 +1,17 @@
-import React from 'react';
-import {Platform, ScrollView, Text} from 'react-native';
-import {
-    Container,
-    Content,
-    Left,
-    Right,
-    Button,
-    Icon,
-    Header,
-    Tabs,
-    Tab,
-    TabHeading,
-    Spinner,
-    H1,
-    List,
-    ListItem,
-    Body
-} from 'native-base';
+import React from 'react'
+import {Platform, ScrollView, Text} from 'react-native'
+import {Container, Left, Right, Button, Icon, Header, Tabs, Tab, TabHeading, Spinner, H1, List, ListItem, Body} from 'native-base'
 
-import GenericStyles from "../constants/Style";
+import GenericStyles from "../constants/Style"
 import {getRecipeFromId} from '../api_calls/public'
-import {Avatar} from "react-native-elements";
+import {Avatar} from "react-native-elements"
 
 
 export default class RecipeScreen extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
-            recipeId: this.props.navigation.getParam('recipeId', 'NO-ID'),
+            recipeId: props.navigation.getParam('recipeId', 'NO-ID'),
             recipe: null
         }
     }
@@ -39,15 +23,15 @@ export default class RecipeScreen extends React.Component {
     componentDidMount() {
         this._asyncRequest = getRecipeFromId(this.state.recipeId).then(
             recipe => {
-                this._asyncRequest = null;
-                this.setState({recipe});
+                this._asyncRequest = null
+                this.setState({recipe})
             }
         )
     }
 
     recipe() {
         const recipe = this.state.recipe
-        let content;
+        let content
         if (recipe === null) {
             content = (<Spinner color='#007aff' />)
         } else {
@@ -65,7 +49,7 @@ export default class RecipeScreen extends React.Component {
 
     ingredients() {
         const recipe = this.state.recipe
-        let content;
+        let content
         if (recipe === null) {
             content = (<Spinner color='#007aff' />)
         } else {
@@ -101,7 +85,7 @@ export default class RecipeScreen extends React.Component {
 
     utensils() {
         const recipe = this.state.recipe
-        let content;
+        let content
         if (recipe === null) {
             content = (<Spinner color='#007aff' />)
         } else {
@@ -235,7 +219,7 @@ export default class RecipeScreen extends React.Component {
 
     render() {
         const recipe = this.state.recipe
-        let content;
+        let content
         if (recipe === null) {
             content = (<Spinner color='#007aff' />)
         } else {

@@ -1,8 +1,9 @@
-import React from "react";
-import {Left, Right, Header, Button, Icon} from "native-base";
+import React from "react"
+import PropTypes from 'prop-types'
+import {Left, Right, Header, Button, Icon} from "native-base"
 
-import {Alert, Platform} from "react-native";
-import GenericStyles from "../../constants/Style";
+import {Alert, Platform} from "react-native"
+import GenericStyles from "../../constants/Style"
 
 export default class RecipesList extends React.Component {
     render() {
@@ -71,4 +72,10 @@ export default class RecipesList extends React.Component {
             </Header>
         )
     }
+}
+
+RecipesList.propTypes = {
+    origin: PropTypes.string,
+    emptySelected: PropTypes.func,
+    updateSelected: PropTypes.func
 }

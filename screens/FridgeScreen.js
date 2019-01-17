@@ -1,8 +1,8 @@
-import React from 'react';
-import {ScrollView, Text} from 'react-native';
-import {Body, Container, Content, Left, List, ListItem, Right, Spinner} from 'native-base';
-import {Avatar} from "react-native-elements";
-import moment from 'moment';
+import React from 'react'
+import {ScrollView, Text} from 'react-native'
+import {Body, Container, Content, Left, List, ListItem, Right, Spinner} from 'native-base'
+import {Avatar} from "react-native-elements"
+import moment from 'moment'
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from "../components/headers/SelectedIngredientHeader"
@@ -22,7 +22,7 @@ export default class ShoppingListScreen extends React.Component {
 
     static navigationOptions = {
         header: null
-    };
+    }
 
     componentDidMount() {
         this._asyncRequest = getFirdge().then(

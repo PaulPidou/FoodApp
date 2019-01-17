@@ -1,17 +1,17 @@
-import React from 'react';
-import {Platform, ScrollView, Text} from 'react-native';
-import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet} from 'native-base';
-import {Avatar} from "react-native-elements";
+import React from 'react'
+import {Platform, ScrollView, Text} from 'react-native'
+import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet} from 'native-base'
+import {Avatar} from "react-native-elements"
 
-import GenericStyles from "../constants/Style";
-import FoodListHeader from "../components/headers/FoodListHeader";
+import GenericStyles from "../constants/Style"
+import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from '../components/headers/SelectedIngredientHeader'
-import {getShoppingList} from "../api_calls/user";
+import {getShoppingList} from "../api_calls/user"
 
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {
         super(props)
-        this.actionSheet = null;
+        this.actionSheet = null
         this.state = {
             selected: false,
             selectedIngredients: [],
@@ -25,14 +25,14 @@ export default class ShoppingListScreen extends React.Component {
 
     static navigationOptions = {
         header: null
-    };
+    }
 
     componentDidMount() {
         this._asyncRequest = getShoppingList().then(
             ingredients => {
-                this._asyncRequest = null;
-                this.setState({ingredients});
-            });
+                this._asyncRequest = null
+                this.setState({ingredients})
+            })
     }
 
     handlePress(item) {
@@ -195,13 +195,13 @@ export default class ShoppingListScreen extends React.Component {
                         {item.quantity} {item.unit}</Text>
                     </Body>
                 </ListItem>
-            );
-        });
+            )
+        })
     }
 
     render() {
-        let header;
-        let content;
+        let header
+        let content
 
         if(this.state.selected) {
             header = (
@@ -235,7 +235,7 @@ export default class ShoppingListScreen extends React.Component {
                 {header}
                 <Content>
                     {content}
-                    <ActionSheet ref={(c) => { this.actionSheet = c; }} />
+                    <ActionSheet ref={(c) => { this.actionSheet = c }} />
                     </Content>
             </Container>
         )

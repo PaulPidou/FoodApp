@@ -11,16 +11,26 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.0.0",
     "@expo/samples": "2.1.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.8.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
     "expo": "^31.0.2",
     "moment": "^2.23.0",
     "native-base": "2.8.2",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-elements": "^0.19.1",
-    "react-navigation": "^2.18.2"
+    "react-navigation": "^2.18.2",
+    "prop-types": "latest"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
     "babel-preset-expo": "^5.0.0",
     "jest-expo": "^31.0.0"
   },

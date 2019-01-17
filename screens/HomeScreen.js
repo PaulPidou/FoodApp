@@ -1,5 +1,5 @@
-import React from 'react';
-import {Container,Left, Body, Right, Button, Icon, Header, Title} from 'native-base';
+import React from 'react'
+import {Container,Left, Body, Right, Button, Icon, Header, Title} from 'native-base'
 
 import GenericStyles from "../constants/Style"
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
@@ -27,8 +27,8 @@ export default class HomeScreen extends React.Component {
     componentDidMount() {
         this._asyncRequest = getRecipesSummary().then(
             recipes => {
-                this._asyncRequest = null;
-                this.setState({recipes});
+                this._asyncRequest = null
+                this.setState({recipes})
             }
         )
     }

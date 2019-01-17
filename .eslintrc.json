@@ -1,0 +1,20 @@
+{
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "parser": "babel-eslint",
+    "plugins": [
+        "promise",
+        "react"
+    ],
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "rules": {
+        "semi": ["error", "never"],
+        "no-useless-escape": "off",
+        "react/prop-types": ["error", { "ignore": ["navigation"] }]
+    }
+}

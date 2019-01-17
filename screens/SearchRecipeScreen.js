@@ -1,15 +1,15 @@
-import React from 'react';
-import {Platform} from 'react-native';
-import {Container, Header, Left, Button, Icon, Input} from 'native-base';
+import React from 'react'
+import {Platform} from 'react-native'
+import {Container, Header, Left, Button, Icon, Input} from 'native-base'
 
 import GenericStyles from '../constants/Style'
 import RecipesList from '../components/contents/RecipesList'
 import {getRecipesFromKeywords} from '../api_calls/public'
-import SelectedHeader from "../components/headers/SelectedRecipeHeader";
+import SelectedHeader from "../components/headers/SelectedRecipeHeader"
 
 export default class SearchRecipeScreen extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             inputText: null,
             selected: false,
@@ -106,6 +106,6 @@ export default class SearchRecipeScreen extends React.Component {
                     handleLongPress={this.handleLongPress}
                 />
             </Container>
-        );
+        )
     }
 }

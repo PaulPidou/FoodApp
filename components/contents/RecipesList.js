@@ -1,8 +1,9 @@
-import React from "react";
-import {Left, Right, Body, Content, ListItem, List, Spinner} from "native-base";
+import React from "react"
+import PropTypes from 'prop-types'
+import {Left, Right, Body, Content, ListItem, List, Spinner} from "native-base"
 
-import {ScrollView, Text} from "react-native";
-import {Avatar} from "react-native-elements";
+import {ScrollView, Text} from "react-native"
+import {Avatar} from "react-native-elements"
 
 export default class RecipesList extends React.Component {
 
@@ -43,7 +44,7 @@ export default class RecipesList extends React.Component {
     }
 
     render() {
-        let content;
+        let content
         if (this.props.recipes === null) {
             content = (<Spinner color='#007aff' />)
         } else if (this.props.recipes.length === 0) {
@@ -64,4 +65,13 @@ export default class RecipesList extends React.Component {
         }
         return (<Content>{content}</Content>)
     }
+}
+
+RecipesList.propTypes = {
+    recipes: PropTypes.array,
+    selectedRecipes: PropTypes.array,
+    handlePress: PropTypes.func,
+    handleLongPress: PropTypes.func,
+    origin: PropTypes.string,
+    firstSearch: PropTypes.bool
 }

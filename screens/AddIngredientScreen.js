@@ -1,9 +1,9 @@
-import React from 'react';
-import {Container, Content, Input, Button, Text, Header, Left, Icon, Body, Title, Form, Item, Label, DatePicker} from 'native-base';
-import moment from 'moment';
+import React from 'react'
+import {Container, Content, Input, Button, Text, Header, Left, Icon, Body, Title, Form, Item, Label, DatePicker} from 'native-base'
+import moment from 'moment'
 
 import GenericStyles from '../constants/Style'
-import {Platform} from "react-native";
+import {Platform} from "react-native"
 
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     _setDate(newDate) {
-        this.setState({ chosenDate: newDate });
+        this.setState({ chosenDate: newDate })
     }
 
     _handlePress() {
@@ -49,7 +49,7 @@ export default class ShoppingListScreen extends React.Component {
                 }</Title>
                 </Body>
             </Header>
-        );
+        )
     }
 
     render() {
@@ -99,11 +99,11 @@ export default class ShoppingListScreen extends React.Component {
                             style={{margin: 5}}
                             onPress={() => this._handlePress()}
                         >
-                            <Text>Ajouter l'ingrédient</Text>
+                            <Text>Ajouter l&apos;ingrédient</Text>
                         </Button>
                     </Form>
                 </Content>
             </Container>
-        );
+        )
     }
 }
