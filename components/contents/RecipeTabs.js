@@ -14,9 +14,20 @@ export default class RecipeTabs extends React.Component {
             i++
             return (
                 <ListItem
+                    avatar
                     key={i}
                 >
-                    <Text>{item}</Text>
+                    <Left>
+                        <Avatar
+                            size="large"
+                            rounded
+                            title={i.toString()}
+                            activeOpacity={0.7}
+                        />
+                    </Left>
+                    <Body>
+                        <Text>{item}</Text>
+                    </Body>
                 </ListItem>
             )
         })
@@ -31,11 +42,46 @@ export default class RecipeTabs extends React.Component {
             content = (
                 <ScrollView>
                     <H1 style={{textAlign: 'center', marginTop: 5, color: '#007aff'}}>{recipe.title}</H1>
-                    <Text>{recipe.author && 'Auteur: ' + recipe.author}</Text>
-                    <Text>{
-                        recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)
-                    }, {recipe.budget.charAt(0).toUpperCase() + recipe.budget.slice(1)}</Text>
-                    <List>{this.renderList()}</List>
+                    <List>
+                        { recipe.author && (
+                            <ListItem icon key={'author'}>
+                                <Left>
+                                    <Icon
+                                        style={GenericStyles.icon}
+                                        name='person' />
+                                </Left>
+                                <Body>
+                                    <Text>{recipe.author}</Text>
+                                </Body>
+                            </ListItem>)
+                        }
+                        <ListItem icon key={'difficulty'}>
+                            <Left>
+                                <Icon
+                                    style={GenericStyles.icon}
+                                    name={Platform.OS === 'ios' ? 'ios-podium' : 'md-podium'} />
+                            </Left>
+                            <Body>
+                                <Text>{recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)}</Text>
+                            </Body>
+                        </ListItem>
+                        <ListItem icon key={'budget'}>
+                            <Left>
+                                <Icon
+                                    style={GenericStyles.icon}
+                                    name={Platform.OS === 'ios' ? 'ios-cash' : 'md-cash'} />
+                            </Left>
+                            <Body>
+                                <Text>{recipe.budget.charAt(0).toUpperCase() + recipe.budget.slice(1)}</Text>
+                            </Body>
+                        </ListItem>
+                    </List>
+                    <List>
+                        <ListItem itemDivider key={0}>
+                            <Text>Recette</Text>
+                        </ListItem>
+                        {this.renderList()}
+                    </List>
                 </ScrollView>)
         }
         return content

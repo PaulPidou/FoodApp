@@ -4,8 +4,8 @@ export const getRecipeFromId = async function(id) {
     await new Promise(resolve => setTimeout(resolve, 1000))
     return {
         "_id": 123,
-        "title": "Super recipe 1",
-        "author": "Toto",
+        "title": '\xab Tartilla \xbb aux abricots',
+        "author": 'Old El Paso',
         "budget": "bon marché",
         "difficulty": "facile",
         "recipeQuantity": {
@@ -45,9 +45,10 @@ export const getRecipeFromId = async function(id) {
             }
         ],
         "recipe": [
-            "Etape1",
-            "Etape2",
-            "Etape3"
+            'Préchauffer le four à 180 °C.',
+            "Disposer la tortilla sur une plaque couverte de papier sulfurisé. La badigeonner avec le beurre fondu à l'aide d'un pinceau ou des mains. Saupoudrer avec 1 sachet de sucre vanillé. Enfourner pour 8 à 10 minutes en surveillant attentivement : les contours de la tortilla doivent commencer à dorer.",
+            'Pendant de temps, dénoyauter les abricots et les couper en lamelles.',
+            "Sortir la tortilla du four. Répartir harmonieusement les lamelles d'abricots sur la tortilla. Saupoudrer avec l'autre sachet de sucre vanillé. Enfourner pour 10 minutes supplémentaires."
         ],
         "tags": [
             "petit budget", "famille"
