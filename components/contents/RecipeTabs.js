@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Tab, TabHeading, Icon, Tabs, Spinner, H1, List, ListItem, Left, Body} from 'native-base'
+import {Tab, TabHeading, Icon, Tabs, Spinner, H1, List, ListItem, Left, Body, Badge} from 'native-base'
 
 import {Platform, ScrollView, Text, View} from 'react-native'
 import GenericStyles from '../../constants/Style'
@@ -43,6 +43,20 @@ export default class RecipeTabs extends React.Component {
             content = (
                 <ScrollView>
                     <H1 style={{textAlign: 'center', marginTop: 5, color: '#007aff'}}>{recipe.title}</H1>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent:'center'}}>
+                        {
+                            recipe.tags.map((tag) => {
+                                return(
+                                    <Badge
+                                        key={tag}
+                                        info
+                                        style={{margin: 5}}
+                                    >
+                                        <Text>{tag.charAt(0).toUpperCase() + tag.slice(1)}</Text>
+                                    </Badge>
+                            )})
+                        }
+                    </View>
                     <List>
                         { recipe.author && (
                             <ListItem icon key={'author'}>

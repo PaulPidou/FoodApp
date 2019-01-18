@@ -43,14 +43,14 @@
         <counts>
           <entry key="babelrc" value="18" />
           <entry key="gitignore" value="11" />
-          <entry key="js" value="16232" />
+          <entry key="js" value="16388" />
           <entry key="json" value="45" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="63" />
-          <entry key="JavaScript" value="16232" />
+          <entry key="JavaScript" value="16388" />
           <entry key="PLAIN_TEXT" value="11" />
         </counts>
       </usages-collector>
@@ -87,8 +87,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/components/contents/RecipeTabs.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="108" column="116" selection-start-line="108" selection-start-column="116" selection-end-line="108" selection-end-column="116" />
+            <state relative-caret-position="1614">
+              <caret line="224" lean-forward="true" selection-start-line="224" selection-end-line="224" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -323,12 +323,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1545416159580</updated>
-      <workItem from="1545416166828" duration="124174000" />
+      <workItem from="1545416166828" duration="124921000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="124174000" />
+    <option name="totallyTimeSpent" value="124921000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1439" height="798" extended-state="6" />
@@ -660,13 +660,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api_calls/public.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="56" column="22" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/constants/Style.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="501">
@@ -674,10 +667,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/api_calls/public.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="56" column="22" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/components/contents/RecipeTabs.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="108" column="116" selection-start-line="108" selection-start-column="116" selection-end-line="108" selection-end-column="116" />
+        <state relative-caret-position="1614">
+          <caret line="224" lean-forward="true" selection-start-line="224" selection-end-line="224" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
