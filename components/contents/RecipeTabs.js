@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Tab, TabHeading, Icon, Tabs, Spinner, H1, List, ListItem, Left, Body} from 'native-base'
 
-import {Platform, ScrollView, Text} from 'react-native'
+import {Platform, ScrollView, Text, View} from 'react-native'
 import GenericStyles from '../../constants/Style'
 import {Avatar} from 'react-native-elements'
 
 export default class RecipeTabs extends React.Component {
-    renderList() {
+
+    renderRecipe() {
         const recipe = this.props.recipe
         let i = 0
         return recipe.recipe.map((item) => {
@@ -55,32 +56,72 @@ export default class RecipeTabs extends React.Component {
                                 </Body>
                             </ListItem>)
                         }
-                        <ListItem icon key={'difficulty'}>
-                            <Left>
-                                <Icon
-                                    style={GenericStyles.icon}
-                                    name={Platform.OS === 'ios' ? 'ios-podium' : 'md-podium'} />
-                            </Left>
-                            <Body>
+                        { recipe.difficulty && (
+                            <ListItem icon key={'difficulty'}>
+                                <Left>
+                                    <Icon
+                                        style={GenericStyles.icon}
+                                        name={Platform.OS === 'ios' ? 'ios-podium' : 'md-podium'} />
+                                </Left>
+                                <Body>
                                 <Text>{recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)}</Text>
-                            </Body>
+                                </Body>
+                            </ListItem>)
+                        }
+                        { recipe.budget && (
+                            <ListItem icon key={'budget'}>
+                                <Left>
+                                    <Icon
+                                        style={GenericStyles.icon}
+                                        name={Platform.OS === 'ios' ? 'ios-cash' : 'md-cash'} />
+                                </Left>
+                                <Body>
+                                <Text>{recipe.budget.charAt(0).toUpperCase() + recipe.budget.slice(1)}</Text>
+                                </Body>
+                            </ListItem>)
+                        }
+                    </List>
+                    <List>
+                        <ListItem itemDivider key={'time_header'}>
+                            <Text>Temps total de préparation: {recipe.totalTime} min</Text>
                         </ListItem>
-                        <ListItem icon key={'budget'}>
-                            <Left>
+                        <ListItem
+                            key={'time'}
+                            style={{flex: 3, flexDirection: 'row'}}
+                        >
+                            <View
+                                style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent:'center'}}
+                            >
                                 <Icon
                                     style={GenericStyles.icon}
-                                    name={Platform.OS === 'ios' ? 'ios-cash' : 'md-cash'} />
-                            </Left>
-                            <Body>
-                                <Text>{recipe.budget.charAt(0).toUpperCase() + recipe.budget.slice(1)}</Text>
-                            </Body>
+                                    name={Platform.OS === 'ios' ? 'ios-hand' : 'md-hand'} />
+                                <Text style={{marginLeft: 5}}>{recipe.timingDetails.preparation} min</Text>
+                            </View>
+                            <View
+                                style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent:'center'}}
+                            >
+                                <Icon
+                                    style={GenericStyles.icon}
+                                    name={Platform.OS === 'ios' ? 'ios-flame' : 'md-flame'} />
+                                <Text style={{marginLeft: 5}} >{recipe.timingDetails.cooking} min</Text>
+                            </View>
+                            <View
+                                style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent:'center'}}
+                            >
+                                <Icon
+                                    style={GenericStyles.icon}
+                                    name={Platform.OS === 'ios' ? 'ios-timer' : 'md-timer'} />
+                                <Text style={{marginLeft: 5}} >{recipe.timingDetails.rest} min</Text>
+                            </View>
                         </ListItem>
                     </List>
                     <List>
                         <ListItem itemDivider key={0}>
-                            <Text>Recette</Text>
+                            <Text>Recette {recipe.recipeQuantity && (
+                                'pour '.concat(recipe.recipeQuantity.value,' ', recipe.recipeQuantity.unit)
+                            )}</Text>
                         </ListItem>
-                        {this.renderList()}
+                        {this.renderRecipe()}
                     </List>
                 </ScrollView>)
         }
