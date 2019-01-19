@@ -17,9 +17,7 @@ export class LogInScreen extends React.Component {
     render() {
         return (
             <Container>
-                <Header
-                    style={GenericStyles.header}
-                >
+                <Header style={GenericStyles.header}>
                     <Left style={GenericStyles.headerLeft} />
                     <Body>
                     <Title style={GenericStyles.headerTitle}>Se connecter</Title>
@@ -77,9 +75,7 @@ export class SignUpScreen extends React.Component {
     render() {
         return (
             <Container>
-                <Header
-                    style={GenericStyles.header}
-                >
+                <Header style={GenericStyles.header}>
                     <Left style={GenericStyles.headerLeft}>
                         <Button
                             transparent
