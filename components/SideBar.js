@@ -1,10 +1,15 @@
 import React from "react"
 import {Container, Content, Text, List, ListItem, Icon, Left, Body} from "native-base"
-import {Image} from "react-native"
+import {Image, Platform, AsyncStorage} from "react-native"
 
 import GenericStyles from '../constants/Style'
 
 export default class SideBar extends React.Component {
+    _signOutAsync = async () => {
+        await AsyncStorage.clear()
+        this.props.navigation.navigate('Auth')
+    }
+
     render() {
         return (
             <Container>
@@ -51,6 +56,19 @@ export default class SideBar extends React.Component {
                             </Left>
                             <Body>
                                 <Text>Paramètres</Text>
+                            </Body>
+                        </ListItem>
+                        <ListItem
+                            icon
+                            onPress={() => this._signOutAsync()}>
+                            <Left>
+                                <Icon
+                                    style={GenericStyles.icon}
+                                    name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
+                                />
+                            </Left>
+                            <Body>
+                            <Text>Me déconnecter</Text>
                             </Body>
                         </ListItem>
                     </List>

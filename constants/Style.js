@@ -37,6 +37,9 @@ const GenericStyles = StyleSheet.create({
         fontSize: 14,
         marginLeft: 0,
         alignSelf:'center'
+    },
+    formBlockButton: {
+        margin: 10
     }
 })
 
