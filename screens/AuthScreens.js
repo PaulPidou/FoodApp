@@ -1,6 +1,6 @@
 import React from 'react'
-import {AsyncStorage, Platform} from 'react-native'
-import {Container, Content, Header, Button, Icon, Text, Form, Item, Input, Left, Title, Body} from 'native-base'
+import {AsyncStorage, Platform, Keyboard} from 'react-native'
+import {Root, Container, Content, Header, Button, Icon, Text, Form, Item, Input, Left, Title, Body, Toast} from 'native-base'
 import GenericStyles from "../constants/Style"
 
 
@@ -29,10 +29,14 @@ export class LogInScreen extends React.Component {
                             <Input
                                 placeholder="Email"
                                 keyboardType={"email-address"}
+                                returnKeyType = { "next" }
+                                onSubmitEditing={() => { this.password._root.focus() }}
+                                blurOnSubmit={false}
                             />
                         </Item>
                         <Item last>
                             <Input
+                                ref={input => { this.password = input }}
                                 placeholder="Mot de passe"
                                 secureTextEntry={true}
                             />
@@ -63,65 +67,104 @@ export class LogInScreen extends React.Component {
 }
 
 export class SignUpScreen extends React.Component {
+    constructor(props) {
+        super(props)
+        this.secondTextInput = null
+        this.state = {
+            email: null,
+            password: null,
+            confirmPassword: null,
+        }
+    }
+
     static navigationOptions = {
         header: null,
     }
 
-    _logInAsync = async () => {
-        await AsyncStorage.setItem('userToken', 'abc')
-        this.props.navigation.navigate('App')
+    handleSignUp = async () => {
+        Keyboard.dismiss()
+        if(!this.state.email || !this.state.password || !this.state.confirmPassword) {
+            Toast.show({
+                text: 'Veuillez renseigner les différents champs !',
+                duration: 3000,
+                textStyle: { textAlign: 'center' }
+            })
+        } else if(this.state.password === this.state.confirmPassword) {
+            await AsyncStorage.setItem('userToken', 'abc')
+            this.props.navigation.navigate('App')
+        } else {
+            Toast.show({
+                text: 'Les deux mots de passe ne sont identiques !',
+                duration: 3000,
+                textStyle: { textAlign: 'center' }
+            })
+        }
     }
 
     render() {
         return (
-            <Container>
-                <Header style={GenericStyles.header}>
-                    <Left style={GenericStyles.headerLeft}>
+            <Root>
+                <Container>
+                    <Header style={GenericStyles.header}>
+                        <Left style={GenericStyles.headerLeft}>
+                            <Button
+                                transparent
+                                onPress={() => this.props.navigation.goBack()}>
+                                <Icon
+                                    style={GenericStyles.icon}
+                                    name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
+                                />
+                            </Button>
+                        </Left>
+                        <Body>
+                        <Title style={GenericStyles.headerTitle}>S&apos;enregistrer</Title>
+                        </Body>
+                    </Header>
+                    <Content>
+                        <Form>
+                            <Item>
+                                <Input
+                                    placeholder="Email"
+                                    keyboardType={"email-address"}
+                                    returnKeyType = { "next" }
+                                    onChangeText={(text) => this.setState({email: text})}
+                                    onSubmitEditing={() => { this.password._root.focus() }}
+                                    blurOnSubmit={false}
+                                />
+                            </Item>
+                            <Item>
+                                <Input
+                                    ref={input => { this.password = input }}
+                                    placeholder="Mot de passe"
+                                    secureTextEntry={true}
+                                    returnKeyType = { "next" }
+                                    onChangeText={(text) => this.setState({password: text})}
+                                    onSubmitEditing={() => { this.confirmPassword._root.focus() }}
+                                    blurOnSubmit={false}
+                                />
+                            </Item>
+                            <Item last>
+                                <Input
+                                    ref={input => { this.confirmPassword = input }}
+                                    placeholder="Confirmer le mot de passe"
+                                    secureTextEntry={true}
+                                    onChangeText={(text) => this.setState({confirmPassword: text})}
+                                    onSubmitEditing={() => this.handleSignUp()}
+                                />
+                            </Item>
+                        </Form>
                         <Button
-                            transparent
-                            onPress={() => this.props.navigation.goBack()}>
+                            block
+                            style={GenericStyles.formBlockButton}
+                            onPress={() => this.handleSignUp()}>
                             <Icon
-                                style={GenericStyles.icon}
-                                name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
+                                name={Platform.OS === 'ios' ? 'ios-rocket' : 'md-rocket'}
                             />
+                            <Text>Créer mon compte</Text>
                         </Button>
-                    </Left>
-                    <Body>
-                    <Title style={GenericStyles.headerTitle}>S&apos;enregistrer</Title>
-                    </Body>
-                </Header>
-                <Content>
-                    <Form>
-                        <Item>
-                            <Input
-                                placeholder="Email"
-                                keyboardType={"email-address"}
-                            />
-                        </Item>
-                        <Item>
-                            <Input
-                                placeholder="Mot de passe"
-                                secureTextEntry={true}
-                            />
-                        </Item>
-                        <Item last>
-                            <Input
-                                placeholder="Confirmer le mot de passe"
-                                secureTextEntry={true}
-                            />
-                        </Item>
-                    </Form>
-                    <Button
-                        block
-                        style={GenericStyles.formBlockButton}
-                        onPress={() => this._logInAsync()}>
-                        <Icon
-                            name={Platform.OS === 'ios' ? 'ios-rocket' : 'md-rocket'}
-                        />
-                        <Text>Créer mon compte</Text>
-                    </Button>
-                </Content>
-            </Container>
+                    </Content>
+                </Container>
+            </Root>
         )
     }
 }
