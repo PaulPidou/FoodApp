@@ -24,7 +24,7 @@ export default class SearchIngredientScreen extends React.Component {
 
     static navigationOptions = {
         header: null
-    };
+    }
 
     searchFilterFunction(text) {
         const filteredIngredients = this.ingredients.filter(item => {
@@ -87,6 +87,7 @@ export default class SearchIngredientScreen extends React.Component {
                     </Left>
                     <Input
                         placeholder={'Je recherche un ingrédient...'}
+                        returnKeyType = { "search" }
                         onChangeText={text => this.searchFilterFunction(text)}
                     />
                 </Header>

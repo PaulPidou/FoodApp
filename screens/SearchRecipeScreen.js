@@ -81,6 +81,7 @@ export default class SearchRecipeScreen extends React.Component {
                 <Input
                     autoFocus = {!this.state.inputText}
                     placeholder={'Je recherche des recettes...'}
+                    returnKeyType = { "search" }
                     defaultValue={this.state.inputText}
                     onChangeText={(text) => this.setState({inputText: text})}
                     onSubmitEditing={(event) => this.handleSearch(event.nativeEvent.text)}
