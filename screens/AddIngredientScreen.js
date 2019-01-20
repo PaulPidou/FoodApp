@@ -24,7 +24,7 @@ export default class ShoppingListScreen extends React.Component {
         this.setState({ chosenDate: newDate })
     }
 
-    _handlePress() {
+    handlePress() {
         console.log(this.state)
         const screen = this.props.navigation.state.params.origin === 'fridge' ? 'Fridge' : 'ShoppingList'
         this.props.navigation.navigate(screen)
@@ -97,7 +97,7 @@ export default class ShoppingListScreen extends React.Component {
                             block
                             light
                             style={{margin: 5}}
-                            onPress={() => this._handlePress()}
+                            onPress={() => this.handlePress()}
                         >
                             <Text>Ajouter l&apos;ingrédient</Text>
                         </Button>

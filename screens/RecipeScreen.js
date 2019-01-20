@@ -28,12 +28,27 @@ export default class RecipeScreen extends React.Component {
         )
     }
 
+    addIngredientsToCart() {
+        console.log("Add ingredients to cart:")
+        console.log(this.state.selectedRecipes)
+    }
+
+    deleteRecipe() {
+        console.log("Delete:")
+        console.log(this.state.selectedRecipes)
+    }
+
+    saveRecipe() {
+        console.log("Save:")
+        console.log(this.state.selectedRecipes)
+    }
+
     header() {
         const rightButton = this.props.navigation.state.params.origin === 'search' ?
             (
                 <Button
                     transparent
-                    onPress={() => console.log("Recipe delete")}>
+                    onPress={() => this.saveRecipe()}>
                     <Icon
                         style={GenericStyles.icon}
                         name={Platform.OS === 'ios' ? 'ios-save' : 'md-save'}
@@ -43,7 +58,7 @@ export default class RecipeScreen extends React.Component {
                 <Button
                     key={'cart'}
                     transparent
-                    onPress={() => console.log("Add ingredients to cart")}>
+                    onPress={() => this.addIngredientsToCart()}>
                     <Icon
                         style={GenericStyles.icon}
                         name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
@@ -58,7 +73,7 @@ export default class RecipeScreen extends React.Component {
                             'Confirmez vous la suppression ?',
                             [
                                 {text: 'Annuler', style: 'cancel'},
-                                {text: 'Oui', onPress: () => console.log('OK Pressed')}
+                                {text: 'Oui', onPress: () => this.deleteRecipe()}
                             ]
                         )}}>
                     <Icon
@@ -70,8 +85,7 @@ export default class RecipeScreen extends React.Component {
         return (
             <Header
                 style={GenericStyles.header}
-                hasTabs
-            >
+                hasTabs>
                 <Left style={GenericStyles.headerLeft}>
                     <Button
                         transparent
