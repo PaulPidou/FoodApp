@@ -30,17 +30,17 @@ export default class RecipeScreen extends React.Component {
 
     addIngredientsToCart() {
         console.log("Add ingredients to cart:")
-        console.log(this.state.selectedRecipes)
+        console.log(this.state.recipeId)
     }
 
     deleteRecipe() {
         console.log("Delete:")
-        console.log(this.state.selectedRecipes)
+        console.log(this.state.recipeId)
     }
 
     saveRecipe() {
         console.log("Save:")
-        console.log(this.state.selectedRecipes)
+        console.log(this.state.recipeId)
     }
 
     header() {
