@@ -11,7 +11,6 @@ import {getShoppingList} from "../api_calls/user"
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {
         super(props)
-        this.actionSheet = null
         this.state = {
             selected: false,
             selectedIngredients: [],
@@ -96,8 +95,20 @@ export default class ShoppingListScreen extends React.Component {
                 <Right>
                     <Button
                         transparent
-                        onPress={() => this.showActionSheet()}
-
+                        onPress={() =>
+                            ActionSheet.show(
+                                {
+                                    title: "Que voulez-vous faire ? (ne concerne que les aliments cochés)",
+                                    options: [
+                                        "Transférer les aliments dans le frigidaire",
+                                        "Supprimer les aliments de la liste de courses",
+                                        "Garder les aliments dans la liste de courses",
+                                        "Annuler"
+                                    ],
+                                    cancelButtonIndex: 3
+                                },
+                                (index) => this.handleActionSheetOptions(index)
+                            )}
                     >
                         <Icon
                             style={GenericStyles.icon}
@@ -115,21 +126,6 @@ export default class ShoppingListScreen extends React.Component {
                 </Right>
             </Header>
         )
-    }
-
-    showActionSheet() {
-        if ( this.actionSheet !== null ) {
-            this.actionSheet._root.showActionSheet({
-                title: "Que voulez-vous faire ? (ne concerne que les aliments cochés)",
-                options: [
-                    "Transférer les aliments dans le frigidaire",
-                    "Supprimer les aliments de la liste de courses",
-                    "Garder les aliments dans la liste de courses",
-                    "Annuler"
-                ],
-                cancelButtonIndex: 3
-            }, (index) => this.handleActionSheetOptions(index))
-        }
     }
 
     handleActionSheetOptions(index) {
@@ -233,10 +229,7 @@ export default class ShoppingListScreen extends React.Component {
         return (
             <Container>
                 {header}
-                <Content>
-                    {content}
-                    <ActionSheet ref={(c) => { this.actionSheet = c }} />
-                    </Content>
+                <Content>{content}</Content>
             </Container>
         )
     }

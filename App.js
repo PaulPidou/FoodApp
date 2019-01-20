@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Platform, StatusBar, StyleSheet, View } from 'react-native'
+import { Platform, StatusBar, StyleSheet } from 'react-native'
+import { Root } from 'native-base'
 import { AppLoading, Asset, Font, Icon } from 'expo'
 import AppNavigator from './navigation/AppNavigator'
 
@@ -20,10 +21,10 @@ export default class App extends React.Component {
       )
     } else {
       return (
-        <View style={styles.container}>
+        <Root style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           <AppNavigator />
-        </View>
+        </Root>
       )
     }
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 import {AsyncStorage, Platform, Keyboard} from 'react-native'
-import {Root, Container, Content, Header, Button, Icon, Text, Form, Item, Input, Left, Title, Body, Toast} from 'native-base'
+import {Container, Content, Header, Button, Icon, Text, Form, Item, Input, Left, Title, Body, Toast} from 'native-base'
 import GenericStyles from "../constants/Style"
 
 
@@ -103,68 +103,66 @@ export class SignUpScreen extends React.Component {
 
     render() {
         return (
-            <Root>
-                <Container>
-                    <Header style={GenericStyles.header}>
-                        <Left style={GenericStyles.headerLeft}>
-                            <Button
-                                transparent
-                                onPress={() => this.props.navigation.goBack()}>
-                                <Icon
-                                    style={GenericStyles.icon}
-                                    name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
-                                />
-                            </Button>
-                        </Left>
-                        <Body>
-                        <Title style={GenericStyles.headerTitle}>S&apos;enregistrer</Title>
-                        </Body>
-                    </Header>
-                    <Content>
-                        <Form>
-                            <Item>
-                                <Input
-                                    placeholder="Email"
-                                    keyboardType={"email-address"}
-                                    returnKeyType = { "next" }
-                                    onChangeText={(text) => this.setState({email: text})}
-                                    onSubmitEditing={() => { this.password._root.focus() }}
-                                    blurOnSubmit={false}
-                                />
-                            </Item>
-                            <Item>
-                                <Input
-                                    ref={input => { this.password = input }}
-                                    placeholder="Mot de passe"
-                                    secureTextEntry={true}
-                                    returnKeyType = { "next" }
-                                    onChangeText={(text) => this.setState({password: text})}
-                                    onSubmitEditing={() => { this.confirmPassword._root.focus() }}
-                                    blurOnSubmit={false}
-                                />
-                            </Item>
-                            <Item last>
-                                <Input
-                                    ref={input => { this.confirmPassword = input }}
-                                    placeholder="Confirmer le mot de passe"
-                                    secureTextEntry={true}
-                                    onChangeText={(text) => this.setState({confirmPassword: text})}
-                                    onSubmitEditing={() => this.handleSignUp()}
-                                />
-                            </Item>
-                        </Form>
+            <Container>
+                <Header style={GenericStyles.header}>
+                    <Left style={GenericStyles.headerLeft}>
                         <Button
-                            block
-                            style={GenericStyles.formBlockButton}
-                            onPress={() => this.handleSignUp()}>
+                            transparent
+                            onPress={() => this.props.navigation.goBack()}>
                             <Icon
-                                name={Platform.OS === 'ios' ? 'ios-rocket' : 'md-rocket'}
+                                style={GenericStyles.icon}
+                                name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
                             />
-                            <Text>Créer mon compte</Text>
                         </Button>
-                    </Content>
-                </Container>
-            </Root>
+                    </Left>
+                    <Body>
+                    <Title style={GenericStyles.headerTitle}>S&apos;enregistrer</Title>
+                    </Body>
+                </Header>
+                <Content>
+                    <Form>
+                        <Item>
+                            <Input
+                                placeholder="Email"
+                                keyboardType={"email-address"}
+                                returnKeyType = { "next" }
+                                onChangeText={(text) => this.setState({email: text})}
+                                onSubmitEditing={() => { this.password._root.focus() }}
+                                blurOnSubmit={false}
+                            />
+                        </Item>
+                        <Item>
+                            <Input
+                                ref={input => { this.password = input }}
+                                placeholder="Mot de passe"
+                                secureTextEntry={true}
+                                returnKeyType = { "next" }
+                                onChangeText={(text) => this.setState({password: text})}
+                                onSubmitEditing={() => { this.confirmPassword._root.focus() }}
+                                blurOnSubmit={false}
+                            />
+                        </Item>
+                        <Item last>
+                            <Input
+                                ref={input => { this.confirmPassword = input }}
+                                placeholder="Confirmer le mot de passe"
+                                secureTextEntry={true}
+                                onChangeText={(text) => this.setState({confirmPassword: text})}
+                                onSubmitEditing={() => this.handleSignUp()}
+                            />
+                        </Item>
+                    </Form>
+                    <Button
+                        block
+                        style={GenericStyles.formBlockButton}
+                        onPress={() => this.handleSignUp()}>
+                        <Icon
+                            name={Platform.OS === 'ios' ? 'ios-rocket' : 'md-rocket'}
+                        />
+                        <Text>Créer mon compte</Text>
+                    </Button>
+                </Content>
+            </Container>
         )
     }
 }
