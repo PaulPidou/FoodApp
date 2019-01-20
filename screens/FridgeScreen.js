@@ -18,6 +18,7 @@ export default class ShoppingListScreen extends React.Component {
         }
         this.emptySelected = this.emptySelected.bind(this)
         this.updateSelected = this.updateSelected.bind(this)
+        this.deleteSelectedIngredients = this.deleteSelectedIngredients.bind(this)
     }
 
     static navigationOptions = {
@@ -69,6 +70,11 @@ export default class ShoppingListScreen extends React.Component {
 
     updateSelected() {
         this.setState({selectedIngredients: this.state.ingredients.map(item => item._id)})
+    }
+
+    deleteSelectedIngredients() {
+        console.log("Delete: ")
+        console.log(this.state.selectedIngredients)
     }
 
     activateSelectedHeader = () => { this.setState({ selected: true }) }
@@ -129,6 +135,7 @@ export default class ShoppingListScreen extends React.Component {
                             origin={'fridge'}
                             emptySelected={this.emptySelected}
                             updateSelected={this.updateSelected}
+                            deleteSelectedIngredients={this.deleteSelectedIngredients}
                         />) :
                     <FoodListHeader
                         navigation={this.props.navigation}

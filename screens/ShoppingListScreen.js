@@ -20,6 +20,7 @@ export default class ShoppingListScreen extends React.Component {
         }
         this.emptySelected = this.emptySelected.bind(this)
         this.updateSelected = this.updateSelected.bind(this)
+        this.deleteSelectedIngredients = this.deleteSelectedIngredients.bind(this)
     }
 
     static navigationOptions = {
@@ -54,16 +55,6 @@ export default class ShoppingListScreen extends React.Component {
         }
     }
 
-    emptySelected() {
-        this.setState({selected: false, selectedIngredients: []})
-    }
-
-    updateSelected() {
-        this.setState({selectedIngredients: this.state.ingredients.map(item => item._id)})
-    }
-
-    startShopping = () => { this.setState({ shoppingMode: true }) }
-
     _updateStateArray(itemID, arrayName) {
         const isSelected = this.state[arrayName].includes(itemID)
         const newArray = isSelected
@@ -77,6 +68,21 @@ export default class ShoppingListScreen extends React.Component {
             this.setState({ [arrayName]: newArray })
         }
     }
+
+    emptySelected() {
+        this.setState({selected: false, selectedIngredients: []})
+    }
+
+    updateSelected() {
+        this.setState({selectedIngredients: this.state.ingredients.map(item => item._id)})
+    }
+
+    deleteSelectedIngredients() {
+        console.log("Delete: ")
+        console.log(this.state.selectedIngredients)
+    }
+
+    startShopping = () => { this.setState({ shoppingMode: true }) }
 
     shoppingHeader() {
         return (
@@ -205,6 +211,7 @@ export default class ShoppingListScreen extends React.Component {
                     origin={'shoppinglist'}
                     emptySelected={this.emptySelected}
                     updateSelected={this.updateSelected}
+                    deleteSelectedIngredients={this.deleteSelectedIngredients}
                 />)
         } else if(this.state.shoppingMode) {
             header = this.shoppingHeader()

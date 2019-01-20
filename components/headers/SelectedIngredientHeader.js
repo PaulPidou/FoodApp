@@ -59,7 +59,7 @@ export default class SelectedIngredientHeader extends React.Component {
                                 'Confirmez vous la suppression ?',
                                 [
                                     {text: 'Annuler', style: 'cancel'},
-                                    {text: 'Oui', onPress: () => console.log('OK Pressed')},
+                                    {text: 'Oui', onPress: () => this.props.deleteSelectedIngredients()},
                                 ]
                             )}}>
                         <Icon
@@ -76,5 +76,6 @@ export default class SelectedIngredientHeader extends React.Component {
 SelectedIngredientHeader.propTypes = {
     origin: PropTypes.string,
     emptySelected: PropTypes.func,
-    updateSelected: PropTypes.func
+    updateSelected: PropTypes.func,
+    deleteSelectedIngredients: PropTypes.func
 }
