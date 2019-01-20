@@ -4,7 +4,7 @@ import {Container,Left, Body, Right, Button, Icon, Header, Title} from 'native-b
 import GenericStyles from "../constants/Style"
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
-import {getRecipesSummary} from '../api_calls/user'
+import {getRecipesSummary} from '../utils/api/user'
 
 
 export default class HomeScreen extends React.Component {

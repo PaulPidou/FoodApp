@@ -4,7 +4,7 @@ import {Container, Left, Right, Button, Icon, Header} from 'native-base'
 
 import GenericStyles from '../constants/Style'
 import RecipeTabs from '../components/contents/RecipeTabs'
-import {getRecipeFromId} from '../api_calls/public'
+import {getRecipeFromId} from '../utils/api/public'
 
 export default class RecipeScreen extends React.Component {
     constructor(props) {

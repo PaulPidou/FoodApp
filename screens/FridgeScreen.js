@@ -6,7 +6,7 @@ import moment from 'moment'
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from "../components/headers/SelectedIngredientHeader"
-import {getFirdge} from "../api_calls/user"
+import {getFirdge} from "../utils/api/user"
 
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {
