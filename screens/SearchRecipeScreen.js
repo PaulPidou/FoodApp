@@ -20,14 +20,11 @@ export default class SearchRecipeScreen extends React.Component {
         this.emptySelected = this.emptySelected.bind(this)
         this.handlePress = this.handlePress.bind(this)
         this.handleLongPress = this.handleLongPress.bind(this)
+        this.saveSelectedRecipes = this.saveSelectedRecipes.bind(this)
     }
 
     static navigationOptions = {
         header: null
-    }
-
-    emptySelected() {
-        this.setState({selected: false, selectedRecipes: []})
     }
 
     handlePress(itemID) {
@@ -57,6 +54,15 @@ export default class SearchRecipeScreen extends React.Component {
             selected: newArray.length > 0,
             selectedRecipes: newArray
         })
+    }
+
+    emptySelected() {
+        this.setState({selected: false, selectedRecipes: []})
+    }
+
+    saveSelectedRecipes() {
+        console.log("Save:")
+        console.log(this.state.selectedRecipes)
     }
 
     async handleSearch(keywords) {
@@ -97,6 +103,7 @@ export default class SearchRecipeScreen extends React.Component {
                     <SelectedHeader
                         origin={'search'}
                         emptySelected={this.emptySelected}
+                        saveSelectedRecipes={this.saveSelectedRecipes}
                     /> : this.header()}
                 <RecipesList
                     origin={'search'}

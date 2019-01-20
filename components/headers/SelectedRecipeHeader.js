@@ -25,7 +25,7 @@ export default class SelectedRecipeHeader extends React.Component {
                         (<Right>
                             <Button
                                 transparent
-                                onPress={() => console.log("Add ingredients to cart")}>
+                                onPress={() => this.props.addIngredientsToCart()}>
                                 <Icon
                                     style={GenericStyles.icon}
                                     name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
@@ -39,7 +39,7 @@ export default class SelectedRecipeHeader extends React.Component {
                                         'Confirmez vous la suppression ?',
                                         [
                                             {text: 'Annuler', style: 'cancel'},
-                                            {text: 'Oui', onPress: () => console.log('OK Pressed')},
+                                            {text: 'Oui', onPress: () => this.props.deleteSelectedRecipes()},
                                         ]
                                     )}}
                             >
@@ -52,7 +52,7 @@ export default class SelectedRecipeHeader extends React.Component {
                         (<Right>
                             <Button
                                 transparent
-                            >
+                                onPress={() => this.props.saveSelectedRecipes()}>
                                 <Icon
                                     style={GenericStyles.icon}
                                     name={Platform.OS === 'ios' ? 'ios-save' : 'md-save'}
@@ -66,5 +66,9 @@ export default class SelectedRecipeHeader extends React.Component {
 }
 
 SelectedRecipeHeader.propTypes = {
-    emptySelected: PropTypes.func
+    origin: PropTypes.string,
+    emptySelected: PropTypes.func,
+    addIngredientsToCart: PropTypes.func,
+    deleteSelectedRecipes: PropTypes.func,
+    saveSelectedRecipes: PropTypes.func
 }

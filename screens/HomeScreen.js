@@ -18,6 +18,8 @@ export default class HomeScreen extends React.Component {
         this.emptySelected = this.emptySelected.bind(this)
         this.handlePress = this.handlePress.bind(this)
         this.handleLongPress = this.handleLongPress.bind(this)
+        this.addIngredientsToCart = this.addIngredientsToCart.bind(this)
+        this.deleteSelectedRecipes = this.deleteSelectedRecipes.bind(this)
     }
 
     static navigationOptions = {
@@ -31,10 +33,6 @@ export default class HomeScreen extends React.Component {
                 this.setState({recipes})
             }
         )
-    }
-
-    emptySelected() {
-        this.setState({selected: false, selectedRecipes: []})
     }
 
     handlePress(itemID) {
@@ -64,6 +62,20 @@ export default class HomeScreen extends React.Component {
             selected: newArray.length > 0,
             selectedRecipes: newArray
         })
+    }
+
+    emptySelected() {
+        this.setState({selected: false, selectedRecipes: []})
+    }
+
+    addIngredientsToCart() {
+        console.log("Add ingredients to cart:")
+        console.log(this.state.selectedRecipes)
+    }
+
+    deleteSelectedRecipes() {
+        console.log("Delete:")
+        console.log(this.state.selectedRecipes)
     }
 
     header() {
@@ -103,6 +115,8 @@ export default class HomeScreen extends React.Component {
                   <SelectedHeader
                       origin={'home'}
                       emptySelected={this.emptySelected}
+                      addIngredientsToCart={this.addIngredientsToCart}
+                      deleteSelectedRecipes={this.deleteSelectedRecipes}
                   /> : this.header()}
               <RecipesList
                   origin={'home'}
