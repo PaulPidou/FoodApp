@@ -4,7 +4,8 @@ import {Container, Left, Right, Button, Icon, Header} from 'native-base'
 
 import GenericStyles from '../constants/Style'
 import RecipeTabs from '../components/contents/RecipeTabs'
-import {getRecipeFromId} from '../utils/api/public'
+import { getRecipeFromId } from '../utils/api/public'
+import { saveRecipes, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../utils/api/user'
 
 export default class RecipeScreen extends React.Component {
     constructor(props) {
@@ -28,17 +29,20 @@ export default class RecipeScreen extends React.Component {
         )
     }
 
-    addIngredientsToCart() {
+    async addIngredientsToCart() {
+        await upsertItemsToShoppingListFromRecipes([this.state.recipeId])
         console.log("Add ingredients to cart:")
         console.log(this.state.recipeId)
     }
 
-    deleteRecipe() {
+    async deleteRecipe() {
+        await deleteSavedRecipes([this.state.recipeId])
         console.log("Delete:")
         console.log(this.state.recipeId)
     }
 
-    saveRecipe() {
+    async saveRecipe() {
+        await saveRecipes([this.state.recipeId])
         console.log("Save:")
         console.log(this.state.recipeId)
     }

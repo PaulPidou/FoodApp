@@ -47,6 +47,10 @@ export const upsertItemsToShoppingList = async function(items) {
 
 }
 
+export const upsertItemsToShoppingListFromRecipes = async function(recipeIDs) {
+
+}
+
 export const deleteItemsFromShoppingList = async function(itemIDs) {
 
 }

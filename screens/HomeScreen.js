@@ -4,7 +4,7 @@ import {Container,Left, Body, Right, Button, Icon, Header, Title} from 'native-b
 import GenericStyles from "../constants/Style"
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
-import { getSavedRecipesSummary } from '../utils/api/user'
+import { getSavedRecipesSummary, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../utils/api/user'
 
 
 export default class HomeScreen extends React.Component {
@@ -68,12 +68,14 @@ export default class HomeScreen extends React.Component {
         this.setState({selected: false, selectedRecipes: []})
     }
 
-    addIngredientsToCart() {
+    async addIngredientsToCart() {
+        await upsertItemsToShoppingListFromRecipes(this.state.selectedRecipes)
         console.log("Add ingredients to cart:")
         console.log(this.state.selectedRecipes)
     }
 
-    deleteSelectedRecipes() {
+    async deleteSelectedRecipes() {
+        await deleteSavedRecipes(this.state.selectedRecipes)
         console.log("Delete:")
         console.log(this.state.selectedRecipes)
     }

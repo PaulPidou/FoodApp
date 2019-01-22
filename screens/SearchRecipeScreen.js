@@ -6,6 +6,7 @@ import GenericStyles from '../constants/Style'
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
 import { getRecipesSummaryFromKeywords } from '../utils/api/public'
+import { saveRecipes } from '../utils/api/user'
 
 export default class SearchRecipeScreen extends React.Component {
     constructor(props) {
@@ -60,7 +61,8 @@ export default class SearchRecipeScreen extends React.Component {
         this.setState({selected: false, selectedRecipes: []})
     }
 
-    saveSelectedRecipes() {
+    async saveSelectedRecipes() {
+        await saveRecipes(this.state.selectedRecipes)
         console.log("Save:")
         console.log(this.state.selectedRecipes)
     }
