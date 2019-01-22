@@ -6,7 +6,7 @@ import moment from 'moment'
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from "../components/headers/SelectedIngredientHeader"
-import {getFridge} from "../utils/api/user"
+import { getFridge, transferItemsFromFridgeToShoppingList, deleteItemsFromFridge } from "../utils/api/user"
 
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {
@@ -74,7 +74,13 @@ export default class ShoppingListScreen extends React.Component {
         }))
     }
 
-    deleteSelectedIngredients() {
+    async transferItemsToShoppingList() {
+        await transferItemsFromFridgeToShoppingList(this.state.selectedIngredients)
+        console.log('Transfered')
+    }
+
+    async deleteSelectedIngredients() {
+        await deleteItemsFromFridge(this.state.selectedIngredients)
         console.log("Delete: ")
         console.log(this.state.selectedIngredients)
     }
@@ -137,6 +143,7 @@ export default class ShoppingListScreen extends React.Component {
                             origin={'fridge'}
                             emptySelected={this.emptySelected}
                             updateSelected={this.updateSelected}
+                            transferItemsToShoppingList={this.transferItemsToShoppingList}
                             deleteSelectedIngredients={this.deleteSelectedIngredients}
                         />) :
                     <FoodListHeader

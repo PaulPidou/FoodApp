@@ -32,20 +32,31 @@ export default class SelectedIngredientHeader extends React.Component {
                 <Right>
                     {
                         this.props.origin === 'shoppinglist' ? (
-                            <Button transparent>
+                            <Button
+                                transparent
+                                onPress={() => {
+                                    this.props.transferItemsToFridge()
+                                }}>
                                 <Icon
                                     style={GenericStyles.icon}
                                     name={Platform.OS === 'ios' ? 'ios-egg' : 'md-egg'}
                                 />
                             </Button>) : (
-                            <Button transparent>
+                            <Button
+                                transparent
+                                onPress={() => {
+                                    this.props.transferItemsToShoppingList()
+                                }}
+                            >
                                 <Icon
                                     style={GenericStyles.icon}
                                     name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
                                 />
                             </Button>)
                     }
-                    <Button transparent>
+                    <Button
+                        transparent
+                    >
                         <Icon
                             style={GenericStyles.icon}
                             name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
@@ -77,5 +88,7 @@ SelectedIngredientHeader.propTypes = {
     origin: PropTypes.string,
     emptySelected: PropTypes.func,
     updateSelected: PropTypes.func,
+    transferItemsToFridge: PropTypes.func,
+    transferItemsToShoppingList: PropTypes.func,
     deleteSelectedIngredients: PropTypes.func
 }

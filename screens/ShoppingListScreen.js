@@ -6,7 +6,7 @@ import {Avatar} from "react-native-elements"
 import GenericStyles from "../constants/Style"
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from '../components/headers/SelectedIngredientHeader'
-import {getShoppingList} from "../utils/api/user"
+import { getShoppingList, transferItemsFromShoppingListToFridge, deleteItemsFromShoppingList } from "../utils/api/user"
 
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {
@@ -20,6 +20,7 @@ export default class ShoppingListScreen extends React.Component {
         }
         this.emptySelected = this.emptySelected.bind(this)
         this.updateSelected = this.updateSelected.bind(this)
+        this.transferItemsToFridge = this.transferItemsToFridge.bind(this)
         this.deleteSelectedIngredients = this.deleteSelectedIngredients.bind(this)
     }
 
@@ -77,7 +78,13 @@ export default class ShoppingListScreen extends React.Component {
         this.setState({selectedIngredients: this.state.ingredients.map(item => item._id)})
     }
 
-    deleteSelectedIngredients() {
+    async transferItemsToFridge() {
+        await transferItemsFromShoppingListToFridge(this.state.selectedIngredients)
+        console.log('Transfered')
+    }
+
+    async deleteSelectedIngredients() {
+        await deleteItemsFromShoppingList(this.state.selectedIngredients)
         console.log("Delete: ")
         console.log(this.state.selectedIngredients)
     }
@@ -104,7 +111,7 @@ export default class ShoppingListScreen extends React.Component {
                         onPress={() =>
                             ActionSheet.show(
                                 {
-                                    title: "Que voulez-vous faire ? (ne concerne que les aliments cochés)",
+                                    title: "Que voulez-vous faire ?",
                                     options: [
                                         "Transférer les aliments dans le frigidaire",
                                         "Supprimer les aliments de la liste de courses",
@@ -134,12 +141,14 @@ export default class ShoppingListScreen extends React.Component {
         )
     }
 
-    handleActionSheetOptions(index) {
+    async handleActionSheetOptions(index) {
         switch(index) {
             case 0:
+                await transferItemsFromShoppingListToFridge(this.state.checkedIngredients)
                 console.log('Transfer')
                 break
             case 1:
+                await deleteItemsFromShoppingList(this.state.checkedIngredients)
                 console.log('Delete')
                 break
             case 2:
@@ -211,6 +220,7 @@ export default class ShoppingListScreen extends React.Component {
                     origin={'shoppinglist'}
                     emptySelected={this.emptySelected}
                     updateSelected={this.updateSelected}
+                    transferItemsToFridge={this.transferItemsToFridge}
                     deleteSelectedIngredients={this.deleteSelectedIngredients}
                 />)
         } else if(this.state.shoppingMode) {
