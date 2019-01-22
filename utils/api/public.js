@@ -1,6 +1,18 @@
 const api_ip = "192.168.43.163:3000"
 
-export const getRecipeFromId = async function(id) {
+export const getAllIngredients = async function() {
+    return [
+        'abricot',
+        'beurre',
+        'farine',
+        'salade',
+        'saumon',
+        'thon',
+        'tortilla'
+    ]
+}
+
+export const getRecipeFromId = async function(recipeID) {
     await new Promise(resolve => setTimeout(resolve, 1000))
     return {
         "_id": 123,
@@ -62,7 +74,7 @@ export const getRecipeFromId = async function(id) {
     }
 }
 
-export const getRecipesFromKeywords = async function(keywords) {
+export const getRecipesSummaryFromKeywords = async function(keywords) {
     /*return await fetch('http://' + api_ip + '/api/public/recipes/by/keywords',
         {
             method: 'POST',
@@ -92,4 +104,16 @@ export const getRecipesFromKeywords = async function(keywords) {
             totalTime: '80'
         }
     ]
+}
+
+export const getRecipesSummaryFromIngredients = async function(ingredientIDs) {
+
+}
+
+export const logInUser = async function(user, password) {
+
+}
+
+export const signUpUser = async function(user, password) {
+
 }

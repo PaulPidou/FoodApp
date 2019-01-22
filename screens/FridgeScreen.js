@@ -6,7 +6,7 @@ import moment from 'moment'
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from "../components/headers/SelectedIngredientHeader"
-import {getFirdge} from "../utils/api/user"
+import {getFridge} from "../utils/api/user"
 
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {
@@ -26,7 +26,7 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     componentDidMount() {
-        this._asyncRequest = getFirdge().then(
+        this._asyncRequest = getFridge().then(
             ingredients => {
                 this._asyncRequest = null
                 this.setState({ingredients})
@@ -69,7 +69,9 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     updateSelected() {
-        this.setState({selectedIngredients: this.state.ingredients.map(item => item._id)})
+        this.setState((state) => ({
+            selectedIngredients: state.ingredients.map(item => item._id)
+        }))
     }
 
     deleteSelectedIngredients() {

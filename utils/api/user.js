@@ -1,5 +1,5 @@
 
-export const getRecipesSummary = async function() {
+export const getSavedRecipesSummary = async function() {
     return [
         {
             _id: '123',
@@ -16,6 +16,14 @@ export const getRecipesSummary = async function() {
             totalTime: '80'
         }
     ]
+}
+
+export const saveRecipes = async function(recipeIDs) {
+
+}
+
+export const deleteSavedRecipes = async function(recipesIDs) {
+
 }
 
 export const getShoppingList = async function() {
@@ -35,7 +43,19 @@ export const getShoppingList = async function() {
     ]
 }
 
-export const getFirdge = async function() {
+export const upsertItemsToShoppingList = async function(items) {
+
+}
+
+export const deleteItemsFromShoppingList = async function(itemIDs) {
+
+}
+
+export const transferItemsFromShoppingListToFridge = async function(itemIDs) {
+
+}
+
+export const getFridge = async function() {
     return [
         {
             _id: 123,
@@ -52,4 +72,16 @@ export const getFirdge = async function() {
             unit: 'ml',
         }
     ]
+}
+
+export const upsertItemsToFridge = async function(items) {
+
+}
+
+export const deleteItemsFromFridge = async function(itemIDs) {
+
+}
+
+export const transferItemsFromFridgeToShoppingList = async function(itemIDs) {
+
 }

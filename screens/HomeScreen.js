@@ -4,7 +4,7 @@ import {Container,Left, Body, Right, Button, Icon, Header, Title} from 'native-b
 import GenericStyles from "../constants/Style"
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
-import {getRecipesSummary} from '../utils/api/user'
+import { getSavedRecipesSummary } from '../utils/api/user'
 
 
 export default class HomeScreen extends React.Component {
@@ -27,10 +27,10 @@ export default class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
-        this._asyncRequest = getRecipesSummary().then(
+        this._asyncRequest = getSavedRecipesSummary().then(
             recipes => {
                 this._asyncRequest = null
-                this.setState({recipes})
+                this.setState({ recipes })
             }
         )
     }
