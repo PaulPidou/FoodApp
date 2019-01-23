@@ -232,6 +232,7 @@ export default class ShoppingListScreen extends React.Component {
                     name={'Liste de courses'}
                     origin={'shoppinglist'}
                     startShopping={this.startShopping}
+                    ingredients={this.state.ingredients}
                 />
             )
         }

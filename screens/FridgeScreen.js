@@ -150,7 +150,7 @@ export default class ShoppingListScreen extends React.Component {
                         navigation={this.props.navigation}
                         name={'Frigidaire'}
                         origin={'fridge'}
-                        activateSelectedHeader={this.activateSelectedHeader}
+                        ingredients={this.state.ingredients}
                     />
                 }
                 <Content>{content}</Content>

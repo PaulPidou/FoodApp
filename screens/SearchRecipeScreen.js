@@ -1,6 +1,6 @@
 import React from 'react'
 import {Platform} from 'react-native'
-import {Container, Header, Left, Button, Icon, Input} from 'native-base'
+import {Container, Header, Left, Button, Icon, Input, Body} from 'native-base'
 
 import GenericStyles from '../constants/Style'
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
@@ -16,7 +16,8 @@ export default class SearchRecipeScreen extends React.Component {
             selected: false,
             selectedRecipes: [],
             recipes: [],
-            firstSearch: true
+            firstSearch: true,
+            ingredients: props.navigation.getParam('ingredients', null),
         }
         this.emptySelected = this.emptySelected.bind(this)
         this.handlePress = this.handlePress.bind(this)
@@ -86,14 +87,19 @@ export default class SearchRecipeScreen extends React.Component {
                         />
                     </Button>
                 </Left>
-                <Input
-                    autoFocus = {!this.state.inputText}
-                    placeholder={'Je recherche des recettes...'}
-                    returnKeyType = { "search" }
-                    defaultValue={this.state.inputText}
-                    onChangeText={(text) => this.setState({inputText: text})}
-                    onSubmitEditing={(event) => this.handleSearch(event.nativeEvent.text)}
-                />
+                <Body>
+                {
+                    !this.state.ingredients && (
+                        <Input
+                            autoFocus = {!this.state.inputText}
+                            placeholder={'Je recherche des recettes...'}
+                            returnKeyType = { "search" }
+                            defaultValue={this.state.inputText}
+                            onChangeText={(text) => this.setState({inputText: text})}
+                            onSubmitEditing={(event) => this.handleSearch(event.nativeEvent.text)}
+                        />)
+                }
+                </Body>
             </Header>
         )
     }

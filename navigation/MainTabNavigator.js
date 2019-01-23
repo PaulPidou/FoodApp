@@ -37,16 +37,12 @@ HomeStack.navigationOptions = {
   tabBarIcon: RecipeTabBarIcon
 }
 
-HomeStack.propTypes = {
-    focused: PropTypes.bool,
-    origin: PropTypes.string,
-    startShopping: PropTypes.func
-}
-
 const ShoppingListStack = createStackNavigator({
     ShoppingList: ShoppingListScreen,
     SearchIngredient: SearchIngredientScreen,
-    AddIngredient: AddIngredientScreen
+    AddIngredient: AddIngredientScreen,
+    SearchRecipe: SearchRecipeScreen,
+    RecipeDetails: RecipeScreen
 })
 
 function ShoppingListTabBarIcon({ focused }) {
@@ -69,7 +65,9 @@ ShoppingListStack.navigationOptions = {
 const FridgeStack = createStackNavigator({
     Fridge: FridgeScreen,
     SearchIngredient: SearchIngredientScreen,
-    AddIngredient: AddIngredientScreen
+    AddIngredient: AddIngredientScreen,
+    SearchRecipe: SearchRecipeScreen,
+    RecipeDetails: RecipeScreen
 })
 
 function FridgeTabBarIcon({ focused }) {

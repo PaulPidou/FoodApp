@@ -40,7 +40,11 @@ export default class FoodListHeader extends React.Component {
                             </Button>)
                     }
                     <Button
-                        transparent>
+                        transparent
+                        onPress={() => {
+                            this.props.navigation.navigate('SearchRecipe', {ingredients: this.props.ingredients})
+                        }}
+                    >
                         <Icon
                             style={GenericStyles.icon}
                             name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
@@ -63,5 +67,6 @@ export default class FoodListHeader extends React.Component {
 FoodListHeader.propTypes = {
     name: PropTypes.string,
     origin: PropTypes.string,
-    startShopping: PropTypes.func
+    startShopping: PropTypes.func,
+    ingredients: PropTypes.array
 }
