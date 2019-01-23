@@ -85,15 +85,6 @@ export default class SearchRecipeScreen extends React.Component {
         this.setState({ recipes, firstSearch: false })
     }
 
-    handleSearchByIngredients() {
-        this.setState({ recipes: null })
-        this._asyncRequest = getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item._id)).then(
-            recipes => {
-                this._asyncRequest = null
-                this.setState({ recipes, firstSearch: false })
-            })
-    }
-
     header() {
         return(
             <Header searchbar style={GenericStyles.header} >
