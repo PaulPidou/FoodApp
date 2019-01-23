@@ -5,8 +5,8 @@ import {Container, Header, Left, Button, Icon, Input, Body} from 'native-base'
 import GenericStyles from '../constants/Style'
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
-import { getRecipesSummaryFromKeywords } from '../utils/api/public'
-import { saveRecipes } from '../utils/api/user'
+import { getRecipesSummaryFromKeywords, getRecipesSummaryFromIngredients } from '../utils/api/public'
+import {getSavedRecipesSummary, saveRecipes} from '../utils/api/user'
 
 export default class SearchRecipeScreen extends React.Component {
     constructor(props) {
@@ -27,6 +27,17 @@ export default class SearchRecipeScreen extends React.Component {
 
     static navigationOptions = {
         header: null
+    }
+
+    componentDidMount() {
+        if (this.state.ingredients) {
+            this.setState({ recipes: null })
+            this._asyncRequest = getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item._id)).then(
+                recipes => {
+                    this._asyncRequest = null
+                    this.setState({ recipes, firstSearch: false })
+                })
+        }
     }
 
     handlePress(itemID) {
@@ -69,9 +80,18 @@ export default class SearchRecipeScreen extends React.Component {
     }
 
     async handleSearch(keywords) {
-        this.setState({recipes: null})
+        this.setState({ recipes: null })
         const recipes = await getRecipesSummaryFromKeywords(keywords)
-        this.setState({recipes, firstSearch: false})
+        this.setState({ recipes, firstSearch: false })
+    }
+
+    handleSearchByIngredients() {
+        this.setState({ recipes: null })
+        this._asyncRequest = getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item._id)).then(
+            recipes => {
+                this._asyncRequest = null
+                this.setState({ recipes, firstSearch: false })
+            })
     }
 
     header() {

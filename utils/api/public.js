@@ -107,7 +107,23 @@ export const getRecipesSummaryFromKeywords = async function(keywords) {
 }
 
 export const getRecipesSummaryFromIngredients = async function(ingredientIDs) {
-
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    return [
+        {
+            _id : '123',
+            title: 'Super recipe 1: found thanks to ingredients',
+            budget: 'bon marché',
+            difficulty: 'facile',
+            totalTime: '50'
+        },
+        {
+            _id : '424',
+            title: 'Super recipe 2',
+            budget: 'assez cher',
+            difficulty: 'difficile',
+            totalTime: '80'
+        }
+    ]
 }
 
 export const logInUser = async function(user, password) {

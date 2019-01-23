@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14ea75e8-cb80-4a67-b5af-ce7f8d11d26a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/components/headers/FoodListHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/headers/FoodListHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/MainTabNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/MainTabNavigator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/FridgeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/FridgeScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/SearchRecipeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/SearchRecipeScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/ShoppingListScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ShoppingListScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/api/public.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/api/public.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -30,7 +28,7 @@
           <entry key="babelrc" value="3" />
           <entry key="gitignore" value="1" />
           <entry key="jpg" value="1" />
-          <entry key="js" value="186" />
+          <entry key="js" value="190" />
           <entry key="json" value="9" />
           <entry key="png" value="4" />
         </counts>
@@ -39,7 +37,7 @@
         <counts>
           <entry key="Image" value="5" />
           <entry key="JSON" value="12" />
-          <entry key="JavaScript" value="186" />
+          <entry key="JavaScript" value="190" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -47,14 +45,14 @@
         <counts>
           <entry key="babelrc" value="18" />
           <entry key="gitignore" value="11" />
-          <entry key="js" value="19477" />
+          <entry key="js" value="19635" />
           <entry key="json" value="45" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="63" />
-          <entry key="JavaScript" value="19477" />
+          <entry key="JavaScript" value="19635" />
           <entry key="PLAIN_TEXT" value="11" />
         </counts>
       </usages-collector>
@@ -68,22 +66,10 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/navigation/MainTabNavigator.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="68" column="16" selection-start-line="68" selection-start-column="4" selection-end-line="68" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/screens/ShoppingListScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="234" column="20" lean-forward="true" selection-start-line="234" selection-start-column="20" selection-end-line="234" selection-end-column="56" />
+            <state relative-caret-position="-2756">
+              <caret line="34" column="44" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -103,11 +89,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/components/headers/FoodListHeader.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="44" column="87" selection-start-line="44" selection-start-column="76" selection-end-line="44" selection-end-column="87" />
+            <state relative-caret-position="259">
+              <caret line="43" column="40" lean-forward="true" selection-start-line="43" selection-start-column="40" selection-end-line="43" selection-end-column="40" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/screens/SearchRecipeScreen.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="267">
+              <caret line="39" column="9" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -116,10 +114,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/screens/SearchRecipeScreen.js">
+        <entry file="file://$PROJECT_DIR$/screens/HomeScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="93" selection-start-line="93" selection-end-line="98" selection-end-column="98" />
+            <state relative-caret-position="338">
+              <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="35" selection-end-column="5" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/api/public.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="113" column="63" selection-start-line="113" selection-start-column="63" selection-end-line="113" selection-end-column="63" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/components/contents/RecipesList.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="229">
+              <caret line="55" column="17" lean-forward="true" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="17" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -218,16 +237,16 @@
         <option value="$PROJECT_DIR$/utils/utils.js" />
         <option value="$PROJECT_DIR$/components/headers/SelectedRecipeHeader.js" />
         <option value="$PROJECT_DIR$/screens/AddIngredientScreen.js" />
-        <option value="$PROJECT_DIR$/utils/api/public.js" />
         <option value="$PROJECT_DIR$/utils/api/user.js" />
         <option value="$PROJECT_DIR$/screens/HomeScreen.js" />
         <option value="$PROJECT_DIR$/screens/RecipeScreen.js" />
         <option value="$PROJECT_DIR$/components/headers/SelectedIngredientHeader.js" />
         <option value="$PROJECT_DIR$/navigation/MainTabNavigator.js" />
-        <option value="$PROJECT_DIR$/screens/ShoppingListScreen.js" />
         <option value="$PROJECT_DIR$/components/headers/FoodListHeader.js" />
-        <option value="$PROJECT_DIR$/screens/SearchRecipeScreen.js" />
         <option value="$PROJECT_DIR$/screens/FridgeScreen.js" />
+        <option value="$PROJECT_DIR$/screens/ShoppingListScreen.js" />
+        <option value="$PROJECT_DIR$/utils/api/public.js" />
+        <option value="$PROJECT_DIR$/screens/SearchRecipeScreen.js" />
       </list>
     </option>
   </component>
@@ -275,6 +294,12 @@
               <item name="FoodApp" type="b2602c69:ProjectViewProjectNode" />
               <item name="FoodApp" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FoodApp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FoodApp" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="contents" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="FoodApp" type="b2602c69:ProjectViewProjectNode" />
@@ -375,12 +400,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1545416159580</updated>
-      <workItem from="1545416166828" duration="146170000" />
+      <workItem from="1545416166828" duration="147347000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="146170000" />
+    <option name="totallyTimeSpent" value="147347000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1439" height="798" extended-state="6" />
@@ -388,7 +413,7 @@
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="npm" order="1" sideWeight="0.29113925" side_tool="true" weight="0.1819464" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.70886075" visible="true" weight="0.1819464" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.70886075" visible="true" weight="0.1819464" />
       <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" sideWeight="0.4992948" weight="0.3286119" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50070524" side_tool="true" weight="0.3286119" />
@@ -396,7 +421,7 @@
       <window_info anchor="bottom" id="Docker" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.3286119" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.20254958" />
+      <window_info anchor="bottom" id="Run" order="6" visible="true" weight="0.20254958" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -551,16 +576,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/contents/RecipesList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="61" column="26" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/constants/Style.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="471">
@@ -662,40 +677,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/api/public.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="108" column="45" selection-start-line="108" selection-start-column="13" selection-end-line="108" selection-end-column="45" />
-          <folding>
-            <element signature="e#88#2212#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/api/user.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1020">
           <caret line="68" column="41" lean-forward="true" selection-start-line="68" selection-start-column="41" selection-end-line="68" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screens/HomeScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="41" column="12" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="95" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/navigation/MainTabNavigator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="68" column="16" selection-start-line="68" selection-start-column="4" selection-end-line="68" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -729,20 +714,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/screens/SearchRecipeScreen.js">
+    <entry file="file://$PROJECT_DIR$/navigation/MainTabNavigator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="93" selection-start-line="93" selection-end-line="98" selection-end-column="98" />
+        <state relative-caret-position="344">
+          <caret line="68" column="16" selection-start-line="68" selection-start-column="4" selection-end-line="68" selection-end-column="16" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/components/contents/RecipesList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="55" column="17" lean-forward="true" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/api/public.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="113" column="63" selection-start-line="113" selection-start-column="63" selection-end-line="113" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/screens/ShoppingListScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="234" column="20" lean-forward="true" selection-start-line="234" selection-start-column="20" selection-end-line="234" selection-end-column="56" />
+        <state relative-caret-position="-2756">
+          <caret line="34" column="44" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/headers/FoodListHeader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="43" column="40" lean-forward="true" selection-start-line="43" selection-start-column="40" selection-end-line="43" selection-end-column="40" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
@@ -759,10 +771,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/headers/FoodListHeader.js">
+    <entry file="file://$PROJECT_DIR$/screens/HomeScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="44" column="87" selection-start-line="44" selection-start-column="76" selection-end-line="44" selection-end-column="87" />
+        <state relative-caret-position="338">
+          <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="35" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/screens/SearchRecipeScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="39" column="9" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>

@@ -32,7 +32,7 @@ export default class ShoppingListScreen extends React.Component {
         this._asyncRequest = getShoppingList().then(
             ingredients => {
                 this._asyncRequest = null
-                this.setState({ingredients})
+                this.setState({ ingredients })
             })
     }
 
