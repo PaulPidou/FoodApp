@@ -1,6 +1,6 @@
 import React from 'react'
 import {ScrollView, Text} from 'react-native'
-import {Body, Container, Content, Left, List, ListItem, Right, Spinner} from 'native-base'
+import {Body, Container, Content, Left, List, ListItem, Right, Spinner, Toast} from 'native-base'
 import {Avatar} from "react-native-elements"
 import moment from 'moment'
 
@@ -14,11 +14,13 @@ export default class ShoppingListScreen extends React.Component {
         this.state = {
             selected: false,
             selectedIngredients: [],
-            ingredients: null
+            ingredients: null,
+            requestTransfer: false
         }
         this.emptySelected = this.emptySelected.bind(this)
         this.updateSelected = this.updateSelected.bind(this)
         this.deleteSelectedIngredients = this.deleteSelectedIngredients.bind(this)
+        this.transferItemsToShoppingList = this.transferItemsToShoppingList.bind(this)
     }
 
     static navigationOptions = {
@@ -75,8 +77,14 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     async transferItemsToShoppingList() {
-        await transferItemsFromFridgeToShoppingList(this.state.selectedIngredients)
-        console.log('Transfered')
+        this.setState({ requestTransfer: true })
+        const res = await transferItemsFromFridgeToShoppingList(this.state.selectedIngredients)
+        Toast.show({
+            text: res ? 'Ingrédient(s) transféré(s)' : 'Un problème est survenu !',
+            textStyle: { textAlign: 'center' },
+            style: { marginBottom: 50 }
+        })
+        this.setState({ requestTransfer: false })
     }
 
     async deleteSelectedIngredients() {
@@ -84,8 +92,6 @@ export default class ShoppingListScreen extends React.Component {
         console.log("Delete: ")
         console.log(this.state.selectedIngredients)
     }
-
-    activateSelectedHeader = () => { this.setState({ selected: true }) }
 
     renderList() {
         return this.state.ingredients.map((item) => {
@@ -140,6 +146,7 @@ export default class ShoppingListScreen extends React.Component {
             <Container>
                 {this.state.selected ? (
                         <SelectedHeader
+                            requestTransfer={this.state.requestTransfer}
                             origin={'fridge'}
                             emptySelected={this.emptySelected}
                             updateSelected={this.updateSelected}

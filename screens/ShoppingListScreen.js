@@ -1,6 +1,6 @@
 import React from 'react'
 import {Platform, ScrollView, Text} from 'react-native'
-import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet} from 'native-base'
+import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet, Toast} from 'native-base'
 import {Avatar} from "react-native-elements"
 
 import GenericStyles from "../constants/Style"
@@ -16,7 +16,8 @@ export default class ShoppingListScreen extends React.Component {
             selectedIngredients: [],
             shoppingMode: false,
             checkedIngredients: [],
-            ingredients: null
+            ingredients: null,
+            requestTransfer: false
         }
         this.emptySelected = this.emptySelected.bind(this)
         this.updateSelected = this.updateSelected.bind(this)
@@ -79,8 +80,14 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     async transferItemsToFridge() {
-        await transferItemsFromShoppingListToFridge(this.state.selectedIngredients)
-        console.log('Transfered')
+        this.setState({ requestTransfer: true })
+        const res = await transferItemsFromShoppingListToFridge(this.state.selectedIngredients)
+        Toast.show({
+            text: res ? 'Ingrédient(s) transféré(s)' : 'Un problème est survenu !',
+            textStyle: { textAlign: 'center' },
+            style: { marginBottom: 50 }
+        })
+        this.setState({ requestTransfer: false })
     }
 
     async deleteSelectedIngredients() {
@@ -217,6 +224,7 @@ export default class ShoppingListScreen extends React.Component {
         if(this.state.selected) {
             header = (
                 <SelectedHeader
+                    requestTransfer={this.state.requestTransfer}
                     origin={'shoppinglist'}
                     emptySelected={this.emptySelected}
                     updateSelected={this.updateSelected}

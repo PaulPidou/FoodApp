@@ -1,8 +1,8 @@
 import React from "react"
 import PropTypes from 'prop-types'
-import {Left, Right, Header, Button, Icon} from "native-base"
+import {Left, Right, Header, Button, Icon, Spinner} from "native-base"
 
-import {Alert, Platform} from "react-native"
+import {Alert, Platform, ActivityIndicator} from "react-native"
 import GenericStyles from "../../constants/Style"
 
 export default class SelectedIngredientHeader extends React.Component {
@@ -31,6 +31,11 @@ export default class SelectedIngredientHeader extends React.Component {
                 </Left>
                 <Right>
                     {
+                        this.props.requestTransfer ? (
+                            <Button transparent>
+                            <ActivityIndicator size="small" color='#007aff' />
+                            </Button>
+                        ) : (
                         this.props.origin === 'shoppinglist' ? (
                             <Button
                                 transparent
@@ -52,7 +57,7 @@ export default class SelectedIngredientHeader extends React.Component {
                                     style={GenericStyles.icon}
                                     name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
                                 />
-                            </Button>)
+                            </Button>))
                     }
                     <Button
                         transparent
@@ -85,6 +90,7 @@ export default class SelectedIngredientHeader extends React.Component {
 }
 
 SelectedIngredientHeader.propTypes = {
+    requestTransfer: PropTypes.bool,
     origin: PropTypes.string,
     emptySelected: PropTypes.func,
     updateSelected: PropTypes.func,
