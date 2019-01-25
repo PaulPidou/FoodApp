@@ -82,7 +82,7 @@ export default class ShoppingListScreen extends React.Component {
         Toast.show({
             text: res ? 'Ingrédient(s) transféré(s)' : 'Un problème est survenu !',
             textStyle: { textAlign: 'center' },
-            style: { marginBottom: 50 }
+            buttonText: 'Ok'
         })
         this.setState({ requestTransfer: false })
     }

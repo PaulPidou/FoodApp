@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import {Left, Right, Header, Button, Icon} from "native-base"
 
-import {Alert, Platform} from "react-native"
+import {ActivityIndicator, Alert, Platform} from "react-native"
 import GenericStyles from "../../constants/Style"
 
 export default class SelectedRecipeHeader extends React.Component {
@@ -23,31 +23,46 @@ export default class SelectedRecipeHeader extends React.Component {
                 {
                     this.props.origin === 'home' ?
                         (<Right>
-                            <Button
-                                transparent
-                                onPress={() => this.props.addIngredientsToCart()}>
-                                <Icon
-                                    style={GenericStyles.icon}
-                                    name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
-                                />
-                            </Button>
-                            <Button
-                                transparent
-                                onPress={() => {
-                                    Alert.alert(
-                                        'Confirmation',
-                                        'Confirmez vous la suppression ?',
-                                        [
-                                            {text: 'Annuler', style: 'cancel'},
-                                            {text: 'Oui', onPress: () => this.props.deleteSelectedRecipes()},
-                                        ]
-                                    )}}
-                            >
-                                <Icon
-                                    style={GenericStyles.icon}
-                                    name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-                                />
-                            </Button>
+                            {
+                                this.props.requestAddToCart ? (
+                                    <Button transparent>
+                                        <ActivityIndicator size="small" color='#007aff'/>
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        transparent
+                                        onPress={() => this.props.addIngredientsToCart()}>
+                                        <Icon
+                                            style={GenericStyles.icon}
+                                            name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
+                                        />
+                                    </Button>)
+                            }
+                            {
+                                this.props.requestDeleteRecipe ? (
+                                        <Button transparent>
+                                            <ActivityIndicator size="small" color='#007aff'/>
+                                        </Button>
+                                    ) :
+                                    (<Button
+                                        transparent
+                                        onPress={() => {
+                                            Alert.alert(
+                                                'Confirmation',
+                                                'Confirmez vous la suppression ?',
+                                                [
+                                                    {text: 'Annuler', style: 'cancel'},
+                                                    {text: 'Oui', onPress: () => this.props.deleteSelectedRecipes()},
+                                                ]
+                                            )
+                                        }}
+                                    >
+                                        <Icon
+                                            style={GenericStyles.icon}
+                                            name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
+                                        />
+                                    </Button>)
+                            }
                         </Right>) :
                         (<Right>
                             <Button
@@ -66,6 +81,8 @@ export default class SelectedRecipeHeader extends React.Component {
 }
 
 SelectedRecipeHeader.propTypes = {
+    requestAddToCart: PropTypes.bool,
+    requestDeleteRecipe: PropTypes.bool,
     origin: PropTypes.string,
     emptySelected: PropTypes.func,
     addIngredientsToCart: PropTypes.func,

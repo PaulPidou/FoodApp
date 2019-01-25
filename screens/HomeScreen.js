@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container,Left, Body, Right, Button, Icon, Header, Title} from 'native-base'
+import {Container, Left, Body, Right, Button, Icon, Header, Title, Toast} from 'native-base'
 
 import GenericStyles from "../constants/Style"
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
@@ -13,7 +13,9 @@ export default class HomeScreen extends React.Component {
         this.state = {
             selected: false,
             selectedRecipes: [],
-            recipes: null
+            recipes: null,
+            requestAddToCart: false,
+            requestDeleteRecipe: false
         }
         this.emptySelected = this.emptySelected.bind(this)
         this.handlePress = this.handlePress.bind(this)
@@ -69,15 +71,25 @@ export default class HomeScreen extends React.Component {
     }
 
     async addIngredientsToCart() {
-        await upsertItemsToShoppingListFromRecipes(this.state.selectedRecipes)
-        console.log("Add ingredients to cart:")
-        console.log(this.state.selectedRecipes)
+        this.setState({ requestAddToCart: true })
+        const res = await upsertItemsToShoppingListFromRecipes(this.state.selectedRecipes)
+        Toast.show({
+            text: res ? 'Ingrédients ajoutés à la liste de course !' : 'Un problème est survenu !',
+            textStyle: { textAlign: 'center' },
+            buttonText: 'Ok'
+        })
+        this.setState({ requestAddToCart: false })
     }
 
     async deleteSelectedRecipes() {
-        await deleteSavedRecipes(this.state.selectedRecipes)
-        console.log("Delete:")
-        console.log(this.state.selectedRecipes)
+        this.setState({ requestDeleteRecipe: true })
+        const res = await deleteSavedRecipes(this.state.selectedRecipes)
+        Toast.show({
+            text: res ? 'Recette supprimée !' : 'Un problème est survenu !',
+            textStyle: { textAlign: 'center' },
+            buttonText: 'Ok'
+        })
+        this.setState({ requestDeleteRecipe: false })
     }
 
     header() {
@@ -115,6 +127,8 @@ export default class HomeScreen extends React.Component {
           <Container>
               {this.state.selected ?
                   <SelectedHeader
+                      requestAddToCart={this.state.requestAddToCart}
+                      requestDeleteRecipe={this.state.requestDeleteRecipe}
                       origin={'home'}
                       emptySelected={this.emptySelected}
                       addIngredientsToCart={this.addIngredientsToCart}

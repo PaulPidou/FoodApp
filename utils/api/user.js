@@ -23,7 +23,8 @@ export const saveRecipes = async function(recipeIDs) {
 }
 
 export const deleteSavedRecipes = async function(recipesIDs) {
-
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    return true
 }
 
 export const getShoppingList = async function() {
@@ -48,7 +49,8 @@ export const upsertItemsToShoppingList = async function(items) {
 }
 
 export const upsertItemsToShoppingListFromRecipes = async function(recipeIDs) {
-
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    return true
 }
 
 export const deleteItemsFromShoppingList = async function(itemIDs) {
