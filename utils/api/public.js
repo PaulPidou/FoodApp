@@ -88,6 +88,7 @@ export const getRecipesSummaryFromKeywords = async function(keywords) {
         });
         */
     await new Promise(resolve => setTimeout(resolve, 1000))
+    return []
     return [
         {
             _id : '123',

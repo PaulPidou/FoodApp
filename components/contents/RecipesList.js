@@ -1,8 +1,8 @@
 import React from "react"
-import PropTypes from 'prop-types'
-import {Left, Right, Body, Content, ListItem, List, Spinner} from "native-base"
-
 import {ScrollView, Text} from "react-native"
+import PropTypes from 'prop-types'
+
+import {Left, Right, Body, Content, ListItem, List, Spinner} from "native-base"
 import {Avatar} from "react-native-elements"
 
 export default class RecipesList extends React.Component {
@@ -49,7 +49,9 @@ export default class RecipesList extends React.Component {
             content = (<Spinner color='#007aff' />)
         } else if (this.props.recipes.length === 0) {
             content = (
-                <Text>{
+                <Text
+                    style={{margin: 10, textAlign: 'center'}}
+                >{
                     this.props.origin === 'home' ?
                         'Votre liste de recettes est vide, commencez dès maintenant à rechercher et sauvegarder des recettes !' :
                         (this.props.firstSearch ? '': 'Aucun résultat, effectuez une nouvelle recherche !')

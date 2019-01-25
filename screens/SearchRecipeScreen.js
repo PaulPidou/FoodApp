@@ -6,7 +6,7 @@ import GenericStyles from '../constants/Style'
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
 import { getRecipesSummaryFromKeywords, getRecipesSummaryFromIngredients } from '../utils/api/public'
-import {getSavedRecipesSummary, saveRecipes} from '../utils/api/user'
+import { saveRecipes } from '../utils/api/user'
 
 export default class SearchRecipeScreen extends React.Component {
     constructor(props) {
