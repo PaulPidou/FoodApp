@@ -61,6 +61,9 @@ export default class SelectedIngredientHeader extends React.Component {
                     }
                     <Button
                         transparent
+                        onPress={() => {
+                            this.props.navigation.navigate('SearchRecipe', {ingredients: this.props.selectedIngredients})
+                        }}
                     >
                         <Icon
                             style={GenericStyles.icon}
@@ -105,5 +108,6 @@ SelectedIngredientHeader.propTypes = {
     updateSelected: PropTypes.func,
     transferItemsToFridge: PropTypes.func,
     transferItemsToShoppingList: PropTypes.func,
-    deleteSelectedIngredients: PropTypes.func
+    deleteSelectedIngredients: PropTypes.func,
+    selectedIngredients: PropTypes.array
 }

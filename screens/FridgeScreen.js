@@ -152,6 +152,7 @@ export default class ShoppingListScreen extends React.Component {
             <Container>
                 {this.state.selected ? (
                         <SelectedHeader
+                            navigation={this.props.navigation}
                             requestTransfer={this.state.requestTransfer}
                             requestDelete={this.state.requestDelete}
                             origin={'fridge'}
@@ -159,6 +160,7 @@ export default class ShoppingListScreen extends React.Component {
                             updateSelected={this.updateSelected}
                             transferItemsToShoppingList={this.transferItemsToShoppingList}
                             deleteSelectedIngredients={this.deleteSelectedIngredients}
+                            selectedIngredients={this.state.selectedIngredients}
                         />) :
                     <FoodListHeader
                         navigation={this.props.navigation}

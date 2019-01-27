@@ -230,6 +230,7 @@ export default class ShoppingListScreen extends React.Component {
         if(this.state.selected) {
             header = (
                 <SelectedHeader
+                    navigation={this.props.navigation}
                     requestTransfer={this.state.requestTransfer}
                     requestDelete={this.state.requestDelete}
                     origin={'shoppinglist'}
@@ -237,6 +238,7 @@ export default class ShoppingListScreen extends React.Component {
                     updateSelected={this.updateSelected}
                     transferItemsToFridge={this.transferItemsToFridge}
                     deleteSelectedIngredients={this.deleteSelectedIngredients}
+                    selectedIngredients={this.state.selectedIngredients}
                 />)
         } else if(this.state.shoppingMode) {
             header = this.shoppingHeader()
