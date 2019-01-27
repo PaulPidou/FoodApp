@@ -54,7 +54,8 @@ export const upsertItemsToShoppingListFromRecipes = async function(recipeIDs) {
 }
 
 export const deleteItemsFromShoppingList = async function(itemIDs) {
-
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    return true
 }
 
 export const transferItemsFromShoppingListToFridge = async function(itemIDs) {
@@ -86,7 +87,8 @@ export const upsertItemsToFridge = async function(items) {
 }
 
 export const deleteItemsFromFridge = async function(itemIDs) {
-
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    return true
 }
 
 export const transferItemsFromFridgeToShoppingList = async function(itemIDs) {

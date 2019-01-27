@@ -15,7 +15,8 @@ export default class ShoppingListScreen extends React.Component {
             selected: false,
             selectedIngredients: [],
             ingredients: null,
-            requestTransfer: false
+            requestTransfer: false,
+            requestDelete: false
         }
         this.emptySelected = this.emptySelected.bind(this)
         this.updateSelected = this.updateSelected.bind(this)
@@ -88,9 +89,14 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     async deleteSelectedIngredients() {
-        await deleteItemsFromFridge(this.state.selectedIngredients)
-        console.log("Delete: ")
-        console.log(this.state.selectedIngredients)
+        this.setState({ requestDelete: true })
+        const res = await deleteItemsFromFridge(this.state.selectedIngredients)
+        Toast.show({
+            text: res ? 'Ingrédient(s) supprimé(s)' : 'Un problème est survenu !',
+            textStyle: { textAlign: 'center' },
+            buttonText: 'Ok'
+        })
+        this.setState({ requestDelete: false })
     }
 
     renderList() {
@@ -147,6 +153,7 @@ export default class ShoppingListScreen extends React.Component {
                 {this.state.selected ? (
                         <SelectedHeader
                             requestTransfer={this.state.requestTransfer}
+                            requestDelete={this.state.requestDelete}
                             origin={'fridge'}
                             emptySelected={this.emptySelected}
                             updateSelected={this.updateSelected}

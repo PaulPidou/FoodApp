@@ -67,22 +67,30 @@ export default class SelectedIngredientHeader extends React.Component {
                             name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
                         />
                     </Button>
-                    <Button
-                        transparent
-                        onPress={() => {
-                            Alert.alert(
-                                'Confirmation',
-                                'Confirmez vous la suppression ?',
-                                [
-                                    {text: 'Annuler', style: 'cancel'},
-                                    {text: 'Oui', onPress: () => this.props.deleteSelectedIngredients()},
-                                ]
-                            )}}>
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-                        />
-                    </Button>
+                    {
+                        this.props.requestDelete ? (
+                            <Button transparent>
+                                <ActivityIndicator size="small" color='#007aff' />
+                            </Button>
+                        ) : (
+                            <Button
+                                transparent
+                                onPress={() => {
+                                    Alert.alert(
+                                        'Confirmation',
+                                        'Confirmez vous la suppression ?',
+                                        [
+                                            {text: 'Annuler', style: 'cancel'},
+                                            {text: 'Oui', onPress: () => this.props.deleteSelectedIngredients()},
+                                        ]
+                                    )}}>
+                                <Icon
+                                    style={GenericStyles.icon}
+                                    name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
+                                />
+                            </Button>
+                        )
+                    }
                 </Right>
             </Header>
         )
@@ -91,6 +99,7 @@ export default class SelectedIngredientHeader extends React.Component {
 
 SelectedIngredientHeader.propTypes = {
     requestTransfer: PropTypes.bool,
+    requestDelete: PropTypes.bool,
     origin: PropTypes.string,
     emptySelected: PropTypes.func,
     updateSelected: PropTypes.func,
