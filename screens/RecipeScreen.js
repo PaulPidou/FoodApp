@@ -51,7 +51,6 @@ export default class RecipeScreen extends React.Component {
             textStyle: { textAlign: 'center' },
             buttonText: 'Ok'
         })
-        this.setState({ requestDelete: false })
         this.props.navigation.goBack()
     }
 
