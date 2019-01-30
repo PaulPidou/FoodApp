@@ -19,7 +19,8 @@ export const getSavedRecipesSummary = async function() {
 }
 
 export const saveRecipes = async function(recipeIDs) {
-
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    return true
 }
 
 export const deleteSavedRecipes = async function(recipesIDs) {
