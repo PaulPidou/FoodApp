@@ -1,6 +1,6 @@
 import React from 'react'
 import {Platform} from 'react-native'
-import {Container, Header, Left, Button, Icon, Input, Body} from 'native-base'
+import {Container, Header, Left, Button, Icon, Input, Body, Toast} from 'native-base'
 
 import GenericStyles from '../constants/Style'
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
@@ -18,6 +18,7 @@ export default class SearchRecipeScreen extends React.Component {
             recipes: [],
             firstSearch: true,
             ingredients: props.navigation.getParam('ingredients', null),
+            requestSave: false
         }
         this.emptySelected = this.emptySelected.bind(this)
         this.handlePress = this.handlePress.bind(this)
@@ -74,9 +75,14 @@ export default class SearchRecipeScreen extends React.Component {
     }
 
     async saveSelectedRecipes() {
-        await saveRecipes(this.state.selectedRecipes)
-        console.log("Save:")
-        console.log(this.state.selectedRecipes)
+        this.setState({ requestSave: true })
+        const res = await saveRecipes(this.state.selectedRecipes)
+        Toast.show({
+            text: res ? 'Recette sauvegardée !' : 'Un problème est survenu !',
+            textStyle: { textAlign: 'center' },
+            buttonText: 'Ok'
+        })
+        this.setState({ requestSave: false })
     }
 
     async handleSearch(keywords) {
@@ -120,6 +126,7 @@ export default class SearchRecipeScreen extends React.Component {
             <Container>
                 {this.state.selected ?
                     <SelectedHeader
+                        requestSave={this.state.requestSave}
                         origin={'search'}
                         emptySelected={this.emptySelected}
                         saveSelectedRecipes={this.saveSelectedRecipes}

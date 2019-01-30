@@ -65,14 +65,21 @@ export default class SelectedRecipeHeader extends React.Component {
                             }
                         </Right>) :
                         (<Right>
-                            <Button
-                                transparent
-                                onPress={() => this.props.saveSelectedRecipes()}>
-                                <Icon
-                                    style={GenericStyles.icon}
-                                    name={Platform.OS === 'ios' ? 'ios-save' : 'md-save'}
-                                />
-                            </Button>
+                            {
+                                this.props.requestSave ? (
+                                    <Button transparent>
+                                        <ActivityIndicator size="small" color='#007aff'/>
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        transparent
+                                        onPress={() => this.props.saveSelectedRecipes()}>
+                                        <Icon
+                                            style={GenericStyles.icon}
+                                            name={Platform.OS === 'ios' ? 'ios-save' : 'md-save'}
+                                        />
+                                    </Button>)
+                            }
                         </Right>)
                 }
             </Header>
@@ -83,6 +90,7 @@ export default class SelectedRecipeHeader extends React.Component {
 SelectedRecipeHeader.propTypes = {
     requestAddToCart: PropTypes.bool,
     requestDeleteRecipe: PropTypes.bool,
+    requestSave: PropTypes.bool,
     origin: PropTypes.string,
     emptySelected: PropTypes.func,
     addIngredientsToCart: PropTypes.func,

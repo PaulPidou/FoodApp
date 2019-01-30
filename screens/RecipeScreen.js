@@ -52,6 +52,7 @@ export default class RecipeScreen extends React.Component {
             buttonText: 'Ok'
         })
         this.setState({ requestDelete: false })
+        this.props.navigation.goBack()
     }
 
     async saveRecipe() {
