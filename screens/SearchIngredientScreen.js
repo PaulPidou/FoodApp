@@ -3,31 +3,31 @@ import {Container, Content, List, ListItem, Input, Button, Text, Header, Left, I
 
 import GenericStyles from '../constants/Style'
 import {Platform, ScrollView} from "react-native"
+import { getAllIngredients } from "../utils/api/public"
 
 export default class SearchIngredientScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            ingredients: this.ingredients
+            ingredients: [],
+            ingredientsCache: []
         }
     }
-
-    ingredients = [
-        'abricot',
-        'beurre',
-        'farine',
-        'salade',
-        'saumon',
-        'thon',
-        'tortilla'
-    ]
 
     static navigationOptions = {
         header: null
     }
 
+    componentDidMount() {
+        this._asyncRequest = getAllIngredients().then(
+            ingredients => {
+                this._asyncRequest = null
+                this.setState({ ingredients, ingredientsCache: ingredients })
+            })
+    }
+
     searchFilterFunction(text) {
-        const filteredIngredients = this.ingredients.filter(item => {
+        const filteredIngredients = this.state.ingredientsCache.filter(item => {
             return item.startsWith(text.toLowerCase())
         })
         this.setState({ ingredients: filteredIngredients })
