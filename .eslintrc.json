@@ -16,5 +16,6 @@
         "semi": ["error", "never"],
         "no-useless-escape": "off",
         "react/prop-types": ["error", { "ignore": ["navigation"] }]
-    }
+    },
+    "globals": { "fetch": false }
 }

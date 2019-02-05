@@ -20,11 +20,11 @@
     "expo": "^31.0.2",
     "moment": "^2.23.0",
     "native-base": "2.8.2",
+    "prop-types": "latest",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-elements": "^0.19.1",
-    "react-navigation": "^2.18.2",
-    "prop-types": "latest"
+    "react-navigation": "^2.18.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

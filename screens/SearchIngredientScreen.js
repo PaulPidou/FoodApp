@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Content, List, ListItem, Input, Button, Text, Header, Left, Icon, Spinner} from 'native-base'
+import {Container, Content, List, ListItem, Input, Button, Text, Header, Left, Icon, Spinner, Toast} from 'native-base'
 
 import GenericStyles from '../constants/Style'
 import {Platform, ScrollView} from "react-native"
@@ -22,7 +22,16 @@ export default class SearchIngredientScreen extends React.Component {
         this._asyncRequest = getAllIngredients().then(
             ingredients => {
                 this._asyncRequest = null
-                this.setState({ ingredients, ingredientsCache: ingredients })
+                if(ingredients) {
+                    this.setState({ ingredients, ingredientsCache: ingredients })
+                } else {
+                    Toast.show({
+                        text: 'Un problème est survenu !',
+                        textStyle: { textAlign: 'center' },
+                        buttonText: 'Ok'
+                    })
+                    this.setState({ ingredients: [], ingredientsCache: [] })
+                }
             })
     }
 
