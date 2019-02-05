@@ -25,7 +25,7 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     _setDate(newDate) {
-        this.setState({chosenDate: newDate})
+        this.setState({ chosenDate: newDate })
     }
 
     async handlePress() {
@@ -33,14 +33,14 @@ export default class ShoppingListScreen extends React.Component {
         const screen = this.props.navigation.state.params.origin === 'fridge' ? 'Fridge' : 'ShoppingList'
         if (screen === 'Fridge') {
             await upsertItemsToFridge({
-                ingredient: this.props.navigation.state.params.ingredient,
+                ingredientID: this.props.navigation.state.params.ingredient._id,
                 quantity: this.state.quantity,
                 unit: this.state.unit,
-                date: this.state.chosenDate
+                expirationDate: this.state.chosenDate
             })
         } else {
             await upsertItemsToShoppingList({
-                ingredient: this.props.navigation.state.params.ingredient,
+                ingredientID: this.props.navigation.state.params.ingredient._id,
                 quantity: this.state.quantity,
                 unit: this.state.unit
             })
@@ -63,7 +63,8 @@ export default class ShoppingListScreen extends React.Component {
                 </Left>
                 <Body>
                 <Title style={GenericStyles.headerTitle}>{
-                    this.props.navigation.state.params.ingredient.charAt(0).toUpperCase() + this.props.navigation.state.params.ingredient.slice(1)
+                    this.props.navigation.state.params.ingredient.name.charAt(0).toUpperCase() + this.props.navigation
+                        .state.params.ingredient.name.slice(1)
                 }</Title>
                 </Body>
             </Header>

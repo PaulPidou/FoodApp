@@ -1,14 +1,15 @@
 const api_ip = "192.168.43.163:3000"
 
 export const getAllIngredients = async function() {
+    await new Promise(resolve => setTimeout(resolve, 1000))
     return [
-        'abricot',
-        'beurre',
-        'farine',
-        'salade',
-        'saumon',
-        'thon',
-        'tortilla'
+        { "_id": "123", "name": 'abricot' },
+        { "_id": "234", "name": 'beurre' },
+        { "_id": "345", "name": 'farine' },
+        { "_id": "456", "name": 'salade' },
+        { "_id": "567", "name": 'saumon' },
+        { "_id": "678", "name": 'thon' },
+        { "_id": "789", "name": 'tortilla' },
     ]
 }
 

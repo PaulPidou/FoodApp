@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Content, List, ListItem, Input, Button, Text, Header, Left, Icon} from 'native-base'
+import {Container, Content, List, ListItem, Input, Button, Text, Header, Left, Icon, Spinner} from 'native-base'
 
 import GenericStyles from '../constants/Style'
 import {Platform, ScrollView} from "react-native"
@@ -9,8 +9,8 @@ export default class SearchIngredientScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            ingredients: [],
-            ingredientsCache: []
+            ingredients: null,
+            ingredientsCache: null
         }
     }
 
@@ -28,7 +28,7 @@ export default class SearchIngredientScreen extends React.Component {
 
     searchFilterFunction(text) {
         const filteredIngredients = this.state.ingredientsCache.filter(item => {
-            return item.startsWith(text.toLowerCase())
+            return item.name.startsWith(text.toLowerCase())
         })
         this.setState({ ingredients: filteredIngredients })
     }
@@ -37,34 +37,35 @@ export default class SearchIngredientScreen extends React.Component {
         let new_letter = true
         let current_letter = null
         return this.state.ingredients.map((item) => {
-            if(current_letter !== item.charAt(0)) {
+            if(current_letter !== item.name.charAt(0)) {
                 new_letter = true
-                current_letter = item.charAt(0)
+                current_letter = item.name.charAt(0)
             }
 
             if (new_letter) {
                 new_letter = false
                 return (
                     [
-                        <ListItem key={item.charAt(0)} itemDivider>
-                            <Text>{item.charAt(0).toUpperCase()}</Text>
+                        <ListItem key={item.name.charAt(0)} itemDivider>
+                            <Text>{item.name.charAt(0).toUpperCase()}</Text>
                         </ListItem>,
                         <ListItem
-                            key={item}
+                            key={item._id}
                             onPress={() => this.props.navigation.navigate('AddIngredient', {ingredient: item,
                                 origin: props.navigation.state.params.origin})}
                         >
-                            <Text>{item.charAt(0).toUpperCase() + item.slice(1)}</Text>
+                            <Text>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</Text>
                         </ListItem>
                     ]
                 )
             } else {
                 return (
                     <ListItem
-                        key={item}
-                        onPress={() => this.props.navigation.navigate('AddIngredient', {ingredient: item})}
+                        key={item._id}
+                        onPress={() => this.props.navigation.navigate('AddIngredient', {ingredient: item,
+                            origin: props.navigation.state.params.origin})}
                     >
-                        <Text>{item.charAt(0).toUpperCase() + item.slice(1)}</Text>
+                        <Text>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</Text>
                     </ListItem>
                 )
             }
@@ -92,11 +93,15 @@ export default class SearchIngredientScreen extends React.Component {
                     />
                 </Header>
                 <Content>
-                    <ScrollView>
-                        <List>
-                            {this.renderList(this.props)}
-                        </List>
-                    </ScrollView>
+                    {
+                        this.state.ingredients === null ? (<Spinner color='#007aff' />) : (
+                            <ScrollView>
+                                <List>
+                                    {this.renderList(this.props)}
+                                </List>
+                            </ScrollView>
+                        )
+                    }
                 </Content>
             </Container>
         )
