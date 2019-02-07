@@ -3,7 +3,7 @@ import {Container, Content, List, ListItem, Input, Button, Text, Header, Left, I
 
 import GenericStyles from '../constants/Style'
 import {Platform, ScrollView} from "react-native"
-import { getAllIngredients } from "../utils/api/public"
+import { getAllIngredients } from "../store/api/public"
 
 export default class SearchIngredientScreen extends React.Component {
     constructor(props) {

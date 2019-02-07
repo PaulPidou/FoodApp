@@ -4,7 +4,7 @@ import {Container, Left, Body, Right, Button, Icon, Header, Title, Toast} from '
 import GenericStyles from "../constants/Style"
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
-import { getSavedRecipesSummary, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../utils/api/user'
+import { getSavedRecipesSummary, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../store/api/user'
 
 
 export default class HomeScreen extends React.Component {

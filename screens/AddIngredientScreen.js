@@ -6,7 +6,7 @@ import moment from 'moment'
 
 import GenericStyles from '../constants/Style'
 
-import {upsertItemsToShoppingList, upsertItemsToFridge} from '../utils/api/user'
+import {upsertItemsToShoppingList, upsertItemsToFridge} from '../store/api/user'
 
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {

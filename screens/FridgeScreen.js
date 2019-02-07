@@ -6,7 +6,7 @@ import moment from 'moment'
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from "../components/headers/SelectedIngredientHeader"
-import { getFridge, transferItemsFromFridgeToShoppingList, deleteItemsFromFridge } from "../utils/api/user"
+import { getFridge, transferItemsFromFridgeToShoppingList, deleteItemsFromFridge } from "../store/api/user"
 
 export default class ShoppingListScreen extends React.Component {
     constructor(props) {

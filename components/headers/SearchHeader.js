@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Header, Left, Button, Icon, Item, Input} from 'native-base'
 
 import GenericStyles from '../../constants/Style'
-import {getRecipesFromKeywords} from '../../utils/api/public'
+import {getRecipesFromKeywords} from '../../store/api/public'
 
 export default class SearchHeader extends React.Component {
     constructor(props) {
