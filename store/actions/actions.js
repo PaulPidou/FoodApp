@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import { REQUEST_PENDING, REQUEST_SUCCESS, REQUEST_ERROR } from './types'
+import { requestActionPending, requestActionSuccess, requestActionError } from './common'
 import SearchIngredientScreen from '../../screens/SearchIngredientScreen'
 
 const mapStateToProps = (state) => ({
-    isLoading: state.savedRecipesReducer.isLoading,
-    error: state.savedRecipesReducer.error,
-    data: state.savedRecipesReducer.data
+    isLoading: state.serviceReducer.isLoading,
+    error: state.serviceReducer.error,
+    data: state.serviceReducer.data
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -38,19 +38,5 @@ export const getAllIngredients = function() {
         */
     }
 }
-
-export const requestActionPending = () => ({
-    type: REQUEST_PENDING
-})
-
-export const requestActionError = (error) => ({
-    type: REQUEST_ERROR,
-    error: error
-})
-
-export const requestActionSuccess = (data) => ({
-    type: REQUEST_SUCCESS,
-    data: data
-})
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchIngredientScreen)

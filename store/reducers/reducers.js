@@ -6,7 +6,7 @@ const initialState = {
     error: undefined
 }
 
-const savedRecipesReducer = function(state = initialState, action) {
+const serviceReducer = function(state = initialState, action) {
     switch(action.type) {
         case REQUEST_PENDING:
             return {
@@ -31,4 +31,4 @@ const savedRecipesReducer = function(state = initialState, action) {
 
 }
 
-export default savedRecipesReducer
+export default serviceReducer
