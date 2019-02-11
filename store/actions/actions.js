@@ -1,32 +1,42 @@
 import { connect } from 'react-redux'
-import { ADD_RECIPES, REQUEST_ERROR, REQUEST_PENDING, REQUEST_SUCCESS } from './types'
+import { REQUEST_PENDING, REQUEST_SUCCESS, REQUEST_ERROR } from './types'
+import SearchIngredientScreen from '../../screens/SearchIngredientScreen'
 
-const api_ip = 'http://192.168.43.163:3000/api'
+const mapStateToProps = (state) => ({
+    isLoading: state.savedRecipesReducer.isLoading,
+    error: state.savedRecipesReducer.error,
+    data: state.savedRecipesReducer.data
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    getAllIngredients: () => dispatch(getAllIngredients())
+})
 
 export const getAllIngredients = function() {
     return dispatch => {
         dispatch(requestActionPending())
-        fetch(`${api_ip}/public/ingredients`)
+        dispatch(requestActionSuccess(
+            [
+                { "_id": "123", "name": 'abricot' },
+                { "_id": "234", "name": 'beurre' },
+                { "_id": "345", "name": 'farine' },
+                { "_id": "456", "name": 'salade' },
+                { "_id": "567", "name": 'saumon' },
+                { "_id": "678", "name": 'thon' },
+                { "_id": "789", "name": 'tortilla' },
+            ]
+        ))
+
+        /*
+        fetch(`${process.env.API_ROOT}/public/ingredients`)
             .then(response => {
                 dispatch(requestActionSuccess(response.json()))
             })
             .catch(error => {
                 dispatch(requestActionError(error))
             })
+        */
     }
-
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return [
-        { "_id": "123", "name": 'abricot' },
-        { "_id": "234", "name": 'beurre' },
-        { "_id": "345", "name": 'farine' },
-        { "_id": "456", "name": 'salade' },
-        { "_id": "567", "name": 'saumon' },
-        { "_id": "678", "name": 'thon' },
-        { "_id": "789", "name": 'tortilla' },
-    ]
-    */
 }
 
 export const requestActionPending = () => ({
@@ -42,3 +52,5 @@ export const requestActionSuccess = (data) => ({
     type: REQUEST_SUCCESS,
     data: data
 })
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchIngredientScreen)
