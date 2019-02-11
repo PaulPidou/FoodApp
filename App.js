@@ -4,6 +4,8 @@ import { Platform, StatusBar, StyleSheet } from 'react-native'
 import { Root } from 'native-base'
 import { AppLoading, Asset, Font, Icon } from 'expo'
 import AppNavigator from './navigation/AppNavigator'
+import { Provider } from 'react-redux'
+import store from './store/reducers/index'
 
 export default class App extends React.Component {
   state = {
@@ -21,10 +23,12 @@ export default class App extends React.Component {
       )
     } else {
       return (
-        <Root style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
-        </Root>
+          <Provider store={store}>
+              <Root style={styles.container}>
+                  {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+                  <AppNavigator />
+              </Root>
+          </Provider>
       )
     }
   }

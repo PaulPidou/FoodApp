@@ -39,4 +39,4 @@ export const getAllIngredients = function() {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchIngredientScreen)
+export const SearchIngredientScreenRedux = connect(mapStateToProps, mapDispatchToProps)(SearchIngredientScreen)
