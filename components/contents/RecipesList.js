@@ -45,7 +45,7 @@ export default class RecipesList extends React.Component {
 
     render() {
         let content
-        if (this.props.recipes === null) {
+        if (this.props.recipes === undefined) {
             content = (<Spinner color='#007aff' />)
         } else if (this.props.recipes.length === 0) {
             content = (

@@ -1,6 +1,6 @@
-import {Toast} from 'native-base'
 import { requestActionPending, requestActionSuccess, requestActionError } from './common'
 
+// Public
 export const getAllIngredients = function() {
     return dispatch => {
         dispatch(requestActionPending())
@@ -22,13 +22,33 @@ export const getAllIngredients = function() {
                 dispatch(requestActionSuccess(response.json()))
             })
             .catch(error => {
-            Toast.show({
-                        text: 'Un problème est survenu !',
-                        textStyle: { textAlign: 'center' },
-                        buttonText: 'Ok'
-                    })
                 dispatch(requestActionError())
             })
         */
+    }
+}
+
+// User
+export const getSavedRecipesSummary = function() {
+    return dispatch => {
+        dispatch(requestActionPending())
+        dispatch(requestActionSuccess(
+            [
+                {
+                    _id: '123',
+                    title: 'Super recipe 1',
+                    budget: 'bon marché',
+                    difficulty: 'facile',
+                    totalTime: '50'
+                },
+                {
+                    _id: '424',
+                    title: 'Super recipe 2',
+                    budget: 'assez cher',
+                    difficulty: 'difficile',
+                    totalTime: '80'
+                }
+            ]
+        ))
     }
 }

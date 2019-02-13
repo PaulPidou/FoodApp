@@ -1,19 +1,19 @@
 import React from 'react'
 import {Container, Left, Body, Right, Button, Icon, Header, Title, Toast} from 'native-base'
-
-import GenericStyles from "../constants/Style"
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
-import { getSavedRecipesSummary, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../store/api/user'
+import { connect } from 'react-redux'
+import PropTypes from "prop-types"
+import { deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../store/api/user'
+import { getSavedRecipesSummary } from "../store/actions/actions"
+import GenericStyles from "../constants/Style"
 
-
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             selected: false,
             selectedRecipes: [],
-            recipes: null,
             requestAddToCart: false,
             requestDeleteRecipe: false
         }
@@ -29,12 +29,7 @@ export default class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
-        this._asyncRequest = getSavedRecipesSummary().then(
-            recipes => {
-                this._asyncRequest = null
-                this.setState({ recipes })
-            }
-        )
+        this.props.getSavedRecipesSummary()
     }
 
     handlePress(itemID) {
@@ -136,7 +131,7 @@ export default class HomeScreen extends React.Component {
                   /> : this.header()}
               <RecipesList
                   origin={'home'}
-                  recipes={this.state.recipes}
+                  recipes={this.props.recipes}
                   selectedRecipes={this.state.selectedRecipes}
                   handlePress={this.handlePress}
                   handleLongPress={this.handleLongPress}
@@ -145,3 +140,18 @@ export default class HomeScreen extends React.Component {
       )
   }
 }
+
+HomeScreen.propTypes = {
+    getSavedRecipesSummary: PropTypes.func,
+    recipes: PropTypes.array,
+}
+
+const mapStateToProps = (state) => ({
+    recipes: state.serviceReducer.data
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    getSavedRecipesSummary: () => dispatch(getSavedRecipesSummary())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
