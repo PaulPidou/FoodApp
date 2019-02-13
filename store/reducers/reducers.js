@@ -1,9 +1,7 @@
 import { REQUEST_PENDING, REQUEST_SUCCESS, REQUEST_ERROR } from '../actions/types'
 
 const initialState = {
-    isLoading: false,
-    data: {},
-    error: undefined
+    data: undefined
 }
 
 const serviceReducer = function(state = initialState, action) {
@@ -11,19 +9,17 @@ const serviceReducer = function(state = initialState, action) {
         case REQUEST_PENDING:
             return {
                 ...state,
-                isLoading: true
+                data: undefined
             }
         case REQUEST_SUCCESS:
             return {
                 ...state,
-                isLoading: false,
                 data: action.data
             }
         case REQUEST_ERROR:
             return {
                 ...state,
-                isLoading: false,
-                error: action.error
+                data: []
             }
         default:
             return state

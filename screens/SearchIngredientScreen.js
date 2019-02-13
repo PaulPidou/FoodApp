@@ -1,16 +1,16 @@
 import React from 'react'
-import {Container, Content, List, ListItem, Input, Button, Text, Header, Left, Icon, Spinner, Toast} from 'native-base'
-
-import GenericStyles from '../constants/Style'
+import {Container, Content, List, ListItem, Input, Button, Text, Header, Left, Icon, Spinner} from 'native-base'
 import {Platform, ScrollView} from "react-native"
-import { getAllIngredients } from "../store/api/public"
+import PropTypes from "prop-types"
+import { connect } from 'react-redux'
+import { getAllIngredients } from '../store/actions/actions'
+import GenericStyles from '../constants/Style'
 
-export default class SearchIngredientScreen extends React.Component {
+class SearchIngredientScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            ingredients: null,
-            ingredientsCache: null
+            ingredients: undefined,
         }
     }
 
@@ -19,32 +19,27 @@ export default class SearchIngredientScreen extends React.Component {
     }
 
     componentDidMount() {
-        this._asyncRequest = getAllIngredients().then(
-            ingredients => {
-                this._asyncRequest = null
-                if(ingredients) {
-                    this.setState({ ingredients, ingredientsCache: ingredients })
-                } else {
-                    Toast.show({
-                        text: 'Un problème est survenu !',
-                        textStyle: { textAlign: 'center' },
-                        buttonText: 'Ok'
-                    })
-                    this.setState({ ingredients: [], ingredientsCache: [] })
-                }
-            })
+        this.props.getAllIngredients()
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (prevState.ingredients ===  undefined) {
+            return { ingredients: nextProps.ingredientsCache}
+        }
+        else return null
     }
 
     searchFilterFunction(text) {
-        const filteredIngredients = this.state.ingredientsCache.filter(item => {
+        const filteredIngredients = this.props.ingredientsCache.filter(item => {
             return item.name.startsWith(text.toLowerCase())
         })
         this.setState({ ingredients: filteredIngredients })
     }
 
-    renderList(props) {
+    renderList() {
         let new_letter = true
         let current_letter = null
+
         return this.state.ingredients.map((item) => {
             if(current_letter !== item.name.charAt(0)) {
                 new_letter = true
@@ -61,7 +56,7 @@ export default class SearchIngredientScreen extends React.Component {
                         <ListItem
                             key={item._id}
                             onPress={() => this.props.navigation.navigate('AddIngredient', {ingredient: item,
-                                origin: props.navigation.state.params.origin})}
+                                origin: this.props.navigation.state.params.origin})}
                         >
                             <Text>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</Text>
                         </ListItem>
@@ -72,7 +67,7 @@ export default class SearchIngredientScreen extends React.Component {
                     <ListItem
                         key={item._id}
                         onPress={() => this.props.navigation.navigate('AddIngredient', {ingredient: item,
-                            origin: props.navigation.state.params.origin})}
+                            origin: this.props.navigation.state.params.origin})}
                     >
                         <Text>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</Text>
                     </ListItem>
@@ -103,10 +98,10 @@ export default class SearchIngredientScreen extends React.Component {
                 </Header>
                 <Content>
                     {
-                        this.state.ingredients === null ? (<Spinner color='#007aff' />) : (
+                        this.props.ingredientsCache === undefined ? (<Spinner color='#007aff' />) : (
                             <ScrollView>
                                 <List>
-                                    {this.renderList(this.props)}
+                                    {this.renderList()}
                                 </List>
                             </ScrollView>
                         )
@@ -116,3 +111,18 @@ export default class SearchIngredientScreen extends React.Component {
         )
     }
 }
+
+SearchIngredientScreen.propTypes = {
+    getAllIngredients: PropTypes.func,
+    ingredientsCache: PropTypes.array,
+}
+
+const mapStateToProps = (state) => ({
+    ingredientsCache: state.serviceReducer.data
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    getAllIngredients: () => dispatch(getAllIngredients())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchIngredientScreen)

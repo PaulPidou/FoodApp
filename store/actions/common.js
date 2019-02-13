@@ -4,9 +4,8 @@ export const requestActionPending = () => ({
     type: REQUEST_PENDING
 })
 
-export const requestActionError = (error) => ({
-    type: REQUEST_ERROR,
-    error: error
+export const requestActionError = () => ({
+    type: REQUEST_ERROR
 })
 
 export const requestActionSuccess = (data) => ({

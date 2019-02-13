@@ -1,16 +1,5 @@
-import { connect } from 'react-redux'
+import {Toast} from 'native-base'
 import { requestActionPending, requestActionSuccess, requestActionError } from './common'
-import SearchIngredientScreen from '../../screens/SearchIngredientScreen'
-
-const mapStateToProps = (state) => ({
-    isLoading: state.serviceReducer.isLoading,
-    error: state.serviceReducer.error,
-    data: state.serviceReducer.data
-})
-
-const mapDispatchToProps = (dispatch) => ({
-    getAllIngredients: () => dispatch(getAllIngredients())
-})
 
 export const getAllIngredients = function() {
     return dispatch => {
@@ -33,10 +22,13 @@ export const getAllIngredients = function() {
                 dispatch(requestActionSuccess(response.json()))
             })
             .catch(error => {
-                dispatch(requestActionError(error))
+            Toast.show({
+                        text: 'Un problème est survenu !',
+                        textStyle: { textAlign: 'center' },
+                        buttonText: 'Ok'
+                    })
+                dispatch(requestActionError())
             })
         */
     }
 }
-
-export const SearchIngredientScreenRedux = connect(mapStateToProps, mapDispatchToProps)(SearchIngredientScreen)
