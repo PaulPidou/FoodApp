@@ -52,3 +52,25 @@ export const getSavedRecipesSummary = function() {
         ))
     }
 }
+
+export const getShoppingList = function() {
+    return dispatch => {
+        dispatch(requestActionPending())
+        dispatch(requestActionSuccess(
+            [
+                {
+                    _id: 123,
+                    ingredientID: 123,
+                    ingredientName: 'abricot',
+                },
+                {
+                    _id: 456,
+                    ingredientID: 456,
+                    ingredientName: 'lait',
+                    quantity: 500,
+                    unit: 'ml',
+                }
+            ]
+        ))
+    }
+}
