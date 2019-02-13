@@ -42,8 +42,7 @@ export default class ShoppingListScreen extends React.Component {
         if(this.state.selected) {
             this._updateStateArray(item._id, 'selectedIngredients')
         } else {
-            this.props.navigation.navigate('AddIngredient', {ingredient: item.ingredientName, origin: 'shoppinglist',
-                quantity: item.quantity ? item.quantity.toString() : null, unit: item.unit ? item.unit.toString() : null})
+            this.props.navigation.navigate('AddIngredient', {ingredient: item, origin: 'shoppinglist' })
         }
     }
 

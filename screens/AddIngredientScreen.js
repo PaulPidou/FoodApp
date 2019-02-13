@@ -13,9 +13,12 @@ export default class ShoppingListScreen extends React.Component {
         super(props)
         this.state = {
             requestAdd: false,
-            quantity: props.navigation.state.params.quantity,
-            unit: props.navigation.state.params.unit,
-            chosenDate: props.navigation.state.params.expirationDate
+            name: props.navigation.state.params.ingredient.name ?
+                props.navigation.state.params.ingredient.name : props.navigation.state.params.ingredient.ingredientName,
+            quantity: props.navigation.state.params.ingredient.quantity ?
+                props.navigation.state.params.ingredient.quantity.toString() : null,
+            unit: props.navigation.state.params.ingredient.unit,
+            chosenDate: props.navigation.state.params.ingredient.expirationDate
         }
         this._setDate = this._setDate.bind(this)
     }
@@ -63,8 +66,7 @@ export default class ShoppingListScreen extends React.Component {
                 </Left>
                 <Body>
                 <Title style={GenericStyles.headerTitle}>{
-                    this.props.navigation.state.params.ingredient.name.charAt(0).toUpperCase() + this.props.navigation
-                        .state.params.ingredient.name.slice(1)
+                    this.state.name.charAt(0).toUpperCase() + this.state.name.slice(1)
                 }</Title>
                 </Body>
             </Header>
