@@ -6,7 +6,7 @@ import GenericStyles from '../constants/Style'
 
 export default class SideBar extends React.Component {
     _signOutAsync = async () => {
-        await AsyncStorage.clear()
+        await AsyncStorage.removeItem('userToken')
         this.props.navigation.navigate('Auth')
     }
 

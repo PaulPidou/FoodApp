@@ -9,6 +9,8 @@ export class LogInScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            email: undefined,
+            password: undefined,
             requestLogIn: false
         }
     }
@@ -18,10 +20,17 @@ export class LogInScreen extends React.Component {
     }
 
     _logInAsync = async () => {
-        this.setState({ requestLogIn: true })
-        const token = await logInUser()
-        //await AsyncStorage.setItem('userToken', 'abc')
-        this.props.navigation.navigate('App')
+        if (this.state.email && this.state.password) {
+            this.setState({requestLogIn: true})
+            const token = await logInUser(this.state.email, this.state.password)
+            await AsyncStorage.setItem('userToken', token)
+            this.props.navigation.navigate('App')
+        } else {
+            Toast.show({
+                text: 'Vous devez fournir votre email et votre mot de passe !',
+                buttonText: 'Ok'
+            })
+        }
     }
 
     render() {
@@ -42,6 +51,7 @@ export class LogInScreen extends React.Component {
                                 returnKeyType = { "next" }
                                 onSubmitEditing={() => { this.password._root.focus() }}
                                 blurOnSubmit={false}
+                                onChangeText={(text) => this.setState({ email: text })}
                             />
                         </Item>
                         <Item last>
@@ -49,6 +59,8 @@ export class LogInScreen extends React.Component {
                                 ref={input => { this.password = input }}
                                 placeholder="Mot de passe"
                                 secureTextEntry={true}
+                                onChangeText={(text) => this.setState({ password: text })}
+                                onSubmitEditing={() => this._logInAsync()}
                             />
                         </Item>
                     </Form>

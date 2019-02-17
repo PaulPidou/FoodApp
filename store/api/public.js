@@ -144,7 +144,7 @@ export const getRecipesSummaryFromIngredients = async function(ingredientIDs) {
 
 export const logInUser = async function(user, password) {
     await new Promise(resolve => setTimeout(resolve, 1000))
-    return 'abc'
+    return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBpZG91LnBhdWxAZ21haWwuY29tIiwiaWF0IjoxNTQ0ODk1NTM2fQ.US2s6kEKmEuhO_LIsH_vPAfEYBN-36_PUbY4sKKjalY'
 }
 
 export const signUpUser = async function(user, password) {
