@@ -1,6 +1,7 @@
 const api_ip = "http://192.168.43.163:3000/api"
 
 export const getAllIngredients = async function() {
+    /*
     return fetch(`${api_ip}/public/ingredients`)
         .then((response) => response.json())
         .then((responseJson) => {
@@ -9,7 +10,7 @@ export const getAllIngredients = async function() {
         .catch(() => {
             return null
         })
-    /*
+        */
     await new Promise(resolve => setTimeout(resolve, 1000))
     return [
         { "_id": "123", "name": 'abricot' },
@@ -20,7 +21,6 @@ export const getAllIngredients = async function() {
         { "_id": "678", "name": 'thon' },
         { "_id": "789", "name": 'tortilla' },
     ]
-    */
 }
 
 export const getRecipeFromId = async function(recipeID) {

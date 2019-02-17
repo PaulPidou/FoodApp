@@ -1,16 +1,15 @@
 import React from 'react'
 import {Container, Content, List, ListItem, Input, Button, Text, Header, Left, Icon, Spinner} from 'native-base'
 import {Platform, ScrollView} from "react-native"
-import PropTypes from "prop-types"
-import { connect } from 'react-redux'
-import { getAllIngredients } from '../store/actions/actions'
+import { getAllIngredients } from '../store/api/public'
 import GenericStyles from '../constants/Style'
 
-class SearchIngredientScreen extends React.Component {
+export default class SearchIngredientScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             ingredients: undefined,
+            ingredientsCache: undefined
         }
     }
 
@@ -19,18 +18,14 @@ class SearchIngredientScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getAllIngredients()
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (prevState.ingredients ===  undefined) {
-            return { ingredients: nextProps.ingredientsCache}
-        }
-        else return null
+        getAllIngredients().then(
+            ingredientsCache => {
+                this.setState({ingredientsCache, ingredients: ingredientsCache})
+            })
     }
 
     searchFilterFunction(text) {
-        const filteredIngredients = this.props.ingredientsCache.filter(item => {
+        const filteredIngredients = this.state.ingredientsCache.filter(item => {
             return item.name.startsWith(text.toLowerCase())
         })
         this.setState({ ingredients: filteredIngredients })
@@ -98,7 +93,7 @@ class SearchIngredientScreen extends React.Component {
                 </Header>
                 <Content>
                     {
-                        this.props.ingredientsCache === undefined ? (<Spinner color='#007aff' />) : (
+                        this.state.ingredientsCache === undefined ? (<Spinner color='#007aff' />) : (
                             <ScrollView>
                                 <List>
                                     {this.renderList()}
@@ -111,18 +106,3 @@ class SearchIngredientScreen extends React.Component {
         )
     }
 }
-
-SearchIngredientScreen.propTypes = {
-    getAllIngredients: PropTypes.func,
-    ingredientsCache: PropTypes.array,
-}
-
-const mapStateToProps = (state) => ({
-    ingredientsCache: state.getAllIngredientsReducer.ingredients
-})
-
-const mapDispatchToProps = {
-    getAllIngredients
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchIngredientScreen)

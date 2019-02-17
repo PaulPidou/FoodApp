@@ -2,16 +2,14 @@ import React from 'react'
 import {Container, Left, Body, Right, Button, Icon, Header, Title, Toast} from 'native-base'
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
-import { connect } from 'react-redux'
-import PropTypes from "prop-types"
-import { deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../store/api/user'
-import { getSavedRecipesSummary } from "../store/actions/actions"
+import {getSavedRecipesSummary, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes} from '../store/api/user'
 import GenericStyles from "../constants/Style"
 
-class HomeScreen extends React.Component {
+export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            recipes: undefined,
             selected: false,
             selectedRecipes: [],
             requestAddToCart: false,
@@ -29,7 +27,10 @@ class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getSavedRecipesSummary()
+        getSavedRecipesSummary().then(
+            recipes => {
+                this.setState({recipes})
+            })
     }
 
     handlePress(itemID) {
@@ -131,7 +132,7 @@ class HomeScreen extends React.Component {
                   /> : this.header()}
               <RecipesList
                   origin={'home'}
-                  recipes={this.props.recipes}
+                  recipes={this.state.recipes}
                   selectedRecipes={this.state.selectedRecipes}
                   handlePress={this.handlePress}
                   handleLongPress={this.handleLongPress}
@@ -140,18 +141,3 @@ class HomeScreen extends React.Component {
       )
   }
 }
-
-HomeScreen.propTypes = {
-    getSavedRecipesSummary: PropTypes.func,
-    recipes: PropTypes.array,
-}
-
-const mapStateToProps = (state) => ({
-    recipes: state.savedRecipesReducer.recipes
-})
-
-const mapDispatchToProps = {
-    getSavedRecipesSummary
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)

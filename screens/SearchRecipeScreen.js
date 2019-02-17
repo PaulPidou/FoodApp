@@ -32,7 +32,7 @@ export default class SearchRecipeScreen extends React.Component {
 
     componentDidMount() {
         if (this.state.ingredients) {
-            this.setState({ recipes: null })
+            this.setState({ recipes: undefined })
             this._asyncRequest = getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item._id)).then(
                 recipes => {
                     this._asyncRequest = null
@@ -86,7 +86,7 @@ export default class SearchRecipeScreen extends React.Component {
     }
 
     async handleSearch(keywords) {
-        this.setState({ recipes: null })
+        this.setState({ recipes: undefined })
         const recipes = await getRecipesSummaryFromKeywords(keywords)
         this.setState({ recipes, firstSearch: false })
     }

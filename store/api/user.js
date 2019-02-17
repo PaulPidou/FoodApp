@@ -1,5 +1,6 @@
 
 export const getSavedRecipesSummary = async function() {
+    await new Promise(resolve => setTimeout(resolve, 1000))
     return [
         {
             _id: '123',
