@@ -23,12 +23,14 @@ export class LogInScreen extends React.Component {
         if (this.state.email && this.state.password) {
             this.setState({requestLogIn: true})
             const token = await logInUser(this.state.email, this.state.password)
-            await AsyncStorage.setItem('userToken', token)
-            this.props.navigation.navigate('App')
+            if(token) {
+                await AsyncStorage.setItem('userToken', token)
+                this.props.navigation.navigate('App')
+            }
         } else {
             Toast.show({
                 text: 'Vous devez fournir votre email et votre mot de passe !',
-                buttonText: 'Ok'
+                duration: 3000,
             })
         }
     }
@@ -111,16 +113,17 @@ export class SignUpScreen extends React.Component {
             Toast.show({
                 text: 'Veuillez renseigner les différents champs !',
                 duration: 3000,
-                textStyle: { textAlign: 'center' }
             })
         } else if(this.state.password === this.state.confirmPassword) {
-            await AsyncStorage.setItem('userToken', 'abc')
-            this.props.navigation.navigate('App')
+            const token = await signUpUser(this.state.email, this.state.password)
+            if (token) {
+                await AsyncStorage.setItem('userToken', token)
+                this.props.navigation.navigate('App')
+            }
         } else {
             Toast.show({
                 text: 'Les deux mots de passe ne sont identiques !',
                 duration: 3000,
-                textStyle: { textAlign: 'center' }
             })
         }
     }

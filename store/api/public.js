@@ -148,5 +148,6 @@ export const logInUser = async function(user, password) {
 }
 
 export const signUpUser = async function(user, password) {
-
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    return 'abc'
 }
