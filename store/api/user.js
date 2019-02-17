@@ -1,5 +1,27 @@
+import { AsyncStorage } from 'react-native'
+import { Toast } from 'native-base'
+const api_ip = "http://192.168.43.163:3000/api"
 
 export const getSavedRecipesSummary = async function() {
+    const userToken = await AsyncStorage.getItem('userToken')
+    return fetch(`${api_ip}/user/savedrecipes`,
+        {
+            method: 'get',
+            headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
+        }).then((response) => {
+            return response.json()
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok',
+                duration: 3000,
+            })
+            return []
+        })
+
+    /*
     await new Promise(resolve => setTimeout(resolve, 1000))
     return [
         {
@@ -17,6 +39,7 @@ export const getSavedRecipesSummary = async function() {
             totalTime: '80'
         }
     ]
+    */
 }
 
 export const saveRecipes = async function(recipeIDs) {
