@@ -150,8 +150,8 @@ const mapStateToProps = (state) => ({
     recipes: state.serviceReducer.data
 })
 
-const mapDispatchToProps = (dispatch) => ({
-    getSavedRecipesSummary: () => dispatch(getSavedRecipesSummary())
-})
+const mapDispatchToProps = {
+    getSavedRecipesSummary
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)

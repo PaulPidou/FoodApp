@@ -121,8 +121,8 @@ const mapStateToProps = (state) => ({
     ingredientsCache: state.serviceReducer.data
 })
 
-const mapDispatchToProps = (dispatch) => ({
-    getAllIngredients: () => dispatch(getAllIngredients())
-})
+const mapDispatchToProps = {
+    getAllIngredients
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchIngredientScreen)
