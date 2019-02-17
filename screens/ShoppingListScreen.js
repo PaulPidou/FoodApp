@@ -31,12 +31,18 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     componentDidMount() {
-        this._asyncRequest = getShoppingList().then(
+        this.load()
+        this.props.navigation.addListener('willFocus', this.load)
+    }
+
+    load = () => {
+        this.setState({ ingredients: null })
+        getShoppingList().then(
             ingredients => {
-                this._asyncRequest = null
                 this.setState({ ingredients })
             })
     }
+
 
     handlePress(item) {
         if(this.state.selected) {

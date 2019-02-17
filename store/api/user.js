@@ -30,6 +30,7 @@ export const deleteSavedRecipes = async function(recipesIDs) {
 }
 
 export const getShoppingList = async function() {
+    await new Promise(resolve => setTimeout(resolve, 1000))
     return [
         {
             _id: 123,
@@ -67,6 +68,7 @@ export const transferItemsFromShoppingListToFridge = async function(itemIDs) {
 }
 
 export const getFridge = async function() {
+    await new Promise(resolve => setTimeout(resolve, 1000))
     return [
         {
             _id: 123,
