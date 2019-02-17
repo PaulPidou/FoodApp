@@ -1,7 +1,8 @@
 import {createStackNavigator, createSwitchNavigator} from 'react-navigation'
 
 import DrawerNavigator from './DrawerNavigator'
-import {LogInScreen, SignUpScreen} from "../screens/AuthScreens"
+import AuthLoadingScreen from '../screens/AuthLoadingScreen'
+import {LogInScreen, SignUpScreen} from '../screens/AuthScreens'
 
 const AuthStack = createStackNavigator({
     LogIn: LogInScreen,
@@ -9,11 +10,10 @@ const AuthStack = createStackNavigator({
 })
 
 export default createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
+        AuthLoading: AuthLoadingScreen,
         App: DrawerNavigator,
         Auth: AuthStack,
     },
     {
-        initialRouteName: 'Auth',
+        initialRouteName: 'AuthLoading',
     })

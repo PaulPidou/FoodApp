@@ -23,7 +23,7 @@ export class LogInScreen extends React.Component {
         if (this.state.email && this.state.password) {
             this.setState({requestLogIn: true})
             const token = await logInUser(this.state.email, this.state.password)
-            if(token) {
+            if (token) {
                 await AsyncStorage.setItem('userToken', token)
                 this.props.navigation.navigate('App')
             }
