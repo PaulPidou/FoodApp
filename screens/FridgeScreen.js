@@ -14,7 +14,7 @@ export default class ShoppingListScreen extends React.Component {
         this.state = {
             selected: false,
             selectedIngredients: [],
-            ingredients: null,
+            ingredients: undefined,
             requestTransfer: false,
             requestDelete: false
         }
@@ -29,11 +29,17 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     componentDidMount() {
-        this._asyncRequest = getFridge().then(
+        this.load()
+        this.props.navigation.addListener('willFocus', this.load)
+    }
+
+    load = () => {
+        this.setState({ ingredients: undefined })
+        getFridge().then(
             ingredients => {
-                this._asyncRequest = null
-                this.setState({ingredients})
+                this.setState({ ingredients })
             })
+
     }
 
     handlePress(item) {
@@ -135,7 +141,7 @@ export default class ShoppingListScreen extends React.Component {
 
     render() {
         let content
-        if (this.state.ingredients === null) {
+        if (this.state.ingredients === undefined) {
             content = (<Spinner color='#007aff' />)
         } else if (this.state.ingredients.length === 0) {
             content = (<Text>Votre frigidaire, commencez dès maintenant à la compléter !</Text>)

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Platform, ScrollView, Text} from 'react-native'
 import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet, Toast} from 'native-base'
-import {Avatar} from "react-native-elements"
+import {Avatar} from 'react-native-elements'
 
 import GenericStyles from "../constants/Style"
 import FoodListHeader from "../components/headers/FoodListHeader"
@@ -16,7 +16,7 @@ export default class ShoppingListScreen extends React.Component {
             selectedIngredients: [],
             shoppingMode: false,
             checkedIngredients: [],
-            ingredients: null,
+            ingredients: undefined,
             requestTransfer: false,
             requestDelete: false
         }
@@ -36,13 +36,12 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     load = () => {
-        this.setState({ ingredients: null })
+        this.setState({ ingredients: undefined })
         getShoppingList().then(
             ingredients => {
                 this.setState({ ingredients })
             })
     }
-
 
     handlePress(item) {
         if(this.state.selected) {
@@ -259,7 +258,7 @@ export default class ShoppingListScreen extends React.Component {
             )
         }
 
-        if (this.state.ingredients === null) {
+        if (this.state.ingredients === undefined) {
             content = (<Spinner color='#007aff' />)
         } else if (this.state.ingredients.length === 0) {
             content = (<Text>Votre liste de courses est vide, commencez dès maintenant à la compléter !</Text>)

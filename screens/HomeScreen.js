@@ -2,7 +2,7 @@ import React from 'react'
 import {Container, Left, Body, Right, Button, Icon, Header, Title, Toast} from 'native-base'
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
-import {getSavedRecipesSummary, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes} from '../store/api/user'
+import { getSavedRecipesSummary, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../store/api/user'
 import GenericStyles from "../constants/Style"
 
 export default class HomeScreen extends React.Component {
@@ -27,9 +27,15 @@ export default class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
+        this.load()
+        this.props.navigation.addListener('willFocus', this.load)
+    }
+
+    load = () => {
+        this.setState({ recipes: undefined })
         getSavedRecipesSummary().then(
             recipes => {
-                this.setState({recipes})
+                this.setState({ recipes })
             })
     }
 
