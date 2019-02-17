@@ -147,7 +147,7 @@ HomeScreen.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    recipes: state.serviceReducer.data
+    recipes: state.savedRecipesReducer.recipes
 })
 
 const mapDispatchToProps = {

@@ -1,30 +1,50 @@
 import { REQUEST_PENDING, REQUEST_SUCCESS, REQUEST_ERROR } from '../actions/types'
 
 const initialState = {
-    data: undefined
+    recipes: undefined,
+    ingredients: undefined
 }
 
-const serviceReducer = function(state = initialState, action) {
+export const savedRecipesReducer = function(state = initialState, action) {
     switch(action.type) {
         case REQUEST_PENDING:
             return {
                 ...state,
-                data: undefined
+                recipes: undefined
             }
         case REQUEST_SUCCESS:
             return {
                 ...state,
-                data: action.data
+                recipes: action.data
             }
         case REQUEST_ERROR:
             return {
                 ...state,
-                data: []
+                recipes: []
             }
         default:
             return state
     }
-
 }
 
-export default serviceReducer
+export const getAllIngredientsReducer = function(state = initialState, action) {
+    switch(action.type) {
+        case REQUEST_PENDING:
+            return {
+                ...state,
+                ingredients: undefined
+            }
+        case REQUEST_SUCCESS:
+            return {
+                ...state,
+                ingredients: action.data
+            }
+        case REQUEST_ERROR:
+            return {
+                ...state,
+                ingredients: []
+            }
+        default:
+            return state
+    }
+}

@@ -118,7 +118,7 @@ SearchIngredientScreen.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    ingredientsCache: state.serviceReducer.data
+    ingredientsCache: state.getAllIngredientsReducer.ingredients
 })
 
 const mapDispatchToProps = {

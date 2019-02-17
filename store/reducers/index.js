@@ -1,10 +1,11 @@
 import { combineReducers, applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 
-import serviceReducer from './reducers'
+import { savedRecipesReducer, getAllIngredientsReducer } from './reducers'
 
 const AppReducers = combineReducers({
-    serviceReducer,
+    savedRecipesReducer,
+    getAllIngredientsReducer
 })
 
 const rootReducer = (state, action) => {
