@@ -1,16 +1,26 @@
 import React from 'react'
 import {AsyncStorage, Platform, Keyboard} from 'react-native'
-import {Container, Content, Header, Button, Icon, Text, Form, Item, Input, Left, Title, Body, Toast} from 'native-base'
-import GenericStyles from "../constants/Style"
+import {Container, Content, Header, Button, Icon, Text, Form, Item, Input, Left, Title, Body, Toast, Spinner} from 'native-base'
+import GenericStyles from '../constants/Style'
+import { logInUser, signUpUser } from '../store/api/public'
 
 
 export class LogInScreen extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            requestLogIn: false
+        }
+    }
+
     static navigationOptions = {
         header: null,
     }
 
     _logInAsync = async () => {
-        await AsyncStorage.setItem('userToken', 'abc')
+        this.setState({ requestLogIn: true })
+        const token = await logInUser()
+        //await AsyncStorage.setItem('userToken', 'abc')
         this.props.navigation.navigate('App')
     }
 
@@ -42,15 +52,18 @@ export class LogInScreen extends React.Component {
                             />
                         </Item>
                     </Form>
-                    <Button
-                        block
-                        style={GenericStyles.formBlockButton}
-                        onPress={() => this._logInAsync()}>
-                        <Icon
-                            name={Platform.OS === 'ios' ? 'ios-log-in' : 'md-log-in'}
-                        />
-                        <Text>Me connecter</Text>
-                    </Button>
+                    {
+                        this.state.requestLogIn ? (<Spinner color='#007aff'/>) : (
+                            <Button
+                                block
+                                style={GenericStyles.formBlockButton}
+                                onPress={() => this._logInAsync()}>
+                                <Icon
+                                    name={Platform.OS === 'ios' ? 'ios-log-in' : 'md-log-in'}
+                                />
+                                <Text>Me connecter</Text>
+                            </Button>)
+                    }
                     <Button
                         block
                         style={GenericStyles.formBlockButton}
@@ -69,7 +82,6 @@ export class LogInScreen extends React.Component {
 export class SignUpScreen extends React.Component {
     constructor(props) {
         super(props)
-        this.secondTextInput = null
         this.state = {
             email: null,
             password: null,
@@ -147,7 +159,7 @@ export class SignUpScreen extends React.Component {
                                 ref={input => { this.confirmPassword = input }}
                                 placeholder="Confirmer le mot de passe"
                                 secureTextEntry={true}
-                                onChangeText={(text) => this.setState({confirmPassword: text})}
+                                onChangeText={(text) => this.setState({ confirmPassword: text })}
                                 onSubmitEditing={() => this.handleSignUp()}
                             />
                         </Item>

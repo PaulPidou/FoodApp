@@ -1,16 +1,21 @@
+import { Toast } from 'native-base'
 const api_ip = "http://192.168.43.163:3000/api"
 
 export const getAllIngredients = async function() {
     /*
     return fetch(`${api_ip}/public/ingredients`)
-        .then((response) => response.json())
-        .then((responseJson) => {
-            return responseJson
+        .then((response) => {
+            return response.json()
         })
         .catch(() => {
-            return null
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            return []
         })
-        */
+    */
     await new Promise(resolve => setTimeout(resolve, 1000))
     return [
         { "_id": "123", "name": 'abricot' },
@@ -138,7 +143,8 @@ export const getRecipesSummaryFromIngredients = async function(ingredientIDs) {
 }
 
 export const logInUser = async function(user, password) {
-
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    return 'abc'
 }
 
 export const signUpUser = async function(user, password) {
