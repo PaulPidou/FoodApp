@@ -20,7 +20,7 @@ export default class SearchIngredientScreen extends React.Component {
     componentDidMount() {
         getAllIngredients().then(
             ingredientsCache => {
-                this.setState({ingredientsCache, ingredients: ingredientsCache})
+                this.setState({ ingredientsCache, ingredients: ingredientsCache })
             })
     }
 
