@@ -143,7 +143,7 @@ export default class ShoppingListScreen extends React.Component {
         if (this.state.ingredients === undefined) {
             content = (<Spinner color='#007aff' />)
         } else if (this.state.ingredients.length === 0) {
-            content = (<Text>Votre frigidaire, commencez dès maintenant à la compléter !</Text>)
+            content = (<Text>Votre frigidaire est vide, commencez dès maintenant à la compléter !</Text>)
         } else {
             content = (
                 <ScrollView>
