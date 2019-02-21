@@ -27,7 +27,6 @@ export default class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.load()
         this.props.navigation.addListener('willFocus', this.load)
     }
 

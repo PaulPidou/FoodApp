@@ -2,7 +2,6 @@ import { Toast } from 'native-base'
 const api_ip = "http://192.168.43.163:3000/api"
 
 export const getAllIngredients = async function() {
-
     return fetch(`${api_ip}/public/ingredients`)
         .then((response) => {
             return response.json()
@@ -31,6 +30,19 @@ export const getAllIngredients = async function() {
 }
 
 export const getRecipeFromId = async function(recipeID) {
+    return fetch(`${api_ip}/public/recipe/${recipeID}`)
+        .then((response) => {
+            return response.json()
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            return {}
+        })
+    /*
     await new Promise(resolve => setTimeout(resolve, 1000))
     return {
         "_id": 123,
@@ -90,10 +102,11 @@ export const getRecipeFromId = async function(recipeID) {
             "rest": 0
         }
     }
+    */
 }
 
 export const getRecipesSummaryFromKeywords = async function(keywords) {
-    /*return await fetch('http://' + api_ip + '/api/public/recipes/by/keywords',
+    return fetch(`${api_ip}/public/recipes/by/keywords`,
         {
             method: 'POST',
             headers: {
@@ -103,8 +116,18 @@ export const getRecipesSummaryFromKeywords = async function(keywords) {
             body: JSON.stringify({
                 keywords: keywords,
             }),
-        });
-        */
+        }).then((response) => {
+            return response.json()
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            return []
+        })
+     /*
     await new Promise(resolve => setTimeout(resolve, 1000))
     return [
         {
@@ -122,9 +145,32 @@ export const getRecipesSummaryFromKeywords = async function(keywords) {
             totalTime: '80'
         }
     ]
+    */
 }
 
 export const getRecipesSummaryFromIngredients = async function(ingredientIDs) {
+    return fetch(`${api_ip}/public/recipes/by/ingredients`,
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ingredients: ingredientIDs,
+            }),
+        }).then((response) => {
+        return response.json()
+    })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            return []
+        })
+    /*
     await new Promise(resolve => setTimeout(resolve, 1000))
     return [
         {
@@ -142,6 +188,7 @@ export const getRecipesSummaryFromIngredients = async function(ingredientIDs) {
             totalTime: '80'
         }
     ]
+    */
 }
 
 export const logInUser = async function(user, password) {

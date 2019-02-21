@@ -33,7 +33,7 @@ export default class SearchRecipeScreen extends React.Component {
     componentDidMount() {
         if (this.state.ingredients) {
             this.setState({ recipes: undefined })
-            getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item._id)).then(
+            getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item.ingredientID)).then(
                 recipes => {
                     this.setState({ recipes, firstSearch: false })
                 })

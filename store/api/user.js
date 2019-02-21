@@ -53,6 +53,24 @@ export const deleteSavedRecipes = async function(recipesIDs) {
 }
 
 export const getShoppingList = async function() {
+    const userToken = await AsyncStorage.getItem('userToken')
+    return fetch(`${api_ip}/user/shoppinglist`,
+        {
+            method: 'get',
+            headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
+        }).then((response) => {
+        return response.json()
+    })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok',
+                duration: 3000,
+            })
+            return []
+        })
+    /*
     await new Promise(resolve => setTimeout(resolve, 1000))
     return [
         {
@@ -68,6 +86,7 @@ export const getShoppingList = async function() {
             unit: 'ml',
         }
     ]
+    */
 }
 
 export const upsertItemsToShoppingList = async function(items) {
@@ -91,6 +110,24 @@ export const transferItemsFromShoppingListToFridge = async function(itemIDs) {
 }
 
 export const getFridge = async function() {
+    const userToken = await AsyncStorage.getItem('userToken')
+    return fetch(`${api_ip}/user/fridge`,
+        {
+            method: 'get',
+            headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
+        }).then((response) => {
+        return response.json()
+    })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok',
+                duration: 3000,
+            })
+            return []
+        })
+    /*
     await new Promise(resolve => setTimeout(resolve, 1000))
     return [
         {
@@ -108,6 +145,7 @@ export const getFridge = async function() {
             unit: 'ml',
         }
     ]
+    */
 }
 
 export const upsertItemsToFridge = async function(items) {

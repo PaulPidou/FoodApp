@@ -31,7 +31,6 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.load()
         this.props.navigation.addListener('willFocus', this.load)
     }
 
@@ -113,7 +112,7 @@ export default class ShoppingListScreen extends React.Component {
             <Header style={GenericStyles.header}>
                 <Left style={{flex: 1, flexDirection: 'row'}}>
                     <Button transparent
-                            onPress={() => this.setState({shoppingMode: false, checkedIngredients: []})}
+                            onPress={() => this.setState({ shoppingMode: false, checkedIngredients: [] })}
                             style={{flex: 0}}
                     >
                         <Icon
@@ -242,7 +241,8 @@ export default class ShoppingListScreen extends React.Component {
                     updateSelected={this.updateSelected}
                     transferItemsToFridge={this.transferItemsToFridge}
                     deleteSelectedIngredients={this.deleteSelectedIngredients}
-                    selectedIngredients={this.state.selectedIngredients}
+                    selectedIngredients={this.state.ingredients ?
+                        this.state.ingredients.filter(item => this.state.selectedIngredients.includes(item._id)) : null }
                 />)
         } else if(this.state.shoppingMode) {
             header = this.shoppingHeader()

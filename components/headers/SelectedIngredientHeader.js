@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from 'prop-types'
-import {Left, Right, Header, Button, Icon, Spinner} from "native-base"
+import { Left, Right, Header, Button, Icon } from "native-base"
 
 import {Alert, Platform, ActivityIndicator} from "react-native"
 import GenericStyles from "../../constants/Style"
@@ -62,7 +62,7 @@ export default class SelectedIngredientHeader extends React.Component {
                     <Button
                         transparent
                         onPress={() => {
-                            this.props.navigation.navigate('SearchRecipe', {ingredients: this.props.selectedIngredients})
+                            this.props.navigation.navigate('SearchRecipe', { ingredients: this.props.selectedIngredients })
                         }}
                     >
                         <Icon

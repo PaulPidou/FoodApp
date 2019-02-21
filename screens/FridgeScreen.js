@@ -29,7 +29,6 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.load()
         this.props.navigation.addListener('willFocus', this.load)
     }
 
@@ -164,7 +163,8 @@ export default class ShoppingListScreen extends React.Component {
                             updateSelected={this.updateSelected}
                             transferItemsToShoppingList={this.transferItemsToShoppingList}
                             deleteSelectedIngredients={this.deleteSelectedIngredients}
-                            selectedIngredients={this.state.selectedIngredients}
+                            selectedIngredients={this.state.ingredients ?
+                                this.state.ingredients.filter(item => this.state.selectedIngredients.includes(item._id)) : null }
                         />) :
                     <FoodListHeader
                         navigation={this.props.navigation}
