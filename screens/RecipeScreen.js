@@ -1,17 +1,17 @@
 import React from 'react'
-import {ActivityIndicator, Alert, Platform} from 'react-native'
+import {ActivityIndicator, Alert, Platform, Text} from 'react-native'
 import {Container, Left, Right, Button, Icon, Header, Toast} from 'native-base'
 
 import GenericStyles from '../constants/Style'
 import RecipeTabs from '../components/contents/RecipeTabs'
-import {getRecipeFromId} from '../store/api/public'
-import {saveRecipes, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes} from '../store/api/user'
+import { getRecipeFromId } from '../store/api/public'
+import { saveRecipes, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../store/api/user'
 
 export default class RecipeScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            recipeId: props.navigation.getParam('recipeId', 'NO-ID'),
+            recipeId: props.navigation.getParam('recipeId', null),
             recipe: null,
             requestAddToCart: false,
             requestDelete: false,
@@ -24,10 +24,9 @@ export default class RecipeScreen extends React.Component {
     }
 
     componentDidMount() {
-        this._asyncRequest = getRecipeFromId(this.state.recipeId).then(
+        getRecipeFromId(this.state.recipeId).then(
             recipe => {
-                this._asyncRequest = null
-                this.setState({recipe})
+                this.setState({ recipe })
             }
         )
     }
@@ -66,7 +65,8 @@ export default class RecipeScreen extends React.Component {
     }
 
     header() {
-        const rightButton = this.props.navigation.state.params.origin === 'search' ?
+        const rightButton = this.state.recipeId ?
+            this.props.navigation.state.params.origin === 'search' ?
             (
                 this.state.requestSave ? (
                     <Button transparent>
@@ -124,7 +124,7 @@ export default class RecipeScreen extends React.Component {
                     />
                 </Button>)
 
-            ])
+            ]) : (<Button transparent />)
 
         return (
             <Header
@@ -148,9 +148,14 @@ export default class RecipeScreen extends React.Component {
         return (
             <Container>
                 {this.header()}
-                <RecipeTabs
-                    recipe={this.state.recipe}
-                />
+                {
+                    this.state.recipeId ?
+                        (<RecipeTabs
+                            recipe={this.state.recipe}
+                        />) :
+                        (<Text style={{margin: 10, textAlign: 'center'}}>Un problème est survenu !</Text>)
+                }
+
             </Container>
         )
     }

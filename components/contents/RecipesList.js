@@ -15,7 +15,7 @@ export default class RecipesList extends React.Component {
             return (
                 <ListItem
                     avatar
-                    key={item._id}
+                    key={this.props.origin + item._id}
                     onPress={() => this.props.handlePress(item._id)}
                     onLongPress={() => this.props.handleLongPress(item._id)}
                 >
