@@ -261,7 +261,8 @@ export default class ShoppingListScreen extends React.Component {
         if (this.state.ingredients === undefined) {
             content = (<Spinner color='#007aff' />)
         } else if (this.state.ingredients.length === 0) {
-            content = (<Text>Votre liste de courses est vide, commencez dès maintenant à la compléter !</Text>)
+            content = (<Text style={{margin: 10, textAlign: 'center'}}>
+                Votre liste de courses est vide, commencez dès maintenant à la compléter !</Text>)
         } else {
             content = (<ScrollView><List>{this.renderList()}</List></ScrollView>)
         }
