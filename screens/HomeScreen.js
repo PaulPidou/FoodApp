@@ -84,12 +84,7 @@ export default class HomeScreen extends React.Component {
 
     async deleteSelectedRecipes() {
         this.setState({ requestDeleteRecipe: true })
-        const res = await deleteSavedRecipes(this.state.selectedRecipes)
-        Toast.show({
-            text: res ? 'Recette supprimée !' : 'Un problème est survenu !',
-            textStyle: { textAlign: 'center' },
-            buttonText: 'Ok'
-        })
+        await deleteSavedRecipes(this.state.selectedRecipes)
         this.setState({ requestDeleteRecipe: false })
     }
 
