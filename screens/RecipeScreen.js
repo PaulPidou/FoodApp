@@ -55,12 +55,7 @@ export default class RecipeScreen extends React.Component {
 
     async saveRecipe() {
         this.setState({ requestSave: true })
-        const res = await saveRecipes([this.state.recipeId])
-        Toast.show({
-            text: res ? 'Recette sauvegardée !' : 'Un problème est survenu !',
-            textStyle: { textAlign: 'center' },
-            buttonText: 'Ok'
-        })
+        await saveRecipes([this.state.recipeId])
         this.setState({ requestSave: false })
     }
 

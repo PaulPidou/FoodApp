@@ -6,7 +6,7 @@ export const getSavedRecipesSummary = async function() {
     const userToken = await AsyncStorage.getItem('userToken')
     return fetch(`${api_ip}/user/savedrecipes`,
         {
-            method: 'get',
+            method: 'GET',
             headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
         }).then((response) => {
             return response.json()
@@ -43,8 +43,37 @@ export const getSavedRecipesSummary = async function() {
 }
 
 export const saveRecipes = async function(recipeIDs) {
+    const userToken = await AsyncStorage.getItem('userToken')
+    return fetch(`${api_ip}/user/save/recipes`,
+        {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + userToken,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                recipes: recipeIDs,
+            }),
+        }).then((response) => response.json())
+        .then((responseJSON) => {
+            Toast.show({
+                text: responseJSON.message,
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        })
+    /*
     await new Promise(resolve => setTimeout(resolve, 1000))
-    return true
+    return
+    */
 }
 
 export const deleteSavedRecipes = async function(recipesIDs) {
