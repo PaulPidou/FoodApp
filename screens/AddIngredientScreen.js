@@ -35,18 +35,18 @@ export default class ShoppingListScreen extends React.Component {
         this.setState({requestAdd: true})
         const screen = this.props.navigation.state.params.origin === 'fridge' ? 'Fridge' : 'ShoppingList'
         if (screen === 'Fridge') {
-            await upsertItemsToFridge({
+            await upsertItemsToFridge([{
                 ingredientID: this.props.navigation.state.params.ingredient._id,
                 quantity: this.state.quantity,
                 unit: this.state.unit,
                 expirationDate: this.state.chosenDate
-            })
+            }])
         } else {
-            await upsertItemsToShoppingList({
+            await upsertItemsToShoppingList([{
                 ingredientID: this.props.navigation.state.params.ingredient._id,
                 quantity: this.state.quantity,
                 unit: this.state.unit
-            })
+            }])
         }
         this.props.navigation.navigate(screen)
     }

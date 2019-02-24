@@ -114,7 +114,7 @@ export const getShoppingList = async function() {
     const userToken = await AsyncStorage.getItem('userToken')
     return fetch(`${api_ip}/user/shoppinglist`,
         {
-            method: 'get',
+            method: 'GET',
             headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
         }).then((response) => {
         return response.json()
@@ -148,8 +148,37 @@ export const getShoppingList = async function() {
 }
 
 export const upsertItemsToShoppingList = async function(items) {
+    const userToken = await AsyncStorage.getItem('userToken')
+    return fetch(`${api_ip}/user/shoppinglist/items`,
+        {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + userToken,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ingredients: items,
+            }),
+        }).then((response) => response.json())
+        .then((responseJSON) => {
+            Toast.show({
+                text: responseJSON.message,
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        })
+    /*
     await new Promise(resolve => setTimeout(resolve, 1000))
-    return true
+    return
+    */
 }
 
 export const upsertItemsToShoppingListFromRecipes = async function(recipeIDs) {
@@ -158,8 +187,37 @@ export const upsertItemsToShoppingListFromRecipes = async function(recipeIDs) {
 }
 
 export const deleteItemsFromShoppingList = async function(itemIDs) {
+    const userToken = await AsyncStorage.getItem('userToken')
+    return fetch(`${api_ip}/user/shoppinglist/delete/items`,
+        {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + userToken,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                items: itemIDs,
+            }),
+        }).then((response) => response.json())
+        .then((responseJSON) => {
+            Toast.show({
+                text: responseJSON.message,
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        })
+    /*
     await new Promise(resolve => setTimeout(resolve, 1000))
-    return true
+    return
+    */
 }
 
 export const transferItemsFromShoppingListToFridge = async function(itemIDs) {
