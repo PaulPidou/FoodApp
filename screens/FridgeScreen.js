@@ -82,24 +82,16 @@ export default class ShoppingListScreen extends React.Component {
 
     async transferItemsToShoppingList() {
         this.setState({ requestTransfer: true })
-        const res = await transferItemsFromFridgeToShoppingList(this.state.selectedIngredients)
-        Toast.show({
-            text: res ? 'Ingrédient(s) transféré(s)' : 'Un problème est survenu !',
-            textStyle: { textAlign: 'center' },
-            buttonText: 'Ok'
-        })
-        this.setState({ requestTransfer: false })
+        await transferItemsFromFridgeToShoppingList(this.state.selectedIngredients)
+        this.setState({ requestTransfer: false, selected: false, selectedIngredients: [] })
+        this.load()
     }
 
     async deleteSelectedIngredients() {
         this.setState({ requestDelete: true })
-        const res = await deleteItemsFromFridge(this.state.selectedIngredients)
-        Toast.show({
-            text: res ? 'Ingrédient(s) supprimé(s)' : 'Un problème est survenu !',
-            textStyle: { textAlign: 'center' },
-            buttonText: 'Ok'
-        })
-        this.setState({ requestDelete: false })
+        await deleteItemsFromFridge(this.state.selectedIngredients)
+        this.setState({ requestDelete: false, selected: false, selectedIngredients: [] })
+        this.load()
     }
 
     renderList() {
