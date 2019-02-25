@@ -73,12 +73,7 @@ export default class HomeScreen extends React.Component {
 
     async addIngredientsToCart() {
         this.setState({ requestAddToCart: true })
-        const res = await upsertItemsToShoppingListFromRecipes(this.state.selectedRecipes)
-        Toast.show({
-            text: res ? 'Ingrédients ajoutés à la liste de course !' : 'Un problème est survenu !',
-            textStyle: { textAlign: 'center' },
-            buttonText: 'Ok'
-        })
+        await upsertItemsToShoppingListFromRecipes(this.state.selectedRecipes)
         this.setState({ requestAddToCart: false })
     }
 
