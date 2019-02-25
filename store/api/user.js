@@ -250,8 +250,37 @@ export const deleteItemsFromShoppingList = async function(itemIDs) {
 }
 
 export const transferItemsFromShoppingListToFridge = async function(itemIDs) {
+    const userToken = await AsyncStorage.getItem('userToken')
+    return fetch(`${api_ip}/user/move/items/from/shoppinglist/to/fridge`,
+        {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + userToken,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                items: itemIDs,
+            }),
+        }).then((response) => response.json())
+        .then((responseJSON) => {
+            Toast.show({
+                text: responseJSON.message,
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        })
+    /*
     await new Promise(resolve => setTimeout(resolve, 1000))
-    return true
+    return
+    */
 }
 
 export const getFridge = async function() {

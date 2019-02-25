@@ -85,13 +85,9 @@ export default class ShoppingListScreen extends React.Component {
 
     async transferItemsToFridge() {
         this.setState({ requestTransfer: true })
-        const res = await transferItemsFromShoppingListToFridge(this.state.selectedIngredients)
-        Toast.show({
-            text: res ? 'Ingrédient(s) transféré(s)' : 'Un problème est survenu !',
-            textStyle: { textAlign: 'center' },
-            buttonText: 'Ok'
-        })
-        this.setState({ requestTransfer: false })
+        await transferItemsFromShoppingListToFridge(this.state.selectedIngredients)
+        this.setState({ requestTransfer: false, selected: false, selectedIngredients: [] })
+        this.load()
     }
 
     async deleteSelectedIngredients() {
@@ -157,21 +153,19 @@ export default class ShoppingListScreen extends React.Component {
         switch(index) {
             case 0:
                 await transferItemsFromShoppingListToFridge(this.state.checkedIngredients)
-                console.log('Transfer')
                 break
             case 1:
                 await deleteItemsFromShoppingList(this.state.checkedIngredients)
-                console.log('Delete')
                 break
             case 2:
-                console.log('Keep')
                 break
             case 3:
                 return
             default:
                 return
         }
-        this.setState({shoppingMode: false, checkedIngredients: []})
+        this.setState({ shoppingMode: false, checkedIngredients: [] })
+        this.load()
     }
 
     renderList() {
