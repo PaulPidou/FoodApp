@@ -19,13 +19,13 @@ export class LogInScreen extends React.Component {
         header: null,
     }
 
-    _logInAsync = async () => {
+    logInAsync = async () => {
         if (this.state.email && this.state.password) {
             this.setState({requestLogIn: true})
             const token = await logInUser(this.state.email, this.state.password)
             if (token) {
                 await AsyncStorage.setItem('userToken', token)
-                this.props.navigation.navigate('App')
+                this.props.navigation.navigate('AuthLoading')
             }
         } else {
             Toast.show({
@@ -62,7 +62,7 @@ export class LogInScreen extends React.Component {
                                 placeholder="Mot de passe"
                                 secureTextEntry={true}
                                 onChangeText={(text) => this.setState({ password: text })}
-                                onSubmitEditing={() => this._logInAsync()}
+                                onSubmitEditing={() => this.logInAsync()}
                             />
                         </Item>
                     </Form>
@@ -71,7 +71,7 @@ export class LogInScreen extends React.Component {
                             <Button
                                 block
                                 style={GenericStyles.formBlockButton}
-                                onPress={() => this._logInAsync()}>
+                                onPress={() => this.logInAsync()}>
                                 <Icon
                                     name={Platform.OS === 'ios' ? 'ios-log-in' : 'md-log-in'}
                                 />
@@ -118,7 +118,7 @@ export class SignUpScreen extends React.Component {
             const token = await signUpUser(this.state.email, this.state.password)
             if (token) {
                 await AsyncStorage.setItem('userToken', token)
-                this.props.navigation.navigate('App')
+                this.props.navigation.navigate('AuthLoading')
             }
         } else {
             Toast.show({

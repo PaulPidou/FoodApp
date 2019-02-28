@@ -1,15 +1,20 @@
 import React from 'react'
 import { AsyncStorage, View, ActivityIndicator } from 'react-native'
+import { getUserLists } from '../store/api/user'
 
 export default class AuthLoadingScreen extends React.Component {
     constructor(props) {
         super(props)
-        this._bootstrapAsync()
+        this.bootstrapAsync()
     }
 
-    _bootstrapAsync = async () => {
+    bootstrapAsync = async () => {
         await new Promise(resolve => setTimeout(resolve, 1000))
         const userToken = await AsyncStorage.getItem('userToken')
+
+        if(userToken) {
+            const lists = await getUserLists()
+        }
         this.props.navigation.navigate(userToken ? 'App' : 'Auth')
     }
 

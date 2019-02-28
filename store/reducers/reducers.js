@@ -1,26 +1,28 @@
 import { REQUEST_PENDING, REQUEST_SUCCESS, REQUEST_ERROR } from '../actions/types'
+import { GET_RECIPES, ADD_RECIPES, REMOVE_RECIPES } from '../actions/types'
 
 const initialState = {
-    recipes: undefined,
-    ingredients: undefined
+    savedRecipes: [],
+    shoppingList: [],
+    fridge: []
 }
 
 export const savedRecipesReducer = function(state = initialState, action) {
     switch(action.type) {
-        case REQUEST_PENDING:
+        case GET_RECIPES:
             return {
                 ...state,
-                recipes: undefined
+                savedRecipes: undefined
             }
-        case REQUEST_SUCCESS:
+        case ADD_RECIPES:
             return {
                 ...state,
-                recipes: action.data
+                savedRecipes: action.data
             }
-        case REQUEST_ERROR:
+        case REMOVE_RECIPES:
             return {
                 ...state,
-                recipes: []
+                savedRecipes: []
             }
         default:
             return state
