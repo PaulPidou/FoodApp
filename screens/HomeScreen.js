@@ -1,15 +1,18 @@
 import React from 'react'
-import {Container, Left, Body, Right, Button, Icon, Header, Title, Toast} from 'native-base'
+import {Container, Left, Body, Right, Button, Icon, Header, Title } from 'native-base'
+import { connect } from 'react-redux'
+
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
 import { getSavedRecipesSummary, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../store/api/user'
 import GenericStyles from "../constants/Style"
+import PropTypes from "prop-types"
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            recipes: undefined,
+            //recipes: this.props.savedRecipes,
             selected: false,
             selectedRecipes: [],
             requestAddToCart: false,
@@ -26,6 +29,7 @@ export default class HomeScreen extends React.Component {
         header: null
     }
 
+    /*
     componentDidMount() {
         this.props.navigation.addListener('willFocus', this.load)
     }
@@ -37,12 +41,13 @@ export default class HomeScreen extends React.Component {
                 this.setState({ recipes })
             })
     }
+    */
 
     handlePress(itemID) {
         if(this.state.selected) {
             this._updateSelectedRecipes(itemID)
         } else {
-            this.props.navigation.navigate("RecipeDetails", {recipeId: itemID, origin: 'home'})
+            this.props.navigation.navigate("RecipeDetails", { recipeId: itemID, origin: 'home' })
         }
     }
 
@@ -68,7 +73,7 @@ export default class HomeScreen extends React.Component {
     }
 
     emptySelected() {
-        this.setState({selected: false, selectedRecipes: []})
+        this.setState({ selected: false, selectedRecipes: [] })
     }
 
     async addIngredientsToCart() {
@@ -127,7 +132,7 @@ export default class HomeScreen extends React.Component {
                   /> : this.header()}
               <RecipesList
                   origin={'home'}
-                  recipes={this.state.recipes}
+                  recipes={this.props.savedRecipes}
                   selectedRecipes={this.state.selectedRecipes}
                   handlePress={this.handlePress}
                   handleLongPress={this.handleLongPress}
@@ -136,3 +141,15 @@ export default class HomeScreen extends React.Component {
       )
   }
 }
+
+HomeScreen.propTypes = {
+    savedRecipes: PropTypes.array
+}
+
+const mapStateToProps = (state) => {
+    return {
+        savedRecipes: state.generalReducer.savedRecipes
+    }
+}
+
+export default connect(mapStateToProps)(HomeScreen)

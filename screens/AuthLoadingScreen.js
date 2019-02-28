@@ -1,21 +1,26 @@
 import React from 'react'
 import { AsyncStorage, View, ActivityIndicator } from 'react-native'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { getUserLists } from '../store/api/user'
 
-export default class AuthLoadingScreen extends React.Component {
+class AuthLoadingScreen extends React.Component {
     constructor(props) {
         super(props)
         this.bootstrapAsync()
     }
 
     bootstrapAsync = async () => {
-        await new Promise(resolve => setTimeout(resolve, 1000))
         const userToken = await AsyncStorage.getItem('userToken')
-
-        if(userToken) {
-            const lists = await getUserLists()
+        if (userToken) {
+            const userLists = await getUserLists()
+            const action = { type: 'UPDATE_USER_LISTS', lists: userLists }
+            this.props.dispatch(action)
+            this.props.navigation.navigate('App')
+        } else {
+            this.props.navigation.navigate('Auth')
         }
-        this.props.navigation.navigate(userToken ? 'App' : 'Auth')
+
     }
 
     render() {
@@ -28,3 +33,9 @@ export default class AuthLoadingScreen extends React.Component {
         )
     }
 }
+
+AuthLoadingScreen.propTypes = {
+    dispatch: PropTypes.func
+}
+
+export default connect()(AuthLoadingScreen)

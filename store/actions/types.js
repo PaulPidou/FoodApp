@@ -1,3 +1,5 @@
+export const UPDATE_USER_LISTS = 'UPDATE_USER_LISTS'
+
 export const GET_RECIPES = 'GET_RECIPES'
 export const ADD_RECIPES = 'ADD_RECIPES'
 export const REMOVE_RECIPES = 'REMOVE_RECIPES'

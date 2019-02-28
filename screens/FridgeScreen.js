@@ -171,3 +171,9 @@ export default class ShoppingListScreen extends React.Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        fridge: state.fridge
+    }
+}
