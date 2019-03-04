@@ -1,5 +1,6 @@
-import {UPDATE_USER_LISTS, FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR,
-    FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR} from '../actions/types'
+import { UPDATE_USER_LISTS, FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR,
+    FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR,
+    FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR } from '../actions/types'
 
 const initialState = {
     savedRecipes: undefined,
@@ -45,6 +46,21 @@ export const generalReducer = function(state = initialState, action) {
             return {
                 ...state,
                 shoppingList: []
+            }
+        case FETCH_FRIDGE_PENDING:
+            return {
+                ...state,
+                fridge: undefined
+            }
+        case FETCH_FRIDGE_SUCCESS:
+            return {
+                ...state,
+                fridge: action.fridge
+            }
+        case FETCH_FRIDGE_ERROR:
+            return {
+                ...state,
+                fridge: []
             }
         default:
             return state

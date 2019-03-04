@@ -3,9 +3,7 @@ import thunk from 'redux-thunk'
 
 import { generalReducer } from './reducers'
 
-const AppReducers = combineReducers({
-    generalReducer
-})
+const AppReducers = combineReducers({ generalReducer })
 
 const rootReducer = (state, action) => {
     return AppReducers(state, action)

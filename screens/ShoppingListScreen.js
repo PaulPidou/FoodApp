@@ -84,7 +84,7 @@ class ShoppingListScreen extends React.Component {
     }
 
     updateSelected() {
-        this.setState({selectedIngredients: this.state.ingredients.map(item => item._id)})
+        this.setState({selectedIngredients: this.props.ingredients.map(item => item._id)})
     }
 
     async transferItemsToFridge() {
@@ -235,8 +235,8 @@ class ShoppingListScreen extends React.Component {
                     updateSelected={this.updateSelected}
                     transferItemsToFridge={this.transferItemsToFridge}
                     deleteSelectedIngredients={this.deleteSelectedIngredients}
-                    selectedIngredients={this.state.ingredients ?
-                        this.state.ingredients.filter(item => this.state.selectedIngredients.includes(item._id)) : null }
+                    selectedIngredients={this.props.ingredients ?
+                        this.props.ingredients.filter(item => this.state.selectedIngredients.includes(item._id)) : null }
                 />)
         } else if(this.state.shoppingMode) {
             header = this.shoppingHeader()

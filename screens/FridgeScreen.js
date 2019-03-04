@@ -1,20 +1,22 @@
 import React from 'react'
 import {ScrollView, Text} from 'react-native'
-import {Body, Container, Content, Left, List, ListItem, Right, Spinner, Toast} from 'native-base'
-import {Avatar} from "react-native-elements"
+import {Body, Container, Content, Left, List, ListItem, Right, Spinner} from 'native-base'
+import {Avatar} from 'react-native-elements'
 import moment from 'moment'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from "../components/headers/SelectedIngredientHeader"
 import { getFridge, transferItemsFromFridgeToShoppingList, deleteItemsFromFridge } from "../store/api/user"
 
-export default class ShoppingListScreen extends React.Component {
+class Fridge extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             selected: false,
             selectedIngredients: [],
-            ingredients: undefined,
+            //ingredients: undefined,
             requestTransfer: false,
             requestDelete: false
         }
@@ -28,6 +30,7 @@ export default class ShoppingListScreen extends React.Component {
         header: null
     }
 
+    /*
     componentDidMount() {
         this.props.navigation.addListener('willFocus', this.load)
     }
@@ -40,6 +43,7 @@ export default class ShoppingListScreen extends React.Component {
             })
 
     }
+    */
 
     handlePress(item) {
         if(this.state.selected) {
@@ -71,7 +75,7 @@ export default class ShoppingListScreen extends React.Component {
     }
 
     emptySelected() {
-        this.setState({selected: false, selectedIngredients: []})
+        this.setState({ selected: false, selectedIngredients: [] })
     }
 
     updateSelected() {
@@ -84,18 +88,18 @@ export default class ShoppingListScreen extends React.Component {
         this.setState({ requestTransfer: true })
         await transferItemsFromFridgeToShoppingList(this.state.selectedIngredients)
         this.setState({ requestTransfer: false, selected: false, selectedIngredients: [] })
-        this.load()
+        //this.load()
     }
 
     async deleteSelectedIngredients() {
         this.setState({ requestDelete: true })
         await deleteItemsFromFridge(this.state.selectedIngredients)
         this.setState({ requestDelete: false, selected: false, selectedIngredients: [] })
-        this.load()
+        //this.load()
     }
 
     renderList() {
-        return this.state.ingredients.map((item) => {
+        return this.props.ingredients.map((item) => {
             const isSelected = this.state.selectedIngredients.includes(item._id)
             const title = isSelected ? null : item.ingredientName.charAt(0).toUpperCase()
             const icon = isSelected ? {name: 'check'} : null
@@ -132,9 +136,9 @@ export default class ShoppingListScreen extends React.Component {
 
     render() {
         let content
-        if (this.state.ingredients === undefined) {
+        if (this.props.ingredients === undefined) {
             content = (<Spinner color='#007aff' />)
-        } else if (this.state.ingredients.length === 0) {
+        } else if (this.props.ingredients.length === 0) {
             content = (<Text style={{margin: 10, textAlign: 'center'}}>
                 Votre frigidaire est vide, commencez dès maintenant à la compléter !</Text>)
         } else {
@@ -156,14 +160,14 @@ export default class ShoppingListScreen extends React.Component {
                             updateSelected={this.updateSelected}
                             transferItemsToShoppingList={this.transferItemsToShoppingList}
                             deleteSelectedIngredients={this.deleteSelectedIngredients}
-                            selectedIngredients={this.state.ingredients ?
-                                this.state.ingredients.filter(item => this.state.selectedIngredients.includes(item._id)) : null }
+                            selectedIngredients={this.props.ingredients ?
+                                this.props.ingredients.filter(item => this.state.selectedIngredients.includes(item._id)) : null }
                         />) :
                     <FoodListHeader
                         navigation={this.props.navigation}
                         name={'Frigidaire'}
                         origin={'fridge'}
-                        ingredients={this.state.ingredients}
+                        ingredients={this.props.ingredients}
                     />
                 }
                 <Content>{content}</Content>
@@ -172,8 +176,14 @@ export default class ShoppingListScreen extends React.Component {
     }
 }
 
+Fridge.propTypes = {
+    ingredients: PropTypes.array
+}
+
 const mapStateToProps = (state) => {
     return {
-        fridge: state.generalReducer.fridge
+        ingredients: state.generalReducer.fridge
     }
 }
+
+export default connect(mapStateToProps)(Fridge)
