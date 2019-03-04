@@ -1,6 +1,8 @@
 import { AsyncStorage } from 'react-native'
 import { Toast } from 'native-base'
-const api_ip = "http://192.168.43.163:3000/api"
+
+import { fetchSavedRecipes } from '../actions/actions'
+const api_ip = 'http://192.168.43.163:3000/api'
 
 export const getUserLists = async function() {
     const userToken = await AsyncStorage.getItem('userToken')
@@ -82,6 +84,7 @@ export const saveRecipes = async function(recipeIDs) {
                 textStyle: { textAlign: 'center' },
                 buttonText: 'Ok'
             })
+            fetchSavedRecipes(userToken)
         })
         .catch(() => {
             Toast.show({
@@ -116,6 +119,7 @@ export const deleteSavedRecipes = async function(recipeIDs) {
                 textStyle: { textAlign: 'center' },
                 buttonText: 'Ok'
             })
+            fetchSavedRecipes(userToken)
         })
         .catch(() => {
             Toast.show({

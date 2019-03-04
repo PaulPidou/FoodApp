@@ -1,6 +1,6 @@
 import React from 'react'
 import {ActivityIndicator, Alert, Platform, Text} from 'react-native'
-import {Container, Left, Right, Button, Icon, Header, Toast} from 'native-base'
+import {Container, Left, Right, Button, Icon, Header} from 'native-base'
 
 import GenericStyles from '../constants/Style'
 import RecipeTabs from '../components/contents/RecipeTabs'

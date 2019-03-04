@@ -85,7 +85,7 @@ class HomeScreen extends React.Component {
     async deleteSelectedRecipes() {
         this.setState({ requestDeleteRecipe: true })
         await deleteSavedRecipes(this.state.selectedRecipes)
-        this.setState({ requestDeleteRecipe: false })
+        this.setState({ selected: false, selectedRecipes: [], requestDeleteRecipe: false })
     }
 
     header() {
