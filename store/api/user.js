@@ -24,46 +24,6 @@ export const getUserLists = async function() {
         })
 }
 
-export const getSavedRecipesSummary = async function() {
-    const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/savedrecipes`,
-        {
-            method: 'GET',
-            headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
-        }).then((response) => {
-            return response.json()
-        })
-        .catch(() => {
-            Toast.show({
-                text: 'Un problème est survenu !',
-                textStyle: { textAlign: 'center' },
-                buttonText: 'Ok',
-                duration: 3000,
-            })
-            return []
-        })
-
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return [
-        {
-            _id: '123',
-            title: 'Super recipe 1',
-            budget: 'bon marché',
-            difficulty: 'facile',
-            totalTime: '50'
-        },
-        {
-            _id: '424',
-            title: 'Super recipe 2',
-            budget: 'assez cher',
-            difficulty: 'difficile',
-            totalTime: '80'
-        }
-    ]
-    */
-}
-
 export const saveRecipes = async function(recipeIDs) {
     const userToken = await AsyncStorage.getItem('userToken')
     return fetch(`${api_ip}/user/save/recipes`,
@@ -131,43 +91,6 @@ export const deleteSavedRecipes = async function(recipeIDs) {
     /*
     await new Promise(resolve => setTimeout(resolve, 1000))
     return
-    */
-}
-
-export const getShoppingList = async function() {
-    const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/shoppinglist`,
-        {
-            method: 'GET',
-            headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
-        }).then((response) => {
-        return response.json()
-    })
-        .catch(() => {
-            Toast.show({
-                text: 'Un problème est survenu !',
-                textStyle: { textAlign: 'center' },
-                buttonText: 'Ok',
-                duration: 3000,
-            })
-            return []
-        })
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return [
-        {
-            _id: 123,
-            ingredientID: 123,
-            ingredientName: 'abricot',
-        },
-        {
-            _id: 456,
-            ingredientID: 456,
-            ingredientName: 'lait',
-            quantity: 500,
-            unit: 'ml',
-        }
-    ]
     */
 }
 
@@ -309,45 +232,6 @@ export const transferItemsFromShoppingListToFridge = async function(itemIDs) {
     /*
     await new Promise(resolve => setTimeout(resolve, 1000))
     return
-    */
-}
-
-export const getFridge = async function() {
-    const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/fridge`,
-        {
-            method: 'get',
-            headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
-        }).then((response) => {
-        return response.json()
-    })
-        .catch(() => {
-            Toast.show({
-                text: 'Un problème est survenu !',
-                textStyle: { textAlign: 'center' },
-                buttonText: 'Ok',
-                duration: 3000,
-            })
-            return []
-        })
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return [
-        {
-            _id: 123,
-            ingredientID: 123,
-            ingredientName: 'abricot',
-            quantity: 5,
-            expirationDate: 1546985657000
-        },
-        {
-            _id: 456,
-            ingredientID: 456,
-            ingredientName: 'lait',
-            quantity: 500,
-            unit: 'ml',
-        }
-    ]
     */
 }
 

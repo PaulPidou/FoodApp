@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from "../components/headers/SelectedIngredientHeader"
-import { getFridge, transferItemsFromFridgeToShoppingList, deleteItemsFromFridge } from "../store/api/user"
+import { transferItemsFromFridgeToShoppingList, deleteItemsFromFridge } from "../store/api/user"
 
 class Fridge extends React.Component {
     constructor(props) {
@@ -29,21 +29,6 @@ class Fridge extends React.Component {
     static navigationOptions = {
         header: null
     }
-
-    /*
-    componentDidMount() {
-        this.props.navigation.addListener('willFocus', this.load)
-    }
-
-    load = () => {
-        this.setState({ ingredients: undefined })
-        getFridge().then(
-            ingredients => {
-                this.setState({ ingredients })
-            })
-
-    }
-    */
 
     handlePress(item) {
         if(this.state.selected) {
@@ -88,14 +73,12 @@ class Fridge extends React.Component {
         this.setState({ requestTransfer: true })
         await transferItemsFromFridgeToShoppingList(this.state.selectedIngredients)
         this.setState({ requestTransfer: false, selected: false, selectedIngredients: [] })
-        //this.load()
     }
 
     async deleteSelectedIngredients() {
         this.setState({ requestDelete: true })
         await deleteItemsFromFridge(this.state.selectedIngredients)
         this.setState({ requestDelete: false, selected: false, selectedIngredients: [] })
-        //this.load()
     }
 
     renderList() {

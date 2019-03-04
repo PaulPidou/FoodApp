@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
-import { getSavedRecipesSummary, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../store/api/user'
+import { deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../store/api/user'
 import GenericStyles from "../constants/Style"
 import PropTypes from "prop-types"
 
@@ -12,7 +12,6 @@ class HomeScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            //recipes: this.props.savedRecipes,
             selected: false,
             selectedRecipes: [],
             requestAddToCart: false,
@@ -28,20 +27,6 @@ class HomeScreen extends React.Component {
     static navigationOptions = {
         header: null
     }
-
-    /*
-    componentDidMount() {
-        this.props.navigation.addListener('willFocus', this.load)
-    }
-
-    load = () => {
-        this.setState({ recipes: undefined })
-        getSavedRecipesSummary().then(
-            recipes => {
-                this.setState({ recipes })
-            })
-    }
-    */
 
     handlePress(itemID) {
         if(this.state.selected) {

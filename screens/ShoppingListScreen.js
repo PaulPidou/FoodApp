@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import GenericStyles from "../constants/Style"
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from '../components/headers/SelectedIngredientHeader'
-import { getShoppingList, transferItemsFromShoppingListToFridge, deleteItemsFromShoppingList } from "../store/api/user"
+import { transferItemsFromShoppingListToFridge, deleteItemsFromShoppingList } from "../store/api/user"
 
 class ShoppingListScreen extends React.Component {
     constructor(props) {
@@ -18,7 +18,6 @@ class ShoppingListScreen extends React.Component {
             selectedIngredients: [],
             shoppingMode: false,
             checkedIngredients: [],
-            //ingredients: undefined,
             requestTransfer: false,
             requestDelete: false
         }
@@ -31,20 +30,6 @@ class ShoppingListScreen extends React.Component {
     static navigationOptions = {
         header: null
     }
-
-    /*
-    componentDidMount() {
-        this.props.navigation.addListener('willFocus', this.load)
-    }
-
-    load = () => {
-        this.setState({ ingredients: undefined })
-        getShoppingList().then(
-            ingredients => {
-                this.setState({ ingredients })
-            })
-    }
-    */
 
     handlePress(item) {
         if(this.state.selected) {
@@ -91,14 +76,12 @@ class ShoppingListScreen extends React.Component {
         this.setState({ requestTransfer: true })
         await transferItemsFromShoppingListToFridge(this.state.selectedIngredients)
         this.setState({ requestTransfer: false, selected: false, selectedIngredients: [] })
-        //this.load()
     }
 
     async deleteSelectedIngredients() {
         this.setState({ requestDelete: true })
         await deleteItemsFromShoppingList(this.state.selectedIngredients)
         this.setState({ requestDelete: false, selected: false, selectedIngredients: [] })
-        //this.load()
     }
 
     startShopping = () => { this.setState({ shoppingMode: true }) }
@@ -169,7 +152,6 @@ class ShoppingListScreen extends React.Component {
                 return
         }
         this.setState({ shoppingMode: false, checkedIngredients: [] })
-        //this.load()
     }
 
     renderList() {
