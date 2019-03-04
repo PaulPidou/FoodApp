@@ -1,7 +1,7 @@
 import { combineReducers, applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 
-import { generalReducer, savedRecipesReducer } from './reducers'
+import { generalReducer } from './reducers'
 
 const AppReducers = combineReducers({
     generalReducer

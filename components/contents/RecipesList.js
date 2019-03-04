@@ -1,5 +1,5 @@
 import React from "react"
-import {ScrollView, Text} from "react-native"
+import { ScrollView, Text } from "react-native"
 import PropTypes from 'prop-types'
 
 import {Left, Right, Body, Content, ListItem, List, Spinner} from "native-base"

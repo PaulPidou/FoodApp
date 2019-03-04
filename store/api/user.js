@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native'
 import { Toast } from 'native-base'
 
-import { fetchSavedRecipes } from '../actions/actions'
+import { fetchSavedRecipes, fetchShoppingList } from '../actions/actions'
 const api_ip = 'http://192.168.43.163:3000/api'
 
 export const getUserLists = async function() {
@@ -191,6 +191,7 @@ export const upsertItemsToShoppingList = async function(items) {
                 textStyle: { textAlign: 'center' },
                 buttonText: 'Ok'
             })
+            fetchShoppingList(userToken)
         })
         .catch(() => {
             Toast.show({
@@ -225,6 +226,7 @@ export const upsertItemsToShoppingListFromRecipes = async function(recipeIDs) {
                 textStyle: { textAlign: 'center' },
                 buttonText: 'Ok'
             })
+            fetchShoppingList(userToken)
         })
         .catch(() => {
             Toast.show({
@@ -259,6 +261,7 @@ export const deleteItemsFromShoppingList = async function(itemIDs) {
                 textStyle: { textAlign: 'center' },
                 buttonText: 'Ok'
             })
+            fetchShoppingList(userToken)
         })
         .catch(() => {
             Toast.show({
@@ -293,6 +296,7 @@ export const transferItemsFromShoppingListToFridge = async function(itemIDs) {
                 textStyle: { textAlign: 'center' },
                 buttonText: 'Ok'
             })
+            fetchShoppingList(userToken)
         })
         .catch(() => {
             Toast.show({
@@ -434,6 +438,7 @@ export const transferItemsFromFridgeToShoppingList = async function(itemIDs) {
                 textStyle: { textAlign: 'center' },
                 buttonText: 'Ok'
             })
+            fetchShoppingList(userToken)
         })
         .catch(() => {
             Toast.show({

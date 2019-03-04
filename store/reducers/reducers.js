@@ -1,5 +1,5 @@
-import {UPDATE_USER_LISTS, FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR} from '../actions/types'
-import { GET_RECIPES, ADD_RECIPES, REMOVE_RECIPES } from '../actions/types'
+import {UPDATE_USER_LISTS, FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR,
+    FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR} from '../actions/types'
 
 const initialState = {
     savedRecipes: undefined,
@@ -31,27 +31,20 @@ export const generalReducer = function(state = initialState, action) {
                 ...state,
                 savedRecipes: []
             }
-        default:
-            return state
-    }
-}
-
-export const savedRecipesReducer = function(state = initialState, action) {
-    switch(action.type) {
-        case GET_RECIPES:
+        case FETCH_SHOPPINGLIST_PENDING:
             return {
                 ...state,
-                savedRecipes: undefined
+                shoppingList: undefined
             }
-        case ADD_RECIPES:
+        case FETCH_SHOPPINGLIST_SUCCESS:
             return {
                 ...state,
-                savedRecipes: action.data
+                shoppingList: action.shoppingList
             }
-        case REMOVE_RECIPES:
+        case FETCH_SHOPPINGLIST_ERROR:
             return {
                 ...state,
-                savedRecipes: []
+                shoppingList: []
             }
         default:
             return state

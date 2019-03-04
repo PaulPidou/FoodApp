@@ -1,14 +1,16 @@
 import React from 'react'
 import {Platform, ScrollView, Text} from 'react-native'
-import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet, Toast} from 'native-base'
+import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet} from 'native-base'
 import {Avatar} from 'react-native-elements'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import GenericStyles from "../constants/Style"
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from '../components/headers/SelectedIngredientHeader'
 import { getShoppingList, transferItemsFromShoppingListToFridge, deleteItemsFromShoppingList } from "../store/api/user"
 
-export default class ShoppingListScreen extends React.Component {
+class ShoppingListScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -16,7 +18,7 @@ export default class ShoppingListScreen extends React.Component {
             selectedIngredients: [],
             shoppingMode: false,
             checkedIngredients: [],
-            ingredients: undefined,
+            //ingredients: undefined,
             requestTransfer: false,
             requestDelete: false
         }
@@ -30,6 +32,7 @@ export default class ShoppingListScreen extends React.Component {
         header: null
     }
 
+    /*
     componentDidMount() {
         this.props.navigation.addListener('willFocus', this.load)
     }
@@ -41,6 +44,7 @@ export default class ShoppingListScreen extends React.Component {
                 this.setState({ ingredients })
             })
     }
+    */
 
     handlePress(item) {
         if(this.state.selected) {
@@ -87,14 +91,14 @@ export default class ShoppingListScreen extends React.Component {
         this.setState({ requestTransfer: true })
         await transferItemsFromShoppingListToFridge(this.state.selectedIngredients)
         this.setState({ requestTransfer: false, selected: false, selectedIngredients: [] })
-        this.load()
+        //this.load()
     }
 
     async deleteSelectedIngredients() {
         this.setState({ requestDelete: true })
         await deleteItemsFromShoppingList(this.state.selectedIngredients)
         this.setState({ requestDelete: false, selected: false, selectedIngredients: [] })
-        this.load()
+        //this.load()
     }
 
     startShopping = () => { this.setState({ shoppingMode: true }) }
@@ -165,11 +169,11 @@ export default class ShoppingListScreen extends React.Component {
                 return
         }
         this.setState({ shoppingMode: false, checkedIngredients: [] })
-        this.load()
+        //this.load()
     }
 
     renderList() {
-        return this.state.ingredients.map((item) => {
+        return this.props.ingredients.map((item) => {
             const isSelected = this.state.selectedIngredients.includes(item._id)
             const title = isSelected ? null : item.ingredientName.charAt(0).toUpperCase()
             const icon = isSelected ? {name: 'check'} : null
@@ -248,9 +252,9 @@ export default class ShoppingListScreen extends React.Component {
             )
         }
 
-        if (this.state.ingredients === undefined) {
+        if (this.props.ingredients === undefined) {
             content = (<Spinner color='#007aff' />)
-        } else if (this.state.ingredients.length === 0) {
+        } else if (this.props.ingredients.length === 0) {
             content = (<Text style={{margin: 10, textAlign: 'center'}}>
                 Votre liste de courses est vide, commencez dès maintenant à la compléter !</Text>)
         } else {
@@ -265,8 +269,14 @@ export default class ShoppingListScreen extends React.Component {
     }
 }
 
+ShoppingListScreen.propTypes = {
+    ingredients: PropTypes.array
+}
+
 const mapStateToProps = (state) => {
     return {
-        shoppingList: state.generalReducer.shoppingList
+        ingredients: state.generalReducer.shoppingList
     }
 }
+
+export default connect(mapStateToProps)(ShoppingListScreen)
