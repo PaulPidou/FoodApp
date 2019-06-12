@@ -84,6 +84,7 @@ class HomeScreen extends React.Component {
                         <Icon
                             style={GenericStyles.icon}
                             name='menu'
+                            type="MaterialIcons"
                         />
                     </Button>
                 </Left>
@@ -100,6 +101,7 @@ class HomeScreen extends React.Component {
                                     <Icon
                                         style={GenericStyles.icon}
                                         name='search'
+                                        type='MaterialIcons'
                                     />
                                 </Button>
                             ) : (<Button transparent></Button>)

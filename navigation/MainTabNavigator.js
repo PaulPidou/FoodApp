@@ -88,7 +88,9 @@ FridgeStack.navigationOptions = {
 }
 
 export default createBottomTabNavigator({
-    HomeStack,
-    ShoppingListStack,
-    FridgeStack
+    'Fridge': FridgeStack,
+    'Recipes': HomeStack,
+    'ShoppingList': ShoppingListStack,
+}, {
+    initialRouteName: 'Recipes'
 })

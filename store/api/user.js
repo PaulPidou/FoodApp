@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native'
 import { Toast } from 'native-base'
 
 import { fetchSavedRecipes, fetchShoppingList, fetchFridge } from '../actions/actions'
-const api_ip = 'http://192.168.43.163:3000/api'
+const api_ip = 'http://192.168.1.27:3000/api'
 
 export const getUserLists = async function() {
     const userToken = await AsyncStorage.getItem('userToken')

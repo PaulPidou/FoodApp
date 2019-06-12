@@ -25,7 +25,7 @@ export default class App extends React.Component {
     } else {
       return (
           <Provider store={store}>
-            <NetworkProvider pingServerUrl={"http://192.168.43.163:3000/"}>
+            <NetworkProvider pingServerUrl={"http://192.168.1.27:3000/"}>
               <Root style={styles.container}>
                   {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
                   <AppNavigator />

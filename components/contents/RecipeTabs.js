@@ -63,7 +63,8 @@ export default class RecipeTabs extends React.Component {
                                 <Left>
                                     <Icon
                                         style={GenericStyles.icon}
-                                        name='person' />
+                                        name='person'
+                                        type="MaterialIcons" />
                                 </Left>
                                 <Body>
                                     <Text>{recipe.author}</Text>

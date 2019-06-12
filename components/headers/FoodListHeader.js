@@ -16,6 +16,7 @@ export default class FoodListHeader extends React.Component {
                         <Icon
                             style={GenericStyles.icon}
                             name='menu'
+                            type="MaterialIcons"
                         />
                     </Button>
                 </Left>
@@ -56,6 +57,7 @@ export default class FoodListHeader extends React.Component {
                         <Icon
                             style={GenericStyles.icon}
                             name='add'
+                            type="MaterialIcons"
                         />
                     </Button>
                 </Right>

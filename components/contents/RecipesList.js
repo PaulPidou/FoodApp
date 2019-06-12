@@ -1,8 +1,8 @@
 import React from "react"
-import { ScrollView, Text } from "react-native"
+import { ScrollView, Text, Image, TouchableOpacity } from "react-native"
 import PropTypes from 'prop-types'
 
-import {Left, Right, Body, Content, ListItem, List, Spinner} from "native-base"
+import {Left, Right, Body, Content, ListItem, H2, List, Spinner, Card, CardItem} from "native-base"
 import {Avatar} from "react-native-elements"
 
 export default class RecipesList extends React.Component {
@@ -13,6 +13,7 @@ export default class RecipesList extends React.Component {
             const title = isSelected ? null : item.title.charAt(0)
             const icon = isSelected ? {name: 'check'} : null
             return (
+                /*
                 <ListItem
                     avatar
                     key={this.props.origin + item._id}
@@ -39,6 +40,31 @@ export default class RecipesList extends React.Component {
                         <Text>{item.totalTime} min</Text>
                     </Right>
                 </ListItem>
+                */
+                <TouchableOpacity
+                    key={this.props.origin + item._id}
+                    onPress={() => this.props.handlePress(item._id)}
+                >
+                    <Card
+                        style={{marginLeft: 15, marginRight: 15, marginTop: 10}}
+                    >
+                        <CardItem cardBody>
+                            <Image source={require('../../assets/images/cooking-icon.png')}
+                                   style={{height: 150, width: null, flex: 1}} />
+                        </CardItem>
+                        <CardItem>
+                            <Body><H2>{item.title}</H2></Body>
+                            <Right>
+                                <Text>{item.totalTime} min</Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem>
+                            <Text note numberOfLines={1}>{
+                                item.difficulty.charAt(0).toUpperCase() + item.difficulty.slice(1)
+                            }, {item.budget.charAt(0).toUpperCase() + item.budget.slice(1)}</Text>
+                        </CardItem>
+                    </Card>
+                </TouchableOpacity>
             )
         })
     }

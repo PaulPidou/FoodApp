@@ -26,6 +26,7 @@ export default class SideBar extends React.Component {
                                 <Icon
                                     style={GenericStyles.icon}
                                     name='home'
+                                    type="MaterialIcons"
                                 />
                             </Left>
                             <Body>
@@ -39,6 +40,7 @@ export default class SideBar extends React.Component {
                                 <Icon
                                     style={GenericStyles.icon}
                                     name='person'
+                                    type="MaterialIcons"
                                 />
                             </Left>
                             <Body>
@@ -52,6 +54,7 @@ export default class SideBar extends React.Component {
                                 <Icon
                                     style={GenericStyles.icon}
                                     name='settings'
+                                    type="MaterialIcons"
                                 />
                             </Left>
                             <Body>

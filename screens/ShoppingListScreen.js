@@ -129,6 +129,7 @@ class ShoppingListScreen extends React.Component {
                         <Icon
                             style={GenericStyles.icon}
                             name='add'
+                            type="MaterialIcons"
                         />
                     </Button>
                 </Right>
