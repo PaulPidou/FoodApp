@@ -2,7 +2,10 @@ import { AsyncStorage } from 'react-native'
 import { Toast } from 'native-base'
 
 import { fetchSavedRecipes, fetchShoppingList, fetchFridge } from '../actions/actions'
-const api_ip = 'http://192.168.1.27:3000/api'
+const api_ip = "http://192.168.43.163:3000/api"
+let userParamaters = {
+    keepFoodListIndependent: false
+}
 
 export const getUserLists = async function() {
     const userToken = await AsyncStorage.getItem('userToken')
@@ -45,6 +48,9 @@ export const saveRecipes = async function(recipeIDs) {
                 buttonText: 'Ok'
             })
             fetchSavedRecipes(userToken)
+            if(!userParamaters.keepFoodListIndependent) {
+                fetchShoppingList(userToken)
+            }
         })
         .catch(() => {
             Toast.show({
@@ -53,10 +59,6 @@ export const saveRecipes = async function(recipeIDs) {
                 buttonText: 'Ok'
             })
         })
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return
-    */
 }
 
 export const deleteSavedRecipes = async function(recipeIDs) {
@@ -80,6 +82,9 @@ export const deleteSavedRecipes = async function(recipeIDs) {
                 buttonText: 'Ok'
             })
             fetchSavedRecipes(userToken)
+            if(!userParamaters.keepFoodListIndependent) {
+                fetchShoppingList(userToken)
+            }
         })
         .catch(() => {
             Toast.show({
@@ -88,10 +93,6 @@ export const deleteSavedRecipes = async function(recipeIDs) {
                 buttonText: 'Ok'
             })
         })
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return
-    */
 }
 
 export const upsertItemsToShoppingList = async function(items) {
@@ -123,10 +124,6 @@ export const upsertItemsToShoppingList = async function(items) {
                 buttonText: 'Ok'
             })
         })
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return
-    */
 }
 
 export const upsertItemsToShoppingListFromRecipes = async function(recipeIDs) {
@@ -158,10 +155,6 @@ export const upsertItemsToShoppingListFromRecipes = async function(recipeIDs) {
                 buttonText: 'Ok'
             })
         })
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return
-    */
 }
 
 export const deleteItemsFromShoppingList = async function(itemIDs) {
@@ -193,10 +186,6 @@ export const deleteItemsFromShoppingList = async function(itemIDs) {
                 buttonText: 'Ok'
             })
         })
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return
-    */
 }
 
 export const transferItemsFromShoppingListToFridge = async function(itemIDs) {
@@ -229,10 +218,6 @@ export const transferItemsFromShoppingListToFridge = async function(itemIDs) {
                 buttonText: 'Ok'
             })
         })
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return
-    */
 }
 
 export const upsertItemsToFridge = async function(items) {
@@ -264,10 +249,6 @@ export const upsertItemsToFridge = async function(items) {
                 buttonText: 'Ok'
             })
         })
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return
-    */
 }
 
 export const deleteItemsFromFridge = async function(itemIDs) {
@@ -299,10 +280,6 @@ export const deleteItemsFromFridge = async function(itemIDs) {
                 buttonText: 'Ok'
             })
         })
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return
-    */
 }
 
 export const transferItemsFromFridgeToShoppingList = async function(itemIDs) {
@@ -335,8 +312,4 @@ export const transferItemsFromFridgeToShoppingList = async function(itemIDs) {
                 buttonText: 'Ok'
             })
         })
-    /*
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return
-    */
 }

@@ -1,46 +1,14 @@
 import React from "react"
-import { ScrollView, Text, Image, TouchableOpacity } from "react-native"
+import {ScrollView, Text, Image, TouchableOpacity} from "react-native"
 import PropTypes from 'prop-types'
 
-import {Left, Right, Body, Content, ListItem, H2, List, Spinner, Card, CardItem} from "native-base"
-import {Avatar} from "react-native-elements"
+import {Right, Body, Content, H2, List, Spinner, Card, CardItem, Icon} from "native-base"
 
 export default class RecipesList extends React.Component {
 
     _renderList() {
         return this.props.recipes.map((item) => {
-            const isSelected = this.props.selectedRecipes.includes(item._id)
-            const title = isSelected ? null : item.title.charAt(0)
-            const icon = isSelected ? {name: 'check'} : null
             return (
-                /*
-                <ListItem
-                    avatar
-                    key={this.props.origin + item._id}
-                    onPress={() => this.props.handlePress(item._id)}
-                    onLongPress={() => this.props.handleLongPress(item._id)}
-                >
-                    <Left>
-                        <Avatar
-                            size="large"
-                            rounded
-                            title={title}
-                            icon={icon}
-                            activeOpacity={0.7}
-                            onPress={() => this.props.handleLongPress(item._id)}
-                        />
-                    </Left>
-                    <Body>
-                    <Text>{item.title}</Text>
-                    <Text note numberOfLines={1}>{
-                        item.difficulty.charAt(0).toUpperCase() + item.difficulty.slice(1)
-                    }, {item.budget.charAt(0).toUpperCase() + item.budget.slice(1)}</Text>
-                    </Body>
-                    <Right>
-                        <Text>{item.totalTime} min</Text>
-                    </Right>
-                </ListItem>
-                */
                 <TouchableOpacity
                     key={this.props.origin + item._id}
                     onPress={() => this.props.handlePress(item._id)}
@@ -50,18 +18,18 @@ export default class RecipesList extends React.Component {
                     >
                         <CardItem cardBody>
                             <Image source={require('../../assets/images/cooking-icon.png')}
-                                   style={{height: 150, width: null, flex: 1}} />
+                                   style={{height: 120, width: null, flex: 1, resizeMode: 'contain'}} />
                         </CardItem>
                         <CardItem>
                             <Body><H2>{item.title}</H2></Body>
-                            <Right>
+                            <Right style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+                                <Icon
+                                    name='timer'
+                                    type='MaterialIcons'
+                                    style={{paddingRight: 5}}
+                                />
                                 <Text>{item.totalTime} min</Text>
                             </Right>
-                        </CardItem>
-                        <CardItem>
-                            <Text note numberOfLines={1}>{
-                                item.difficulty.charAt(0).toUpperCase() + item.difficulty.slice(1)
-                            }, {item.budget.charAt(0).toUpperCase() + item.budget.slice(1)}</Text>
                         </CardItem>
                     </Card>
                 </TouchableOpacity>
