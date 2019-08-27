@@ -1,6 +1,7 @@
 import React from 'react'
-import {Container, Content, List, ListItem, Input, Button, Text, Header, Left, Icon, Spinner} from 'native-base'
-import {Platform, ScrollView} from "react-native"
+import { Container, Content, List, ListItem, Input, Button, Text, Header, Left, Icon, Spinner } from 'native-base'
+import { Platform, ScrollView, View } from 'react-native'
+import { Avatar } from 'react-native-elements'
 import { getAllIngredients } from '../store/api/public'
 import GenericStyles from '../constants/Style'
 
@@ -31,7 +32,7 @@ export default class SearchIngredientScreen extends React.Component {
         this.setState({ ingredients: filteredIngredients })
     }
 
-    renderList() {
+    renderList_old() {
         let new_letter = true
         let current_letter = null
 
@@ -71,6 +72,61 @@ export default class SearchIngredientScreen extends React.Component {
         })
     }
 
+    renderList() {
+        let view = []
+        for (let i = 0; i < this.state.ingredients.length; i+=2) {
+            const item1 = this.state.ingredients[i].name
+            let row = null
+
+            if (i+1 <= this.state.ingredients.length-1) {
+                const item2 = this.state.ingredients[i+1].name
+
+                row = (<View
+                    key={i}
+                    style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
+                    <View style={{width: 150, height: 150, margin: 10, justifyContent: 'center',
+                        alignItems: 'center', borderColor: '#eee', borderWidth: 1, borderRadius: 5}}>
+                        <Avatar
+                            large
+                            rounded
+                            title={item1.charAt(0).toUpperCase()}
+                            activeOpacity={0.7}
+                        />
+                        <Text style={{marginTop: 10}}>{item1.charAt(0).toUpperCase() + item1.slice(1)}</Text>
+                    </View>
+                    <View style={{width: 150, height: 150, margin: 10, justifyContent: 'center',
+                        alignItems: 'center', borderColor: '#eee', borderWidth: 1, borderRadius: 5}}>
+                        <Avatar
+                            large
+                            rounded
+                            title={item2.charAt(0).toUpperCase()}
+                            activeOpacity={0.7}
+                        />
+                        <Text style={{marginTop: 10}}>{item2.charAt(0).toUpperCase() + item2.slice(1)}</Text>
+                    </View>
+                </View>)
+            } else {
+                row = (<View
+                    key={i}
+                    style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
+                    <View style={{width: 150, height: 150, margin: 10, justifyContent: 'center',
+                        alignItems: 'center'}}>
+                        <Avatar
+                            large
+                            rounded
+                            title={item1.charAt(0).toUpperCase()}
+                            activeOpacity={0.7}
+                        />
+                        <Text>{item1.charAt(0).toUpperCase() + item1.slice(1)}</Text>
+                    </View>
+                    <View style={{width: 150, height: 150, margin: 10}} />
+                </View>)
+            }
+            view.push(row)
+        }
+        return view
+    }
+
     render() {
         return (
             <Container>
@@ -95,9 +151,7 @@ export default class SearchIngredientScreen extends React.Component {
                     {
                         this.state.ingredientsCache === undefined ? (<Spinner color='#007aff' />) : (
                             <ScrollView>
-                                <List>
-                                    {this.renderList()}
-                                </List>
+                                {this.renderList()}
                             </ScrollView>
                         )
                     }
@@ -106,3 +160,9 @@ export default class SearchIngredientScreen extends React.Component {
         )
     }
 }
+
+/*
+<List>
+                                    {this.renderList()}
+                                </List>
+ */

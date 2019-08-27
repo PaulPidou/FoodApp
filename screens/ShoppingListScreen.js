@@ -1,7 +1,7 @@
 import React from 'react'
 import {Platform, ScrollView, Text} from 'react-native'
 import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet} from 'native-base'
-import {Avatar} from 'react-native-elements'
+import { Avatar } from 'react-native-elements'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
