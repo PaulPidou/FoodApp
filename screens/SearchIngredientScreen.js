@@ -110,14 +110,14 @@ export default class SearchIngredientScreen extends React.Component {
                     key={i}
                     style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
                     <View style={{width: 150, height: 150, margin: 10, justifyContent: 'center',
-                        alignItems: 'center'}}>
+                        alignItems: 'center', borderColor: '#eee', borderWidth: 1, borderRadius: 5}}>
                         <Avatar
                             large
                             rounded
                             title={item1.charAt(0).toUpperCase()}
                             activeOpacity={0.7}
                         />
-                        <Text>{item1.charAt(0).toUpperCase() + item1.slice(1)}</Text>
+                        <Text style={{marginTop: 10}}>{item1.charAt(0).toUpperCase() + item1.slice(1)}</Text>
                     </View>
                     <View style={{width: 150, height: 150, margin: 10}} />
                 </View>)
@@ -160,9 +160,3 @@ export default class SearchIngredientScreen extends React.Component {
         )
     }
 }
-
-/*
-<List>
-                                    {this.renderList()}
-                                </List>
- */
