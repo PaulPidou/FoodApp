@@ -163,7 +163,7 @@ export default class RecipeTabs extends React.Component {
                                         <Avatar
                                             size="small"
                                             rounded
-                                            title={item.ingredient.charAt(0).toUpperCase()}
+                                            title={item.ingredientName.charAt(0).toUpperCase()}
                                             activeOpacity={0.7}
                                         />
                                     </Left>
@@ -193,18 +193,18 @@ export default class RecipeTabs extends React.Component {
                                 <ListItem
                                     icon
                                     avatar
-                                    key={item.utensil}
+                                    key={item.utensilName}
                                 >
                                     <Left style={{height: 30}}>
                                         <Avatar
                                             size="small"
                                             rounded
-                                            title={this._getUtensilAvatarTitle(item.utensil)}
+                                            title={this._getUtensilAvatarTitle(item.utensilName)}
                                             activeOpacity={0.7}
                                         />
                                     </Left>
                                     <Body>
-                                    <Text>{item.utensil}</Text>
+                                    <Text>{item.utensilName}</Text>
                                     </Body>
                                 </ListItem>
                             )

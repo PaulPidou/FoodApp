@@ -32,9 +32,17 @@ RecipeTabBarIcon.propTypes = {
     focused: PropTypes.bool
 }
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Recettes',
-  tabBarIcon: RecipeTabBarIcon
+HomeStack.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true
+    if (navigation.state.index > 0) {
+        tabBarVisible = false
+    }
+
+    return {
+        tabBarVisible,
+        tabBarLabel: 'Recettes',
+        tabBarIcon: RecipeTabBarIcon
+    }
 }
 
 const ShoppingListStack = createStackNavigator({
@@ -57,9 +65,18 @@ ShoppingListTabBarIcon.propTypes = {
     focused: PropTypes.bool
 }
 
-ShoppingListStack.navigationOptions = {
-  tabBarLabel: 'Liste de courses',
-  tabBarIcon: ShoppingListTabBarIcon
+ShoppingListStack.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true
+    if (navigation.state.index > 0) {
+        tabBarVisible = false
+    }
+
+    return {
+        tabBarVisible,
+        tabBarLabel: 'Liste de courses',
+        tabBarIcon: ShoppingListTabBarIcon
+    }
+
 }
 
 const FridgeStack = createStackNavigator({
@@ -82,9 +99,17 @@ FridgeTabBarIcon.propTypes = {
     focused: PropTypes.bool
 }
 
-FridgeStack.navigationOptions = {
-  tabBarLabel: 'Frigo',
-  tabBarIcon: FridgeTabBarIcon
+FridgeStack.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true
+    if (navigation.state.index > 0) {
+        tabBarVisible = false
+    }
+
+    return {
+        tabBarVisible,
+        tabBarLabel: 'Frigo',
+        tabBarIcon: FridgeTabBarIcon
+    }
 }
 
 export default createBottomTabNavigator({
