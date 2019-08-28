@@ -47,9 +47,15 @@ const GenericStyles = StyleSheet.create({
         margin: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        borderColor: '#eee',
         borderWidth: 1,
         borderRadius: 5
+    },
+    unselectedIngredientBlock: {
+        borderColor: '#eee',
+    },
+    selectedIngredientBlock: {
+        borderColor: '#79ffb6',
+        backgroundColor: '#b3ffde'
     }
 })
 

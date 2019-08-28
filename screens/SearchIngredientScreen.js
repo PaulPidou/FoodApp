@@ -1,6 +1,6 @@
 import React from 'react'
-import { Container, Content, List, ListItem, Input, Button, Text, Header, Left, Icon, Spinner } from 'native-base'
-import { Platform, ScrollView, View } from 'react-native'
+import { Container, Content, Input, Button, Text, Header, Left, Icon, Spinner } from 'native-base'
+import { Platform, ScrollView, View, TouchableOpacity } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import { getAllIngredients } from '../store/api/public'
 import GenericStyles from '../constants/Style'
@@ -10,7 +10,8 @@ export default class SearchIngredientScreen extends React.Component {
         super(props)
         this.state = {
             ingredients: undefined,
-            ingredientsCache: undefined
+            ingredientsCache: undefined,
+            ingredientsSelected: []
         }
     }
 
@@ -32,81 +33,62 @@ export default class SearchIngredientScreen extends React.Component {
         this.setState({ ingredients: filteredIngredients })
     }
 
-    renderList_old() {
-        let new_letter = true
-        let current_letter = null
-
-        return this.state.ingredients.map((item) => {
-            if(current_letter !== item.name.charAt(0)) {
-                new_letter = true
-                current_letter = item.name.charAt(0)
-            }
-
-            if (new_letter) {
-                new_letter = false
-                return (
-                    [
-                        <ListItem key={item.name.charAt(0)} itemDivider>
-                            <Text>{item.name.charAt(0).toUpperCase()}</Text>
-                        </ListItem>,
-                        <ListItem
-                            key={item._id}
-                            onPress={() => this.props.navigation.navigate('AddIngredient', {ingredient: item,
-                                origin: this.props.navigation.state.params.origin})}
-                        >
-                            <Text>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</Text>
-                        </ListItem>
-                    ]
-                )
-            } else {
-                return (
-                    <ListItem
-                        key={item._id}
-                        onPress={() => this.props.navigation.navigate('AddIngredient', {ingredient: item,
-                            origin: this.props.navigation.state.params.origin})}
-                    >
-                        <Text>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</Text>
-                    </ListItem>
-                )
-            }
-        })
+    _selectIngredient(ingredientID) {
+        const isSelected = this.state.ingredientsSelected.includes(ingredientID)
+        const newArray = isSelected ? this.state.ingredientsSelected.filter(id => id !== ingredientID) :
+            [...this.state.ingredientsSelected, ingredientID]
+        this.setState({ ingredientsSelected: newArray })
     }
 
     renderList() {
         let view = []
         for (let i = 0; i < this.state.ingredients.length; i+=2) {
-            const item1 = this.state.ingredients[i].name
+            const item1 = this.state.ingredients[i]
             let row = null
 
             if (i+1 <= this.state.ingredients.length-1) {
-                const item2 = this.state.ingredients[i+1].name
+                const item2 = this.state.ingredients[i+1]
 
                 row = (
-                    <View style={GenericStyles.ingredientBlock}>
-                        <Avatar
-                            large
-                            rounded
-                            title={item2.charAt(0).toUpperCase()}
-                            activeOpacity={0.7}
-                        />
-                        <Text style={{marginTop: 10}}>{item2.charAt(0).toUpperCase() + item2.slice(1)}</Text>
-                    </View>
+                    <TouchableOpacity
+                        activeOpacity={.4}
+                        onPress={() => this._selectIngredient(item2._id)}>
+                        <View
+                            style={[GenericStyles.ingredientBlock,
+                            this.state.ingredientsSelected.includes(item2._id) ?
+                                GenericStyles.selectedIngredientBlock : GenericStyles.unselectedIngredientBlock]}
+                        >
+                            <Avatar
+                                large
+                                rounded
+                                title={item2.name.charAt(0).toUpperCase()}
+                                activeOpacity={0.7}
+                            />
+                            <Text style={{marginTop: 10}}>{item2.name.charAt(0).toUpperCase() + item2.name.slice(1)}</Text>
+                        </View>
+                    </TouchableOpacity>
                 )
             } else {
                 row = (<View style={{width: 150, height: 150, margin: 10}} />)
             }
-            
+
             view.push(
                 <View key={i} style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
-                    <View style={GenericStyles.ingredientBlock}>
-                        <Avatar
-                            large
-                            rounded
-                            title={item1.charAt(0).toUpperCase()}
-                            activeOpacity={0.7}
-                        />
-                        <Text style={{marginTop: 10}}>{item1.charAt(0).toUpperCase() + item1.slice(1)}</Text>
-                    </View>
+                    <TouchableOpacity
+                        activeOpacity={.4}
+                        onPress={() => this._selectIngredient(item1._id)}>
+                        <View style={[GenericStyles.ingredientBlock,
+                            this.state.ingredientsSelected.includes(item1._id) ?
+                                GenericStyles.selectedIngredientBlock : GenericStyles.unselectedIngredientBlock]}>
+                            <Avatar
+                                large
+                                rounded
+                                title={item1.name.charAt(0).toUpperCase()}
+                                activeOpacity={0.7}
+                            />
+                            <Text style={{marginTop: 10}}>{item1.name.charAt(0).toUpperCase() + item1.name.slice(1)}</Text>
+                        </View>
+                    </TouchableOpacity>
                     {row}
                 </View>
             )
