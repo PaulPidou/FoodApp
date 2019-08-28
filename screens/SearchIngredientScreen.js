@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Content, Input, Button, Text, Header, Left, Icon, Spinner } from 'native-base'
-import { Platform, ScrollView, View, TouchableOpacity } from 'react-native'
+import { Platform, ScrollView, View, TouchableOpacity, Dimensions } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import { getAllIngredients } from '../store/api/public'
 import GenericStyles from '../constants/Style'
@@ -119,12 +119,31 @@ export default class SearchIngredientScreen extends React.Component {
                 <Content>
                     {
                         this.state.ingredientsCache === undefined ? (<Spinner color='#007aff' />) : (
-                            <ScrollView>
-                                {this.renderList()}
-                            </ScrollView>
+                            <View style={{marginLeft: 10, marginRight: 10}}>
+                                <ScrollView>
+                                    {this.renderList()}
+                                </ScrollView>
+                            </View>
                         )
                     }
                 </Content>
+                {
+                    this.state.ingredientsCache !== undefined ? (
+                        <Button rounded success
+                                style={{
+                                    position: 'absolute',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: 200,
+                                    left: Math.round(Dimensions.get('window').width / 2) - 100,
+                                    bottom: 10,
+                                    zIndex:5
+                                }}
+                        >
+                            <Text>Done</Text>
+                        </Button>
+                    ) : (<View/>)
+                }
             </Container>
         )
     }
