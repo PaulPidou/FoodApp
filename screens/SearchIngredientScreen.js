@@ -81,21 +81,8 @@ export default class SearchIngredientScreen extends React.Component {
             if (i+1 <= this.state.ingredients.length-1) {
                 const item2 = this.state.ingredients[i+1].name
 
-                row = (<View
-                    key={i}
-                    style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
-                    <View style={{width: 150, height: 150, margin: 10, justifyContent: 'center',
-                        alignItems: 'center', borderColor: '#eee', borderWidth: 1, borderRadius: 5}}>
-                        <Avatar
-                            large
-                            rounded
-                            title={item1.charAt(0).toUpperCase()}
-                            activeOpacity={0.7}
-                        />
-                        <Text style={{marginTop: 10}}>{item1.charAt(0).toUpperCase() + item1.slice(1)}</Text>
-                    </View>
-                    <View style={{width: 150, height: 150, margin: 10, justifyContent: 'center',
-                        alignItems: 'center', borderColor: '#eee', borderWidth: 1, borderRadius: 5}}>
+                row = (
+                    <View style={GenericStyles.ingredientBlock}>
                         <Avatar
                             large
                             rounded
@@ -104,13 +91,14 @@ export default class SearchIngredientScreen extends React.Component {
                         />
                         <Text style={{marginTop: 10}}>{item2.charAt(0).toUpperCase() + item2.slice(1)}</Text>
                     </View>
-                </View>)
+                )
             } else {
-                row = (<View
-                    key={i}
-                    style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
-                    <View style={{width: 150, height: 150, margin: 10, justifyContent: 'center',
-                        alignItems: 'center', borderColor: '#eee', borderWidth: 1, borderRadius: 5}}>
+                row = (<View style={{width: 150, height: 150, margin: 10}} />)
+            }
+            
+            view.push(
+                <View key={i} style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
+                    <View style={GenericStyles.ingredientBlock}>
                         <Avatar
                             large
                             rounded
@@ -119,10 +107,9 @@ export default class SearchIngredientScreen extends React.Component {
                         />
                         <Text style={{marginTop: 10}}>{item1.charAt(0).toUpperCase() + item1.slice(1)}</Text>
                     </View>
-                    <View style={{width: 150, height: 150, margin: 10}} />
-                </View>)
-            }
-            view.push(row)
+                    {row}
+                </View>
+            )
         }
         return view
     }
