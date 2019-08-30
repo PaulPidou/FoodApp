@@ -2,8 +2,10 @@ import React from 'react'
 import { Container, Content, Input, Button, Text, Header, Left, Right, Icon, Spinner } from 'native-base'
 import { Platform, ScrollView, View, TouchableOpacity, Dimensions } from 'react-native'
 import { Avatar } from 'react-native-elements'
-import { getAllIngredients } from '../store/api/public'
+
 import GenericStyles from '../constants/Style'
+import { getAllIngredients } from '../store/api/public'
+import { upsertItemsToShoppingList, upsertItemsToFridge } from '../store/api/user'
 
 export default class SearchIngredientScreen extends React.Component {
     constructor(props) {
@@ -49,6 +51,18 @@ export default class SearchIngredientScreen extends React.Component {
         const newArray = isSelected ? this.state.ingredientsSelected.filter(id => id !== ingredientID) :
             [...this.state.ingredientsSelected, ingredientID]
         this.setState({ ingredientsSelected: newArray })
+    }
+
+    handlePress() {
+        const screen = this.props.navigation.state.params.origin === 'fridge' ? 'Fridge' : 'ShoppingList'
+        if(this.props.navigation.state.params.origin === 'fridge') {
+            console.log('Add to fridge')
+            console.log(this.state.ingredientsSelected)
+        } else {
+            console.log('Add to SL')
+            console.log(this.state.ingredientsSelected)
+        }
+        this.props.navigation.navigate(screen)
     }
 
     renderList() {
@@ -135,7 +149,8 @@ export default class SearchIngredientScreen extends React.Component {
                             onPress={() => this._sortIngredients(!this.state.sortByFame)}>
                             <Icon
                                 style={GenericStyles.icon}
-                                name={Platform.OS === 'ios' ? 'ios-'.concat(rightIcon) : 'md-'.concat(rightIcon)}
+                                name={this.state.sortByFame ? 'sort-by-alpha': 'sort' }
+                                type='MaterialIcons'
                             />
                         </Button>
                     </Right>
@@ -163,6 +178,7 @@ export default class SearchIngredientScreen extends React.Component {
                                     bottom: 10,
                                     zIndex:5
                                 }}
+                                onPress={() => { this.handlePress() }}
                         >
                             <Text>Ajouter</Text>
                         </Button>
