@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Content, Input, Button, Text, Header, Left, Icon, Spinner } from 'native-base'
+import { Container, Content, Input, Button, Text, Header, Left, Right, Icon, Spinner } from 'native-base'
 import { Platform, ScrollView, View, TouchableOpacity, Dimensions } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import { getAllIngredients } from '../store/api/public'
@@ -11,7 +11,8 @@ export default class SearchIngredientScreen extends React.Component {
         this.state = {
             ingredients: undefined,
             ingredientsCache: undefined,
-            ingredientsSelected: []
+            ingredientsSelected: [],
+            sortByFame: false
         }
     }
 
@@ -26,11 +27,21 @@ export default class SearchIngredientScreen extends React.Component {
             })
     }
 
-    searchFilterFunction(text) {
+    _searchFilterFunction(text) {
         const filteredIngredients = this.state.ingredientsCache.filter(item => {
             return item.name.startsWith(text.toLowerCase())
         })
-        this.setState({ ingredients: filteredIngredients })
+        this.setState({ ingredients: filteredIngredients },
+            () => { this._sortIngredients(this.state.sortByFame) })
+    }
+
+    _sortIngredients(sortByFame) {
+        let ingredients = this.state.ingredients.slice()
+
+        sortByFame ? ingredients.sort((a, b) => (a.fame > b.fame) ? -1 : 1) :
+            ingredients.sort((a, b) => (a.name > b.name) ? 1 : -1)
+
+        this.setState({ ingredients, sortByFame })
     }
 
     _selectIngredient(ingredientID) {
@@ -62,6 +73,7 @@ export default class SearchIngredientScreen extends React.Component {
                                 large
                                 rounded
                                 title={item2.name.charAt(0).toUpperCase()}
+                                source={{ uri: item2.picture }}
                                 activeOpacity={0.7}
                             />
                             <Text style={{marginTop: 10}}>{item2.name.charAt(0).toUpperCase() + item2.name.slice(1)}</Text>
@@ -84,6 +96,7 @@ export default class SearchIngredientScreen extends React.Component {
                                 large
                                 rounded
                                 title={item1.name.charAt(0).toUpperCase()}
+                                source={{ uri: item1.picture }}
                                 activeOpacity={0.7}
                             />
                             <Text style={{marginTop: 10}}>{item1.name.charAt(0).toUpperCase() + item1.name.slice(1)}</Text>
@@ -97,6 +110,7 @@ export default class SearchIngredientScreen extends React.Component {
     }
 
     render() {
+        const rightIcon = this.state.sortByFame ? 'list' : 'podium'
         return (
             <Container>
                 <Header searchbar style={GenericStyles.header} >
@@ -113,8 +127,18 @@ export default class SearchIngredientScreen extends React.Component {
                     <Input
                         placeholder={'Je recherche un ingrédient...'}
                         returnKeyType = { "search" }
-                        onChangeText={text => this.searchFilterFunction(text)}
+                        onChangeText={text => this._searchFilterFunction(text)}
                     />
+                    <Right style={{flex: 0}}>
+                        <Button
+                            transparent
+                            onPress={() => this._sortIngredients(!this.state.sortByFame)}>
+                            <Icon
+                                style={GenericStyles.icon}
+                                name={Platform.OS === 'ios' ? 'ios-'.concat(rightIcon) : 'md-'.concat(rightIcon)}
+                            />
+                        </Button>
+                    </Right>
                 </Header>
                 <Content>
                     {
@@ -140,7 +164,7 @@ export default class SearchIngredientScreen extends React.Component {
                                     zIndex:5
                                 }}
                         >
-                            <Text>Done</Text>
+                            <Text>Ajouter</Text>
                         </Button>
                     ) : (<View/>)
                 }
