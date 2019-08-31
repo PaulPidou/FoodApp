@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14ea75e8-cb80-4a67-b5af-ce7f8d11d26a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/screens/FridgeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/FridgeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/SearchIngredientScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/SearchIngredientScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/ShoppingListScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ShoppingListScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/MainTabNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/MainTabNavigator.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -37,7 +35,7 @@
           <entry key="babelrc" value="3" />
           <entry key="gitignore" value="1" />
           <entry key="jpg" value="1" />
-          <entry key="js" value="360" />
+          <entry key="js" value="361" />
           <entry key="json" value="18" />
           <entry key="png" value="4" />
         </counts>
@@ -46,7 +44,7 @@
         <counts>
           <entry key="Image" value="5" />
           <entry key="JSON" value="21" />
-          <entry key="JavaScript" value="360" />
+          <entry key="JavaScript" value="361" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -122,11 +120,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/screens/ShoppingListScreen.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="151">
               <caret line="170" column="42" selection-start-line="170" selection-start-column="42" selection-end-line="170" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/navigation/MainTabNavigator.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="81" column="45" selection-start-line="81" selection-start-column="45" selection-end-line="81" selection-end-column="45" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -247,7 +257,6 @@
         <option value="$PROJECT_DIR$/App.js" />
         <option value="$PROJECT_DIR$/store/reducers/index.js" />
         <option value="$PROJECT_DIR$/store/api/user.js" />
-        <option value="$PROJECT_DIR$/navigation/MainTabNavigator.js" />
         <option value="$PROJECT_DIR$/constants/Style.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/components/contents/RecipesList.js" />
@@ -255,6 +264,7 @@
         <option value="$PROJECT_DIR$/screens/SearchIngredientScreen.js" />
         <option value="$PROJECT_DIR$/screens/FridgeScreen.js" />
         <option value="$PROJECT_DIR$/screens/ShoppingListScreen.js" />
+        <option value="$PROJECT_DIR$/navigation/MainTabNavigator.js" />
       </list>
     </option>
   </component>
@@ -432,12 +442,12 @@
       <workItem from="1560348775962" duration="8021000" />
       <workItem from="1561191906075" duration="3320000" />
       <workItem from="1561282566764" duration="3619000" />
-      <workItem from="1566839551757" duration="23859000" />
+      <workItem from="1566839551757" duration="23965000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="281156000" />
+    <option name="totallyTimeSpent" value="281262000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="798" extended-state="6" />
@@ -445,15 +455,15 @@
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="npm" order="1" sideWeight="0.2934363" side_tool="true" weight="0.22973925" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.7065637" visible="true" weight="0.22973925" />
+      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.7065637" visible="true" weight="0.22973925" />
       <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" sideWeight="0.4992948" weight="0.3286119" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50070524" side_tool="true" weight="0.3286119" />
       <window_info anchor="bottom" id="Version Control" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Docker" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Find" order="5" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="6" visible="true" weight="0.3385269" />
+      <window_info active="true" anchor="bottom" id="Find" order="5" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.3385269" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -672,16 +682,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/navigation/MainTabNavigator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-135">
-          <caret line="79" column="1" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -797,6 +797,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
           <caret line="170" column="42" selection-start-line="170" selection-start-column="42" selection-end-line="170" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/navigation/MainTabNavigator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="81" column="45" selection-start-line="81" selection-start-column="45" selection-end-line="81" selection-end-column="45" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>

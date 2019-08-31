@@ -12,7 +12,6 @@ import RecipeScreen from '../screens/RecipeScreen'
 import ShoppingListScreen from '../screens/ShoppingListScreen'
 import FridgeScreen from '../screens/FridgeScreen'
 import SearchIngredientScreen from '../screens/SearchIngredientScreen'
-import AddIngredientScreen from '../screens/AddIngredientScreen'
 
 const HomeStack = createStackNavigator({
     Home: HomeScreen,
@@ -48,7 +47,6 @@ HomeStack.navigationOptions = ({ navigation }) => {
 const ShoppingListStack = createStackNavigator({
     ShoppingList: ShoppingListScreen,
     SearchIngredient: SearchIngredientScreen,
-    AddIngredient: AddIngredientScreen,
     SearchRecipe: SearchRecipeScreen,
     RecipeDetails: RecipeScreen
 })
@@ -82,7 +80,6 @@ ShoppingListStack.navigationOptions = ({ navigation }) => {
 const FridgeStack = createStackNavigator({
     Fridge: FridgeScreen,
     SearchIngredient: SearchIngredientScreen,
-    AddIngredient: AddIngredientScreen,
     SearchRecipe: SearchRecipeScreen,
     RecipeDetails: RecipeScreen
 })
