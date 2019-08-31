@@ -33,7 +33,7 @@ class ShoppingListScreen extends React.Component {
 
     handlePress(item) {
         if(this.state.selected) {
-            this._updateStateArray(item._id, 'selectedIngredients')
+            this._updateStateArray(item.ingredientID, 'selectedIngredients')
         } else {
             this.props.navigation.navigate('AddIngredient', {ingredient: item, origin: 'shoppinglist' })
         }
@@ -69,7 +69,7 @@ class ShoppingListScreen extends React.Component {
     }
 
     updateSelected() {
-        this.setState({selectedIngredients: this.props.ingredients.map(item => item._id)})
+        this.setState({selectedIngredients: this.props.ingredients.map(item => item.ingredientID)})
     }
 
     async transferItemsToFridge() {
@@ -157,27 +157,27 @@ class ShoppingListScreen extends React.Component {
 
     renderList() {
         return this.props.ingredients.map((item) => {
-            const isSelected = this.state.selectedIngredients.includes(item._id)
+            const isSelected = this.state.selectedIngredients.includes(item.ingredientID)
             const title = isSelected ? null : item.ingredientName.charAt(0).toUpperCase()
             const icon = isSelected ? {name: 'check'} : null
 
-            const isChecked = this.state.checkedIngredients.includes(item._id)
+            const isChecked = this.state.checkedIngredients.includes(item.ingredientID)
             const iconLeft = isChecked ? (Platform.OS === 'ios' ? 'ios-checkbox-outline' : 'md-checkbox-outline') :
                 (Platform.OS === 'ios' ? 'ios-square-outline' : 'md-square-outline')
             return (
                 <ListItem
                     icon
                     avatar
-                    key={item._id}
+                    key={item.ingredientID}
                     onPress={() => this.handlePress(item)}
-                    onLongPress={() => this.handleLongPress(item._id)}
+                    onLongPress={() => this.handleLongPress(item.ingredientID)}
                 >
                     <Left style={{height: 30}}>
                         {
                             this.state.shoppingMode ? (
                                 <Button
                                     transparent
-                                    onPress={() => {this._updateStateArray(item._id, 'checkedIngredients')}}
+                                    onPress={() => {this._updateStateArray(item.ingredientID, 'checkedIngredients')}}
                                 >
                                     <Icon name={iconLeft} />
                                 </Button>) : (
@@ -187,7 +187,7 @@ class ShoppingListScreen extends React.Component {
                                         title={title}
                                         icon={icon}
                                         activeOpacity={0.7}
-                                        onPress={() => this.handleLongPress(item._id)}
+                                        onPress={() => this.handleLongPress(item.ingredientID)}
                                     />)
                         }
                     </Left>
@@ -219,7 +219,7 @@ class ShoppingListScreen extends React.Component {
                     transferItemsToFridge={this.transferItemsToFridge}
                     deleteSelectedIngredients={this.deleteSelectedIngredients}
                     selectedIngredients={this.props.ingredients ?
-                        this.props.ingredients.filter(item => this.state.selectedIngredients.includes(item._id)) : null }
+                        this.props.ingredients.filter(item => this.state.selectedIngredients.includes(item.ingredientID)) : null }
                 />)
         } else if(this.state.shoppingMode) {
             header = this.shoppingHeader()

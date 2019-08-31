@@ -2,12 +2,14 @@ import React from 'react'
 import { Container, Content, Input, Button, Text, Header, Left, Right, Icon, Spinner } from 'native-base'
 import { Platform, ScrollView, View, TouchableOpacity, Dimensions } from 'react-native'
 import { Avatar } from 'react-native-elements'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import GenericStyles from '../constants/Style'
 import { getAllIngredients } from '../store/api/public'
-import { upsertItemsToShoppingList, upsertItemsToFridge } from '../store/api/user'
+import {upsertItemsToShoppingList, upsertItemsToFridge, getUserLists } from '../store/api/user'
 
-export default class SearchIngredientScreen extends React.Component {
+class SearchIngredientScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -53,14 +55,15 @@ export default class SearchIngredientScreen extends React.Component {
         this.setState({ ingredientsSelected: newArray })
     }
 
-    handlePress() {
+    async handlePress() {
         const screen = this.props.navigation.state.params.origin === 'fridge' ? 'Fridge' : 'ShoppingList'
+        const ingredients = this.state.ingredientsSelected.map((item) => {
+            return { ingredientID: item }
+        })
         if(this.props.navigation.state.params.origin === 'fridge') {
-            console.log('Add to fridge')
-            console.log(this.state.ingredientsSelected)
+            await upsertItemsToFridge(ingredients)
         } else {
-            console.log('Add to SL')
-            console.log(this.state.ingredientsSelected)
+            await upsertItemsToShoppingList(ingredients)
         }
         this.props.navigation.navigate(screen)
     }
@@ -187,3 +190,9 @@ export default class SearchIngredientScreen extends React.Component {
         )
     }
 }
+
+SearchIngredientScreen.propTypes = {
+    dispatch: PropTypes.func
+}
+
+export default connect()(SearchIngredientScreen)

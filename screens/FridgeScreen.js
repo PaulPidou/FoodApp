@@ -16,7 +16,6 @@ class Fridge extends React.Component {
         this.state = {
             selected: false,
             selectedIngredients: [],
-            //ingredients: undefined,
             requestTransfer: false,
             requestDelete: false
         }
@@ -32,7 +31,7 @@ class Fridge extends React.Component {
 
     handlePress(item) {
         if(this.state.selected) {
-            this._updateStateArray(item._id)
+            this._updateStateArray(item.ingredientID)
         } else {
             this.props.navigation.navigate('AddIngredient', {ingredient: item, origin: 'fridge'})
         }
@@ -65,7 +64,7 @@ class Fridge extends React.Component {
 
     updateSelected() {
         this.setState((state) => ({
-            selectedIngredients: state.ingredients.map(item => item._id)
+            selectedIngredients: state.ingredients.map(item => item.ingredientID)
         }))
     }
 
@@ -83,16 +82,16 @@ class Fridge extends React.Component {
 
     renderList() {
         return this.props.ingredients.map((item) => {
-            const isSelected = this.state.selectedIngredients.includes(item._id)
+            const isSelected = this.state.selectedIngredients.includes(item.ingredientID)
             const title = isSelected ? null : item.ingredientName.charAt(0).toUpperCase()
             const icon = isSelected ? {name: 'check'} : null
             return (
                 <ListItem
                     icon
                     avatar
-                    key={item._id}
+                    key={item.ingredientID}
                     onPress={() => this.handlePress(item)}
-                    onLongPress={() => this.handleLongPress(item._id)}
+                    onLongPress={() => this.handleLongPress(item.ingredientID)}
                 >
                     <Left style={{height: 30}}>
                         <Avatar
@@ -101,7 +100,7 @@ class Fridge extends React.Component {
                             title={title}
                             icon={icon}
                             activeOpacity={0.7}
-                            onPress={() => this.handleLongPress(item._id)}
+                            onPress={() => this.handleLongPress(item.ingredientID)}
                         />
                     </Left>
                     <Body>
@@ -144,7 +143,7 @@ class Fridge extends React.Component {
                             transferItemsToShoppingList={this.transferItemsToShoppingList}
                             deleteSelectedIngredients={this.deleteSelectedIngredients}
                             selectedIngredients={this.props.ingredients ?
-                                this.props.ingredients.filter(item => this.state.selectedIngredients.includes(item._id)) : null }
+                                this.props.ingredients.filter(item => this.state.selectedIngredients.includes(item.ingredientID)) : null }
                         />) :
                     <FoodListHeader
                         navigation={this.props.navigation}
