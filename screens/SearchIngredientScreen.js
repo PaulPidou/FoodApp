@@ -124,7 +124,6 @@ export default class SearchIngredientScreen extends React.Component {
     }
 
     render() {
-        const rightIcon = this.state.sortByFame ? 'list' : 'podium'
         return (
             <Container>
                 <Header searchbar style={GenericStyles.header} >
@@ -159,7 +158,7 @@ export default class SearchIngredientScreen extends React.Component {
                     {
                         this.state.ingredientsCache === undefined ? (<Spinner color='#007aff' />) : (
                             <View style={{marginLeft: 10, marginRight: 10}}>
-                                <ScrollView>
+                                <ScrollView style={{ marginBottom: 55 }}>
                                     {this.renderList()}
                                 </ScrollView>
                             </View>
