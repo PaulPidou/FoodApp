@@ -32,14 +32,18 @@ class ShoppingListScreen extends React.Component {
     }
 
     handlePress(item) {
-        if(this.state.selected) {
+        if(this.state.shoppingMode) {
+            this._updateStateArray(item.ingredientID, 'checkedIngredients')
+        } else if(this.state.selected) {
             this._updateStateArray(item.ingredientID, 'selectedIngredients')
-        } else {
-            this.props.navigation.navigate('AddIngredient', {ingredient: item, origin: 'shoppinglist' })
         }
     }
 
     handleLongPress(itemID) {
+        if(this.state.shoppingMode) {
+            this._updateStateArray(itemID, 'checkedIngredients')
+            return
+        }
         if(this.state.selected) {
             this._updateStateArray(itemID, 'selectedIngredients')
         } else {
@@ -97,6 +101,16 @@ class ShoppingListScreen extends React.Component {
                         <Icon
                             style={GenericStyles.icon}
                             name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
+                        />
+                    </Button>
+                    <Button transparent
+                            onPress={() => this.setState({checkedIngredients:
+                                    this.props.ingredients.map(item => item.ingredientID) })}
+                            style={{flex: 0}}
+                    >
+                        <Icon
+                            style={GenericStyles.icon}
+                            name={Platform.OS === 'ios' ? 'ios-filing' : 'md-filing'}
                         />
                     </Button>
                 </Left>
@@ -177,7 +191,7 @@ class ShoppingListScreen extends React.Component {
                             this.state.shoppingMode ? (
                                 <Button
                                     transparent
-                                    onPress={() => {this._updateStateArray(item.ingredientID, 'checkedIngredients')}}
+                                    onPress={() => this.handlePress(item)}
                                 >
                                     <Icon name={iconLeft} />
                                 </Button>) : (
@@ -194,9 +208,7 @@ class ShoppingListScreen extends React.Component {
                     <Body>
                     <Text
                         style={isChecked && {textDecorationLine: 'line-through'}}
-                    >{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)}
-                        {(item.quantity || item.unit) && ': '}
-                        {item.quantity} {item.unit}</Text>
+                    >{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)}</Text>
                     </Body>
                 </ListItem>
             )

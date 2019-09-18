@@ -32,8 +32,6 @@ class Fridge extends React.Component {
     handlePress(item) {
         if(this.state.selected) {
             this._updateStateArray(item.ingredientID)
-        } else {
-            this.props.navigation.navigate('AddIngredient', {ingredient: item, origin: 'fridge'})
         }
     }
 

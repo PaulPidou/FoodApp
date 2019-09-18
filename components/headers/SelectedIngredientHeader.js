@@ -36,7 +36,7 @@ export default class SelectedIngredientHeader extends React.Component {
                                 <ActivityIndicator size="small" color='#007aff' />
                             </Button>
                         ) : (
-                        this.props.origin === 'shoppinglist' ? (
+                        this.props.origin === 'shoppinglist' && (
                             <Button
                                 transparent
                                 onPress={() => {
@@ -46,30 +46,22 @@ export default class SelectedIngredientHeader extends React.Component {
                                     style={GenericStyles.icon}
                                     name={Platform.OS === 'ios' ? 'ios-egg' : 'md-egg'}
                                 />
-                            </Button>) : (
+                            </Button>))
+                    }
+                    {
+                        this.props.origin === 'fridge' && (
                             <Button
                                 transparent
                                 onPress={() => {
-                                    this.props.transferItemsToShoppingList()
+                                    this.props.navigation.navigate('SearchRecipe', {ingredients: this.props.selectedIngredients})
                                 }}
                             >
                                 <Icon
                                     style={GenericStyles.icon}
-                                    name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
+                                    name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
                                 />
-                            </Button>))
+                            </Button>)
                     }
-                    <Button
-                        transparent
-                        onPress={() => {
-                            this.props.navigation.navigate('SearchRecipe', { ingredients: this.props.selectedIngredients })
-                        }}
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
-                        />
-                    </Button>
                     {
                         this.props.requestDelete ? (
                             <Button transparent>

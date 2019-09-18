@@ -27,7 +27,7 @@ export default class FoodListHeader extends React.Component {
                 </Body>
                 <Right style={GenericStyles.headerFoodListComponent}>
                     {
-                        this.props.origin === 'shoppinglist' && (
+                        this.props.origin === 'shoppinglist' ? (
                             <Button
                                 transparent
                                 onPress={() => {
@@ -38,19 +38,19 @@ export default class FoodListHeader extends React.Component {
                                     style={GenericStyles.icon}
                                     name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
                                 />
-                            </Button>)
+                            </Button>) : (
+                                <Button
+                                    transparent
+                                    onPress={() => {
+                                        this.props.navigation.navigate('SearchRecipe', {ingredients: this.props.ingredients})
+                                    }}>
+                                    <Icon
+                                        style={GenericStyles.icon}
+                                        name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
+                                    />
+                                </Button>)
                     }
-                    <Button
-                        transparent
-                        onPress={() => {
-                            this.props.navigation.navigate('SearchRecipe', {ingredients: this.props.ingredients})
-                        }}
-                    >
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
-                        />
-                    </Button>
+
                     <Button
                         transparent
                         onPress={() => this.props.navigation.navigate('SearchIngredient', {origin: this.props.origin})} >
