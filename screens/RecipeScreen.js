@@ -1,13 +1,15 @@
 import React from 'react'
 import {ActivityIndicator, Alert, Platform, Text} from 'react-native'
 import {Container, Left, Right, Button, Icon, Header} from 'native-base'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import GenericStyles from '../constants/Style'
 import RecipeTabs from '../components/contents/RecipeTabs'
 import { getRecipeFromId } from '../store/api/public'
 import { saveRecipes, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../store/api/user'
 
-export default class RecipeScreen extends React.Component {
+class RecipeScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -50,23 +52,8 @@ export default class RecipeScreen extends React.Component {
     }
 
     header() {
-        const rightButton = this.state.recipeId ?
-            this.props.navigation.state.params.origin === 'search' ?
-            (
-                this.state.requestSave ? (
-                    <Button transparent>
-                        <ActivityIndicator size="small" color='#007aff'/>
-                    </Button>
-                ) : (
-                    <Button
-                        transparent
-                        onPress={() => this.saveRecipe()}>
-                        <Icon
-                            style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-save' : 'md-save'}
-                        />
-                    </Button>)
-            ) : ([
+        const rightButton = this.state.recipeId &&
+            this.props.isSaved ? ([
                 this.state.requestAddToCart ? (
                     <Button
                         key={'cart'}
@@ -108,8 +95,20 @@ export default class RecipeScreen extends React.Component {
                         name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
                     />
                 </Button>)
-
-            ]) : (<Button transparent />)
+            ]) : (
+                this.state.requestSave ? (
+                    <Button transparent>
+                        <ActivityIndicator size="small" color='#007aff'/>
+                    </Button>
+                ) : (
+                    <Button
+                        transparent
+                        onPress={() => this.saveRecipe()}>
+                        <Icon
+                            style={GenericStyles.icon}
+                            name={Platform.OS === 'ios' ? 'ios-save' : 'md-save'}
+                        />
+                    </Button>))
 
         return (
             <Header
@@ -145,3 +144,17 @@ export default class RecipeScreen extends React.Component {
         )
     }
 }
+
+RecipeScreen.propTypes = {
+    isSaved: PropTypes.bool
+}
+
+const mapStateToProps = (state, ownProps) => {
+    const isSaved = state.generalReducer.savedRecipes.map(recipe => recipe._id)
+        .includes(ownProps.navigation.getParam('recipeId', null))
+    return {
+        isSaved: isSaved
+    }
+}
+
+export default connect(mapStateToProps)(RecipeScreen)

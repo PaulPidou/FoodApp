@@ -18,8 +18,8 @@ export default class RecipesList extends React.Component {
                     >
                         <CardItem cardBody>
                             <Image
-                                    source={{ uri: item.picture }}
-                                    defaultSource={require('../../assets/images/cooking-icon.png')}
+                                    //source={{ uri: item.picture }}
+                                    source={require('../../assets/images/cooking-icon.png')}
                                     style={{height: 120, width: null, flex: 1, resizeMode: 'contain'}} />
                         </CardItem>
                         <CardItem>
