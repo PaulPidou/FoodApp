@@ -150,10 +150,9 @@ RecipeScreen.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const isSaved = state.generalReducer.savedRecipes.map(recipe => recipe._id)
-        .includes(ownProps.navigation.getParam('recipeId', null))
     return {
-        isSaved: isSaved
+        isSaved: state.generalReducer.savedRecipes.map(recipe => recipe._id)
+            .includes(ownProps.navigation.getParam('recipeId', null))
     }
 }
 
