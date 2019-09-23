@@ -92,11 +92,11 @@ class RecipeScreen extends React.Component {
                     }}>
                     <Icon
                         style={GenericStyles.icon}
-                        name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
+                        name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
                     />
                 </Button>)
             ]) : (
-                this.state.requestSave ? (
+                this.state.requestSave || (this.props.isSaved === undefined) ? (
                     <Button transparent>
                         <ActivityIndicator size="small" color='#007aff'/>
                     </Button>
@@ -106,7 +106,7 @@ class RecipeScreen extends React.Component {
                         onPress={() => this.saveRecipe()}>
                         <Icon
                             style={GenericStyles.icon}
-                            name={Platform.OS === 'ios' ? 'ios-save' : 'md-save'}
+                            name={Platform.OS === 'ios' ? 'ios-heart-empty' : 'md-heart-empty'}
                         />
                     </Button>))
 
@@ -151,8 +151,8 @@ RecipeScreen.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        isSaved: state.generalReducer.savedRecipes.map(recipe => recipe._id)
-            .includes(ownProps.navigation.getParam('recipeId', null))
+        isSaved: state.generalReducer.savedRecipes !== undefined ? state.generalReducer.savedRecipes.map(recipe => recipe._id)
+            .includes(ownProps.navigation.getParam('recipeId', null)) : undefined
     }
 }
 
