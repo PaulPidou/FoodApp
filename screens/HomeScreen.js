@@ -94,7 +94,7 @@ class HomeScreen extends React.Component {
                 <Right>
                     <NetworkConsumer>
                         {({ isConnected }) => (
-                            isConnected ? (
+                            isConnected && (
                                 <Button
                                     transparent
                                     onPress={() => this.props.navigation.navigate("SearchRecipe")}>
@@ -104,7 +104,7 @@ class HomeScreen extends React.Component {
                                         type='MaterialIcons'
                                     />
                                 </Button>
-                            ) : (<Button transparent></Button>)
+                            )
                         )}
                     </NetworkConsumer>
                 </Right>

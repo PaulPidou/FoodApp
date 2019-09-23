@@ -61,9 +61,9 @@ class Fridge extends React.Component {
     }
 
     updateSelected() {
-        this.setState((state) => ({
-            selectedIngredients: state.ingredients.map(item => item.ingredientID)
-        }))
+        this.setState({
+            selectedIngredients: this.props.ingredients.map(item => item.ingredientID)
+        })
     }
 
     async transferItemsToShoppingList() {
