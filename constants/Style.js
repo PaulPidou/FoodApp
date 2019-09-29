@@ -56,6 +56,20 @@ const GenericStyles = StyleSheet.create({
     selectedIngredientBlock: {
         borderColor: '#79ffb6',
         backgroundColor: '#b3ffde'
+    },
+    commonIngredientsCircle: {
+        width: 10,
+        height: 10,
+        borderRadius: 10/2,
+        backgroundColor: 'green',
+        margin: 5
+    },
+    missingIngredientsCircle: {
+        width: 10,
+        height: 10,
+        borderRadius: 10/2,
+        backgroundColor: 'red',
+        margin: 5
     }
 })
 

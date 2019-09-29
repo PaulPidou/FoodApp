@@ -169,7 +169,7 @@ class SearchIngredientScreen extends React.Component {
                     }
                 </Content>
                 {
-                    this.state.ingredientsCache !== undefined ? (
+                    this.state.ingredientsCache !== undefined && (
                         <Button rounded success
                                 style={{
                                     position: 'absolute',
@@ -184,7 +184,7 @@ class SearchIngredientScreen extends React.Component {
                         >
                             <Text>Ajouter</Text>
                         </Button>
-                    ) : (<View/>)
+                    )
                 }
             </Container>
         )

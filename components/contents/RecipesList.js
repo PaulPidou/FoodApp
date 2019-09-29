@@ -1,13 +1,22 @@
 import React from "react"
-import {ScrollView, Text, Image, TouchableOpacity} from "react-native"
+import {View, ScrollView, Text, Image, TouchableOpacity, Dimensions, Platform} from 'react-native'
 import PropTypes from 'prop-types'
 
-import {Right, Body, Content, H2, List, Spinner, Card, CardItem, Icon} from "native-base"
+import {Right, Body, Content, H2, List, Spinner, Card, CardItem, Icon, Button} from 'native-base'
+import { connect } from 'react-redux'
+import GenericStyles from '../../constants/Style'
 
-export default class RecipesList extends React.Component {
+class RecipesList extends React.Component {
+    _getCommonIngredients(recipeIngredients) {
+        const fridge = this.props.fridge.map(ingredient => ingredient.ingredientID)
+        const ingredients = recipeIngredients.map(ingredient => ingredient.ingredientID)
+        
+        return fridge.filter(value => ingredients.includes(value))
+    }
 
     _renderList() {
         return this.props.recipes.map((item) => {
+            const commonIngredients = this._getCommonIngredients(item.ingredients)
             return (
                 <TouchableOpacity
                     key={this.props.origin + item._id}
@@ -33,6 +42,40 @@ export default class RecipesList extends React.Component {
                                 <Text>{item.totalTime} min</Text>
                             </Right>
                         </CardItem>
+
+                                <CardItem style={{marginTop: 0, paddingTop: 0}}>
+                                    {
+                                        (commonIngredients.length > 0) && (
+                                            <>
+                                                <View style={GenericStyles.commonIngredientsCircle}/>
+                                                <Text>{commonIngredients.length} ingrédient(s)</Text>
+                                            </>
+                                        )
+                                    }
+                                    {
+                                        (item.ingredients.length - commonIngredients.length) > 0 && (
+                                            <>
+                                                <View style={GenericStyles.missingIngredientsCircle}/>
+                                                <Text>{item.ingredients.length - commonIngredients.length} ingrédient(s)</Text>
+                                            </>
+                                        )
+                                    }
+                                </CardItem>
+                                    <Button iconLeft rounded success
+                                            style={{
+                                                alignSelf: 'center',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                width: 200,
+                                                bottom: 10
+                                            }}
+                                    >
+                                        <Icon
+                                            name={Platform.OS === 'ios' ? 'ios-heart-empty' : 'md-heart-empty'}
+                                        />
+                                        <Text style={{color: '#fff', marginLeft: 15}}>Sauvegarder</Text>
+                                    </Button>
+
                     </Card>
                 </TouchableOpacity>
             )
@@ -67,8 +110,19 @@ export default class RecipesList extends React.Component {
 
 RecipesList.propTypes = {
     recipes: PropTypes.array,
+    fridge: PropTypes.array,
     handlePress: PropTypes.func,
-    handleLongPress: PropTypes.func,
     origin: PropTypes.string,
     firstSearch: PropTypes.bool
 }
+
+const mapStateToProps = (state) => {
+    return {
+        fridge: state.generalReducer.fridge
+    }
+
+    /* {
+                            this.props.origin === 'search' && (  */
+}
+
+export default connect(mapStateToProps)(RecipesList)
