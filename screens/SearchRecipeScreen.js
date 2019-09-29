@@ -1,29 +1,21 @@
 import React from 'react'
 import {Platform} from 'react-native'
-import {Container, Header, Left, Button, Icon, Input, Body, Toast} from 'native-base'
+import {Container, Header, Left, Button, Icon, Input, Body } from 'native-base'
 
 import GenericStyles from '../constants/Style'
-import SelectedHeader from '../components/headers/SelectedRecipeHeader'
 import RecipesList from '../components/contents/RecipesList'
 import { getRecipesSummaryFromKeywords, getRecipesSummaryFromIngredients } from '../store/api/public'
-import { saveRecipes } from '../store/api/user'
 
 export default class SearchRecipeScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             inputText: null,
-            selected: false,
-            selectedRecipes: [],
             recipes: [],
             firstSearch: true,
             ingredients: props.navigation.getParam('ingredients', null),
-            requestSave: false
         }
-        this.emptySelected = this.emptySelected.bind(this)
         this.handlePress = this.handlePress.bind(this)
-        this.handleLongPress = this.handleLongPress.bind(this)
-        this.saveSelectedRecipes = this.saveSelectedRecipes.bind(this)
     }
 
     static navigationOptions = {
@@ -44,39 +36,8 @@ export default class SearchRecipeScreen extends React.Component {
         if(this.state.selected) {
             this._updateSelectedRecipes(itemID)
         } else {
-            this.props.navigation.navigate("RecipeDetails", {recipeId: itemID, origin: 'search'})
+            this.props.navigation.navigate('RecipeDetails', {recipeId: itemID, origin: 'search'})
         }
-    }
-
-    handleLongPress(itemID) {
-        if(this.state.selected) {
-            this._updateSelectedRecipes(itemID)
-        } else {
-            this.setState({
-                selected: true,
-                selectedRecipes: [itemID]
-            })
-        }
-    }
-
-    _updateSelectedRecipes(itemID) {
-        const isSelected = this.state.selectedRecipes.includes(itemID)
-        const newArray = isSelected
-            ? this.state.selectedRecipes.filter(id => id !== itemID) : [...this.state.selectedRecipes, itemID]
-        this.setState({
-            selected: newArray.length > 0,
-            selectedRecipes: newArray
-        })
-    }
-
-    emptySelected() {
-        this.setState({selected: false, selectedRecipes: []})
-    }
-
-    async saveSelectedRecipes() {
-        this.setState({ requestSave: true })
-        await saveRecipes(this.state.selectedRecipes)
-        this.setState({ requestSave: false })
     }
 
     async handleSearch(keywords) {
@@ -118,20 +79,12 @@ export default class SearchRecipeScreen extends React.Component {
     render() {
         return (
             <Container>
-                {this.state.selected ?
-                    <SelectedHeader
-                        requestSave={this.state.requestSave}
-                        origin={'search'}
-                        emptySelected={this.emptySelected}
-                        saveSelectedRecipes={this.saveSelectedRecipes}
-                    /> : this.header()}
+                {this.header()}
                 <RecipesList
                     origin={'search'}
                     firstSearch={this.state.firstSearch}
                     recipes={this.state.recipes}
-                    selectedRecipes={this.state.selectedRecipes}
                     handlePress={this.handlePress}
-                    handleLongPress={this.handleLongPress}
                 />
             </Container>
         )

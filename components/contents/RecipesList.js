@@ -67,7 +67,6 @@ export default class RecipesList extends React.Component {
 
 RecipesList.propTypes = {
     recipes: PropTypes.array,
-    selectedRecipes: PropTypes.array,
     handlePress: PropTypes.func,
     handleLongPress: PropTypes.func,
     origin: PropTypes.string,

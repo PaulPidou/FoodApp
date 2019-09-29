@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="14ea75e8-cb80-4a67-b5af-ce7f8d11d26a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/RecipeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/RecipeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/contents/RecipesList.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/contents/RecipesList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/SearchRecipeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/SearchRecipeScreen.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,26 +19,6 @@
         <option value="JavaScript File" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>styles</find>
-      <find>char</find>
-      <find>ActionSheet</find>
-      <find>showActionSheet</find>
-      <find>orig</find>
-      <find>Toast</find>
-      <find>Toas</find>
-      <find>navi</find>
-      <find>this.props.na</find>
-      <find>ingredientNa</find>
-      <find>selectedIngred</find>
-      <find>addI</find>
-      <find>this.lo</find>
-      <find>moment</find>
-      <find>this.state.in</find>
-      <find>state.in</find>
-    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -120,7 +102,7 @@
       <workItem from="1567263614576" duration="171000" />
       <workItem from="1567266343431" duration="30000" />
       <workItem from="1568308458616" duration="130000" />
-      <workItem from="1568308657010" duration="7416000" />
+      <workItem from="1568308657010" duration="8272000" />
     </task>
     <servers />
   </component>
