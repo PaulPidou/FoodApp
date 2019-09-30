@@ -1,15 +1,37 @@
 import React from "react"
-import {View, ScrollView, Text, Image, TouchableOpacity, Dimensions, Platform} from 'react-native'
+import {View, ScrollView, Text, Image, TouchableOpacity, Platform, ActivityIndicator} from 'react-native'
 import PropTypes from 'prop-types'
 
 import {Right, Body, Content, H2, List, Spinner, Card, CardItem, Icon, Button} from 'native-base'
 import { connect } from 'react-redux'
+import { saveRecipes, deleteSavedRecipes } from '../../store/api/user'
 import GenericStyles from '../../constants/Style'
 
 class RecipesList extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            requestActionOnRecipes: []
+        }
+    }
+
     _getCommonIngredients(recipeIngredients) {
         const ingredients = recipeIngredients.map(ingredient => ingredient.ingredientID)
         return this.props.fridge.filter(value => ingredients.includes(value))
+    }
+
+    async _saveRecipe(recipeID) {
+        const currentState = this.state.requestActionOnRecipes
+        this.setState({requestActionOnRecipes: [...currentState, recipeID]})
+        await saveRecipes([recipeID])
+        this.setState({requestActionOnRecipes: [...currentState]})
+    }
+
+    async _deleteRecipe(recipeID) {
+        const currentState = this.state.requestActionOnRecipes
+        this.setState({requestActionOnRecipes: [...currentState, recipeID]})
+        await deleteSavedRecipes([recipeID])
+        this.setState({requestActionOnRecipes: [...currentState]})
     }
 
     _renderList() {
@@ -60,36 +82,48 @@ class RecipesList extends React.Component {
                                     }
                                 </CardItem>
                                 {
-                                    this.props.savedRecipes.includes(item._id) ? (
-                                        <Button iconLeft rounded
-                                                style={{
-                                                    alignSelf: 'center',
-                                                    width: 120,
-                                                    bottom: 10,
-                                                    backgroundColor: '#5D9599'
-                                                }}
-                                        >
-                                            <Icon
-                                                style={{marginLeft: 20}}
-                                                name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
-                                            />
-                                            <Text style={{color: '#fff', marginLeft: 15}}>Retirer</Text>
-                                        </Button>
-                                    ) : (
-                                        <Button iconLeft rounded success
-                                                style={{
-                                                    alignSelf: 'center',
-                                                    width: 150,
-                                                    bottom: 10
-                                                }}
-                                        >
-                                            <Icon
-                                                style={{marginLeft: 20}}
-                                                name={Platform.OS === 'ios' ? 'ios-heart-empty' : 'md-heart-empty'}
-                                            />
-                                            <Text style={{color: '#fff', marginLeft: 15}}>Sauvegarder</Text>
-                                        </Button>
-                                    )
+                                    this.state.requestActionOnRecipes.includes(item._id) || this.props.savedRecipes === undefined ? (
+                                            <Button transparent
+                                                    style={{
+                                                        alignSelf: 'center',
+                                                        bottom: 10,
+                                                    }}
+                                            >
+                                                <ActivityIndicator size="small" color='#007aff'/>
+                                            </Button>
+                                        ) : (
+                                        this.props.savedRecipes.includes(item._id) ? (
+                                            <Button iconLeft rounded
+                                                    style={{
+                                                        alignSelf: 'center',
+                                                        width: 120,
+                                                        bottom: 10,
+                                                        backgroundColor: '#5D9599'
+                                                    }}
+                                                    onPress={() => this._deleteRecipe(item._id)}
+                                            >
+                                                <Icon
+                                                    style={{marginLeft: 20}}
+                                                    name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
+                                                />
+                                                <Text style={{color: '#fff', marginLeft: 15}}>Retirer</Text>
+                                            </Button>
+                                        ) : (
+                                            <Button iconLeft rounded success
+                                                    style={{
+                                                        alignSelf: 'center',
+                                                        width: 150,
+                                                        bottom: 10
+                                                    }}
+                                                    onPress={() => this._saveRecipe(item._id)}
+                                            >
+                                                <Icon
+                                                    style={{marginLeft: 20}}
+                                                    name={Platform.OS === 'ios' ? 'ios-heart-empty' : 'md-heart-empty'}
+                                                />
+                                                <Text style={{color: '#fff', marginLeft: 15}}>Sauvegarder</Text>
+                                            </Button>
+                                        ))
                                 }
 
 
@@ -136,7 +170,8 @@ RecipesList.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        savedRecipes: state.generalReducer.savedRecipes.map(recipe => recipe._id),
+        savedRecipes: state.generalReducer.savedRecipes !== undefined ?
+            state.generalReducer.savedRecipes.map(recipe => recipe._id) : undefined,
         fridge: state.generalReducer.fridge.map(ingredient => ingredient.ingredientID)
     }
 
