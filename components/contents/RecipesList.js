@@ -8,10 +8,8 @@ import GenericStyles from '../../constants/Style'
 
 class RecipesList extends React.Component {
     _getCommonIngredients(recipeIngredients) {
-        const fridge = this.props.fridge.map(ingredient => ingredient.ingredientID)
         const ingredients = recipeIngredients.map(ingredient => ingredient.ingredientID)
-        
-        return fridge.filter(value => ingredients.includes(value))
+        return this.props.fridge.filter(value => ingredients.includes(value))
     }
 
     _renderList() {
@@ -61,20 +59,39 @@ class RecipesList extends React.Component {
                                         )
                                     }
                                 </CardItem>
-                                    <Button iconLeft rounded success
-                                            style={{
-                                                alignSelf: 'center',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                width: 200,
-                                                bottom: 10
-                                            }}
-                                    >
-                                        <Icon
-                                            name={Platform.OS === 'ios' ? 'ios-heart-empty' : 'md-heart-empty'}
-                                        />
-                                        <Text style={{color: '#fff', marginLeft: 15}}>Sauvegarder</Text>
-                                    </Button>
+                                {
+                                    this.props.savedRecipes.includes(item._id) ? (
+                                        <Button iconLeft rounded
+                                                style={{
+                                                    alignSelf: 'center',
+                                                    width: 120,
+                                                    bottom: 10,
+                                                    backgroundColor: '#5D9599'
+                                                }}
+                                        >
+                                            <Icon
+                                                style={{marginLeft: 20}}
+                                                name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
+                                            />
+                                            <Text style={{color: '#fff', marginLeft: 15}}>Retirer</Text>
+                                        </Button>
+                                    ) : (
+                                        <Button iconLeft rounded success
+                                                style={{
+                                                    alignSelf: 'center',
+                                                    width: 150,
+                                                    bottom: 10
+                                                }}
+                                        >
+                                            <Icon
+                                                style={{marginLeft: 20}}
+                                                name={Platform.OS === 'ios' ? 'ios-heart-empty' : 'md-heart-empty'}
+                                            />
+                                            <Text style={{color: '#fff', marginLeft: 15}}>Sauvegarder</Text>
+                                        </Button>
+                                    )
+                                }
+
 
                     </Card>
                 </TouchableOpacity>
@@ -110,6 +127,7 @@ class RecipesList extends React.Component {
 
 RecipesList.propTypes = {
     recipes: PropTypes.array,
+    savedRecipes: PropTypes.array,
     fridge: PropTypes.array,
     handlePress: PropTypes.func,
     origin: PropTypes.string,
@@ -118,7 +136,8 @@ RecipesList.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        fridge: state.generalReducer.fridge
+        savedRecipes: state.generalReducer.savedRecipes.map(recipe => recipe._id),
+        fridge: state.generalReducer.fridge.map(ingredient => ingredient.ingredientID)
     }
 
     /* {
