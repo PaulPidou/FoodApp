@@ -62,13 +62,16 @@ class RecipesList extends React.Component {
                                 <Text>{item.totalTime} min</Text>
                             </Right>
                         </CardItem>
-
+                        {
+                            this.props.origin === 'search' && (
                                 <CardItem style={{marginTop: 0, paddingTop: 0}}>
                                     {
-                                        (commonIngredients.length > 0) && (
+                                        commonIngredients.length > 0 && (
                                             <>
                                                 <View style={GenericStyles.commonIngredientsCircle}/>
-                                                <Text>{commonIngredients.length} ingrédient(s)</Text>
+                                                <Text>{commonIngredients.length} {
+                                                    commonIngredients.length > 1 ? "ingrédients" : "ingrédient"
+                                                }</Text>
                                             </>
                                         )
                                     }
@@ -76,12 +79,16 @@ class RecipesList extends React.Component {
                                         (item.ingredients.length - commonIngredients.length) > 0 && (
                                             <>
                                                 <View style={GenericStyles.missingIngredientsCircle}/>
-                                                <Text>{item.ingredients.length - commonIngredients.length} ingrédient(s)</Text>
+                                                <Text>{item.ingredients.length - commonIngredients.length} {
+                                                    commonIngredients.length > 1 ? "ingrédients" : "ingrédient"
+                                                }</Text>
                                             </>
                                         )
                                     }
-                                </CardItem>
-                                {
+                                </CardItem>)
+                        }
+                        {
+                            this.props.origin === 'search' && (
                                     this.state.requestActionOnRecipes.includes(item._id) || this.props.savedRecipes === undefined ? (
                                             <Button transparent
                                                     style={{
@@ -123,10 +130,8 @@ class RecipesList extends React.Component {
                                                 />
                                                 <Text style={{color: '#fff', marginLeft: 15}}>Sauvegarder</Text>
                                             </Button>
-                                        ))
-                                }
-
-
+                                        )))
+                        }
                     </Card>
                 </TouchableOpacity>
             )
