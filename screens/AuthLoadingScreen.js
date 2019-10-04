@@ -1,5 +1,5 @@
 import React from 'react'
-import { AsyncStorage, View, ActivityIndicator } from 'react-native'
+import { AsyncStorage, View, ActivityIndicator, Image, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getUserLists } from '../store/api/user'
@@ -26,9 +26,14 @@ class AuthLoadingScreen extends React.Component {
     render() {
         return (
             <View
-                style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+                style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#36FF9B' }}
             >
-                <ActivityIndicator size='large' color='#007aff' />
+                <Image
+                    style={{ marginBottom: 50}}
+                    source={require('../assets/images/icon_large.png')}
+                />
+                <ActivityIndicator size='large' color='#fff' />
+                <Text style={{ color: '#454545', fontSize: 27, fontWeight: '100', marginTop: 40 }}>Groceries (Re)Cycle</Text>
             </View>
         )
     }
