@@ -23,7 +23,7 @@ export const getUserLists = async function() {
                 buttonText: 'Ok',
                 duration: 3000,
             })
-            return {}
+            return null
         })
 }
 

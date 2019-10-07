@@ -14,7 +14,8 @@ class AuthLoadingScreen extends React.Component {
         const userToken = await AsyncStorage.getItem('userToken')
         if (userToken) {
             const userLists = await getUserLists()
-            const action = { type: 'UPDATE_USER_LISTS', lists: userLists }
+            const action = { type: 'UPDATE_USER_LISTS', lists: userLists ?
+                    userLists : { savedRecipes: [], shoppingList: [], fridge: []} }
             this.props.dispatch(action)
             this.props.navigation.navigate('App')
         } else {

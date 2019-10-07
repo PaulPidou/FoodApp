@@ -102,9 +102,7 @@ class Fridge extends React.Component {
                         />
                     </Left>
                     <Body>
-                    <Text>{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)}
-                        {(item.quantity || item.unit) && ': '}
-                        {item.quantity} {item.unit}</Text>
+                    <Text>{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)}</Text>
                     </Body>
                     <Right>
                         <Text>{item.expirationDate && (moment(item.expirationDate).format('DD/MM/YYYY'))}</Text>
