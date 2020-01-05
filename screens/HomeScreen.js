@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Left, Body, Right, Button, Icon, Header, Title } from 'native-base'
+import { Container, Left, Body, Right, Button, Icon, Header, Title } from 'native-base'
 import { connect } from 'react-redux'
 import { NetworkConsumer } from 'react-native-offline'
 

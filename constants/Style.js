@@ -1,5 +1,5 @@
 import {Platform, StyleSheet} from "react-native"
-import {Constants} from "expo"
+import Constants from 'expo-constants'
 
 const GenericStyles = StyleSheet.create({
     header: {
