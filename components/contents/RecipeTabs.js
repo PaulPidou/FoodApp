@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Image } from 'react-native'
 import {Tab, TabHeading, Icon, Tabs, Spinner, H1, List, ListItem, Left, Body, Badge} from 'native-base'
 
 import {Platform, ScrollView, Text, View} from 'react-native'
@@ -42,6 +43,9 @@ export default class RecipeTabs extends React.Component {
         } else {
             content = (
                 <ScrollView>
+                    <Image
+                        source={ !recipe.picture ? null : { uri: recipe.picture }}
+                        style={ !recipe.picture ? {height: 0} : {height: 150, width: null, flex: 1, resizeMode: 'cover'}} />
                     <H1 style={{textAlign: 'center', marginTop: 5, color: '#007aff'}}>{recipe.title}</H1>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent:'center'}}>
                         {
