@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Image } from 'react-native'
-import {Tab, TabHeading, Icon, Tabs, Spinner, H1, List, ListItem, Left, Body, Badge} from 'native-base'
+import {Tab, TabHeading, Icon, Tabs, Spinner, H1, List, ListItem, Left, Right, Body, Badge} from 'native-base'
 
 import {Platform, ScrollView, Text, View} from 'react-native'
 import GenericStyles from '../../constants/Style'
@@ -174,6 +174,15 @@ export default class RecipeTabs extends React.Component {
                                     <Body>
                                     <Text>{item.display}</Text>
                                     </Body>
+                                    <Right>
+                                        {
+                                            this.props.commonIngredientsWithFridge.includes(item.ingredientID) ? (
+                                                <View style={GenericStyles.commonIngredientsCircle}/>
+                                            ) : (
+                                                <View style={GenericStyles.missingIngredientsCircle}/>
+                                            )
+                                        }
+                                    </Right>
                                 </ListItem>
                             )
                         })
@@ -272,5 +281,6 @@ export default class RecipeTabs extends React.Component {
 }
 
 RecipeTabs.propTypes = {
-    recipe: PropTypes.object
+    recipe: PropTypes.object,
+    commonIngredientsWithFridge: PropTypes.array
 }

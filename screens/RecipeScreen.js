@@ -51,6 +51,12 @@ class RecipeScreen extends React.Component {
         this.setState({ requestSave: false })
     }
 
+    _getCommonIngredients(recipe) {
+        if (!recipe) { return [] }
+        const ingredients = recipe.ingredients.map(ingredient => ingredient.ingredientID)
+        return this.props.fridge.filter(value => ingredients.includes(value))
+    }
+
     header() {
         const rightButton = this.state.recipeId &&
             this.props.isSaved ? ([
@@ -136,6 +142,7 @@ class RecipeScreen extends React.Component {
                     this.state.recipeId ?
                         (<RecipeTabs
                             recipe={this.state.recipe}
+                            commonIngredientsWithFridge={this._getCommonIngredients(this.state.recipe)}
                         />) :
                         (<Text style={{margin: 10, textAlign: 'center'}}>Un problème est survenu !</Text>)
                 }
@@ -146,13 +153,15 @@ class RecipeScreen extends React.Component {
 }
 
 RecipeScreen.propTypes = {
-    isSaved: PropTypes.bool
+    isSaved: PropTypes.bool,
+    fridge: PropTypes.array
 }
 
 const mapStateToProps = (state, ownProps) => {
     return {
         isSaved: state.generalReducer.savedRecipes !== undefined ? state.generalReducer.savedRecipes.map(recipe => recipe._id)
-            .includes(ownProps.navigation.getParam('recipeId', null)) : undefined
+            .includes(ownProps.navigation.getParam('recipeId', null)) : undefined,
+        fridge: state.generalReducer.fridge.map(ingredient => ingredient.ingredientID)
     }
 }
 

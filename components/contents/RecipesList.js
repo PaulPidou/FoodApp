@@ -181,9 +181,6 @@ const mapStateToProps = (state) => {
             state.generalReducer.savedRecipes.map(recipe => recipe._id) : undefined,
         fridge: state.generalReducer.fridge.map(ingredient => ingredient.ingredientID)
     }
-
-    /* {
-                            this.props.origin === 'search' && (  */
 }
 
 export default connect(mapStateToProps)(RecipesList)
