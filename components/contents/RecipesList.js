@@ -47,9 +47,9 @@ class RecipesList extends React.Component {
                     >
                         <CardItem cardBody>
                             <Image
-                                    //source={{ uri: item.picture }}
-                                    source={require('../../assets/images/cooking-icon.png')}
-                                    style={{height: 120, width: null, flex: 1, resizeMode: 'contain'}} />
+                                    source={ !item.picture ?
+                                        require('../../assets/images/cooking-icon.png') : { uri: item.picture }}
+                                    style={{height: 120, width: null, flex: 1, resizeMode: 'cover'}} />
                         </CardItem>
                         <CardItem>
                             <Body><H2>{item.title}</H2></Body>
@@ -104,6 +104,7 @@ class RecipesList extends React.Component {
                                                     style={{
                                                         alignSelf: 'center',
                                                         width: 120,
+                                                        height: 35,
                                                         bottom: 10,
                                                         backgroundColor: '#5D9599'
                                                     }}
@@ -120,6 +121,7 @@ class RecipesList extends React.Component {
                                                     style={{
                                                         alignSelf: 'center',
                                                         width: 150,
+                                                        height: 35,
                                                         bottom: 10
                                                     }}
                                                     onPress={() => this._saveRecipe(item._id)}

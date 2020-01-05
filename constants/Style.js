@@ -61,14 +61,14 @@ const GenericStyles = StyleSheet.create({
         width: 10,
         height: 10,
         borderRadius: 10/2,
-        backgroundColor: 'green',
+        backgroundColor: '#5CD327',
         margin: 5
     },
     missingIngredientsCircle: {
         width: 10,
         height: 10,
         borderRadius: 10/2,
-        backgroundColor: 'red',
+        backgroundColor: '#D3275C',
         margin: 5
     }
 })
