@@ -15,7 +15,7 @@ export default class SelectedIngredientHeader extends React.Component {
                             style={{flex: 0}}
                     >
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
                         />
                     </Button>
@@ -24,7 +24,7 @@ export default class SelectedIngredientHeader extends React.Component {
                             style={{flex: 0}}
                     >
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name={Platform.OS === 'ios' ? 'ios-filing' : 'md-filing'}
                         />
                     </Button>
@@ -43,7 +43,7 @@ export default class SelectedIngredientHeader extends React.Component {
                                     this.props.transferItemsToFridge()
                                 }}>
                                 <Icon
-                                    style={GenericStyles.icon}
+                                    style={GenericStyles.headerIcon}
                                     name={Platform.OS === 'ios' ? 'ios-egg' : 'md-egg'}
                                 />
                             </Button>))
@@ -57,7 +57,7 @@ export default class SelectedIngredientHeader extends React.Component {
                                 }}
                             >
                                 <Icon
-                                    style={GenericStyles.icon}
+                                    style={GenericStyles.headerIcon}
                                     name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
                                 />
                             </Button>)
@@ -80,7 +80,7 @@ export default class SelectedIngredientHeader extends React.Component {
                                         ]
                                     )}}>
                                 <Icon
-                                    style={GenericStyles.icon}
+                                    style={GenericStyles.headerIcon}
                                     name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
                                 />
                             </Button>

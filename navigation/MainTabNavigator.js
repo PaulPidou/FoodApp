@@ -13,6 +13,8 @@ import ShoppingListScreen from '../screens/ShoppingListScreen'
 import FridgeScreen from '../screens/FridgeScreen'
 import SearchIngredientScreen from '../screens/SearchIngredientScreen'
 
+import Colors from '../constants/Colors'
+
 const HomeStack = createStackNavigator({
     Home: HomeScreen,
     SearchRecipe: SearchRecipeScreen,
@@ -39,6 +41,9 @@ HomeStack.navigationOptions = ({ navigation }) => {
 
     return {
         tabBarVisible,
+        tabBarOptions: {
+            activeTintColor: Colors.tintColor
+        },
         tabBarLabel: 'Recettes',
         tabBarIcon: RecipeTabBarIcon
     }
@@ -71,6 +76,9 @@ ShoppingListStack.navigationOptions = ({ navigation }) => {
 
     return {
         tabBarVisible,
+        tabBarOptions: {
+            activeTintColor: Colors.tintColor
+        },
         tabBarLabel: 'Liste de courses',
         tabBarIcon: ShoppingListTabBarIcon
     }
@@ -104,6 +112,9 @@ FridgeStack.navigationOptions = ({ navigation }) => {
 
     return {
         tabBarVisible,
+        tabBarOptions: {
+            activeTintColor: Colors.tintColor
+        },
         tabBarLabel: 'Frigo',
         tabBarIcon: FridgeTabBarIcon
     }

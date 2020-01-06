@@ -36,7 +36,7 @@ export default class SearchHeader extends React.Component {
                         transparent
                         onPress={() => this.props.navigation.openDrawer()} >
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name='menu'
                         />
                     </Button>
@@ -49,7 +49,7 @@ export default class SearchHeader extends React.Component {
                     <Icon
                         active
                         name={this.props.icon}
-                        style={GenericStyles.icon}
+                        style={GenericStyles.headerIcon}
                         onPress = {this.handleSubmit}
                     />
                 </Item>

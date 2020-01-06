@@ -14,7 +14,7 @@ export default class FoodListHeader extends React.Component {
                         transparent
                         onPress={() => this.props.navigation.openDrawer()} >
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name='menu'
                             type="MaterialIcons"
                         />
@@ -35,7 +35,7 @@ export default class FoodListHeader extends React.Component {
                                 }}
                             >
                                 <Icon
-                                    style={GenericStyles.icon}
+                                    style={GenericStyles.headerIcon}
                                     name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
                                 />
                             </Button>) : (
@@ -45,7 +45,7 @@ export default class FoodListHeader extends React.Component {
                                         this.props.navigation.navigate('SearchRecipe', {ingredients: this.props.ingredients})
                                     }}>
                                     <Icon
-                                        style={GenericStyles.icon}
+                                        style={GenericStyles.headerIcon}
                                         name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
                                     />
                                 </Button>)
@@ -55,7 +55,7 @@ export default class FoodListHeader extends React.Component {
                         transparent
                         onPress={() => this.props.navigation.navigate('SearchIngredient', {origin: this.props.origin})} >
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name='add'
                             type="MaterialIcons"
                         />

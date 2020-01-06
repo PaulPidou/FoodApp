@@ -135,13 +135,15 @@ class SearchIngredientScreen extends React.Component {
                             transparent
                             onPress={() => this.props.navigation.goBack()} >
                             <Icon
-                                style={GenericStyles.icon}
+                                style={GenericStyles.headerIcon}
                                 name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
                             />
                         </Button>
                     </Left>
                     <Input
+                        style={GenericStyles.headerTitle}
                         placeholder={'Je recherche un ingrédient...'}
+                        placeholderTextColor='#fff'
                         returnKeyType = { "search" }
                         onChangeText={text => this._searchFilterFunction(text)}
                     />
@@ -150,7 +152,7 @@ class SearchIngredientScreen extends React.Component {
                             transparent
                             onPress={() => this._sortIngredients(!this.state.sortByFame)}>
                             <Icon
-                                style={GenericStyles.icon}
+                                style={GenericStyles.headerIcon}
                                 name={this.state.sortByFame ? 'sort-by-alpha': 'sort' }
                                 type='MaterialIcons'
                             />

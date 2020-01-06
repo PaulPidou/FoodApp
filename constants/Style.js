@@ -3,11 +3,11 @@ import Constants from 'expo-constants'
 
 const GenericStyles = StyleSheet.create({
     header: {
-        backgroundColor: "#fff",
+        backgroundColor: "#3cff9a", // "#10ff82", // #fff
         marginTop: Constants.statusBarHeight
     },
     headerTab: {
-        backgroundColor: "#fff",
+        backgroundColor: "#3cff9a",
     },
     headerLeft: {
         flex: 0,
@@ -17,10 +17,13 @@ const GenericStyles = StyleSheet.create({
         flex: 1
     },
     icon : {
-        color: '#007aff'
+        color: "#bbb" // 007aff
+    },
+    headerIcon : {
+        color: '#fff' // 007aff
     },
     tabIcon : {
-        color: '#007aff',
+        color: '#fff', // '#007aff'
         margin: 10
     },
     tabText: {
@@ -30,7 +33,7 @@ const GenericStyles = StyleSheet.create({
         backgroundColor: '#007AFF'
     },
     headerTitle: {
-        color: '#007aff'
+        color: '#fff' // 007aff
     },
     headerButton: {
         color: '#007aff',
@@ -56,6 +59,9 @@ const GenericStyles = StyleSheet.create({
     selectedIngredientBlock: {
         borderColor: '#79ffb6',
         backgroundColor: '#b3ffde'
+    },
+    recipeTitle: {
+        color: '#888'
     },
     commonIngredientsCircle: {
         width: 10,

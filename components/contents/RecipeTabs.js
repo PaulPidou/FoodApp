@@ -46,17 +46,16 @@ export default class RecipeTabs extends React.Component {
                     <Image
                         source={ !recipe.picture ? null : { uri: recipe.picture }}
                         style={ !recipe.picture ? {height: 0} : {height: 150, width: null, flex: 1, resizeMode: 'cover'}} />
-                    <H1 style={{textAlign: 'center', marginTop: 5, color: '#007aff'}}>{recipe.title}</H1>
+                    <H1 style={{textAlign: 'center', marginTop: 5, color: '#888'}}>{recipe.title}</H1>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent:'center'}}>
                         {
                             recipe.tags.map((tag) => {
                                 return(
                                     <Badge
                                         key={tag}
-                                        info
-                                        style={{margin: 5}}
+                                        style={{margin: 5, backgroundColor: "#33ffb1"}}
                                     >
-                                        <Text>{tag.charAt(0).toUpperCase() + tag.slice(1)}</Text>
+                                        <Text style={GenericStyles.headerTitle}>{tag.charAt(0).toUpperCase() + tag.slice(1)}</Text>
                                     </Badge>
                             )})
                         }
@@ -241,7 +240,7 @@ export default class RecipeTabs extends React.Component {
         return (
             <Tabs
                 key={'tabs'}
-                tabBarUnderlineStyle={{backgroundColor: '#007AFF'}}
+                tabBarUnderlineStyle={{backgroundColor: '#fff'}}
                 tabContainerStyle={{elevation: 0}}
             >
                 <Tab

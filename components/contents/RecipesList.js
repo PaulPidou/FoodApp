@@ -52,14 +52,14 @@ class RecipesList extends React.Component {
                                     style={{height: 120, width: null, flex: 1, resizeMode: 'cover'}} />
                         </CardItem>
                         <CardItem>
-                            <Body><H2>{item.title}</H2></Body>
+                            <Body><H2 style={GenericStyles.recipeTitle}>{item.title}</H2></Body>
                             <Right style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
                                 <Icon
                                     name='timer'
                                     type='MaterialIcons'
                                     style={{paddingRight: 5}}
                                 />
-                                <Text>{item.totalTime} min</Text>
+                                <Text style={GenericStyles.recipeTitle}>{item.totalTime} min</Text>
                             </Right>
                         </CardItem>
                         {
@@ -117,12 +117,13 @@ class RecipesList extends React.Component {
                                                 <Text style={{color: '#fff', marginLeft: 15}}>Retirer</Text>
                                             </Button>
                                         ) : (
-                                            <Button iconLeft rounded success
+                                            <Button iconLeft rounded
                                                     style={{
                                                         alignSelf: 'center',
                                                         width: 150,
                                                         height: 35,
-                                                        bottom: 10
+                                                        bottom: 10,
+                                                        backgroundColor: '#36FF9B'
                                                     }}
                                                     onPress={() => this._saveRecipe(item._id)}
                                             >

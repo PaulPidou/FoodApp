@@ -72,7 +72,7 @@ class RecipeScreen extends React.Component {
                         transparent
                         onPress={() => this.addIngredientsToCart()}>
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
                         />
                     </Button>
@@ -97,7 +97,7 @@ class RecipeScreen extends React.Component {
                         )
                     }}>
                     <Icon
-                        style={GenericStyles.icon}
+                        style={GenericStyles.headerIcon}
                         name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
                     />
                 </Button>)
@@ -111,7 +111,7 @@ class RecipeScreen extends React.Component {
                         transparent
                         onPress={() => this.saveRecipe()}>
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name={Platform.OS === 'ios' ? 'ios-heart-empty' : 'md-heart-empty'}
                         />
                     </Button>))
@@ -125,7 +125,7 @@ class RecipeScreen extends React.Component {
                         transparent
                         onPress={() => this.props.navigation.goBack()}>
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
                         />
                     </Button>

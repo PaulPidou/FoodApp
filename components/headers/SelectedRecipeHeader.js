@@ -15,7 +15,7 @@ export default class SelectedRecipeHeader extends React.Component {
                         onPress={() => this.props.emptySelected()}
                     >
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
                         />
                     </Button>
@@ -33,7 +33,7 @@ export default class SelectedRecipeHeader extends React.Component {
                                         transparent
                                         onPress={() => this.props.addIngredientsToCart()}>
                                         <Icon
-                                            style={GenericStyles.icon}
+                                            style={GenericStyles.headerIcon}
                                             name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
                                         />
                                     </Button>)
@@ -58,7 +58,7 @@ export default class SelectedRecipeHeader extends React.Component {
                                         }}
                                     >
                                         <Icon
-                                            style={GenericStyles.icon}
+                                            style={GenericStyles.headerIcon}
                                             name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
                                         />
                                     </Button>)
@@ -75,7 +75,7 @@ export default class SelectedRecipeHeader extends React.Component {
                                         transparent
                                         onPress={() => this.props.saveSelectedRecipes()}>
                                         <Icon
-                                            style={GenericStyles.icon}
+                                            style={GenericStyles.headerIcon}
                                             name={Platform.OS === 'ios' ? 'ios-save' : 'md-save'}
                                         />
                                     </Button>)

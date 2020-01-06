@@ -54,7 +54,7 @@ export default class SearchRecipeScreen extends React.Component {
                         transparent
                         onPress={() => this.props.navigation.goBack()} >
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
                         />
                     </Button>
@@ -63,8 +63,10 @@ export default class SearchRecipeScreen extends React.Component {
                 {
                     !this.state.ingredients && (
                         <Input
+                            style={GenericStyles.headerTitle}
                             autoFocus = {!this.state.inputText}
                             placeholder={'Je recherche des recettes...'}
+                            placeholderTextColor='#fff'
                             returnKeyType = { "search" }
                             defaultValue={this.state.inputText}
                             onChangeText={(text) => this.setState({inputText: text})}

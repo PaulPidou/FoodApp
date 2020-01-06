@@ -29,7 +29,7 @@ class HomeScreen extends React.Component {
                         transparent
                         onPress={() => this.props.navigation.openDrawer()}>
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name='menu'
                             type="MaterialIcons"
                         />
@@ -46,7 +46,7 @@ class HomeScreen extends React.Component {
                                     transparent
                                     onPress={() => this.props.navigation.navigate("SearchRecipe")}>
                                     <Icon
-                                        style={GenericStyles.icon}
+                                        style={GenericStyles.headerIcon}
                                         name='search'
                                         type='MaterialIcons'
                                     />
