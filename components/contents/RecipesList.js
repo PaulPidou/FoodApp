@@ -6,6 +6,7 @@ import {Right, Body, Content, H2, List, Spinner, Card, CardItem, Icon, Button} f
 import { connect } from 'react-redux'
 import { saveRecipes, deleteSavedRecipes } from '../../store/api/user'
 import GenericStyles from '../../constants/Style'
+import Colors from '../../constants/Colors'
 
 class RecipesList extends React.Component {
     constructor(props) {
@@ -96,7 +97,7 @@ class RecipesList extends React.Component {
                                                         bottom: 10,
                                                     }}
                                             >
-                                                <ActivityIndicator size="small" color='#007aff'/>
+                                                <ActivityIndicator size="small" color={Colors.tintColor}/>
                                             </Button>
                                         ) : (
                                         this.props.savedRecipes.includes(item._id) ? (

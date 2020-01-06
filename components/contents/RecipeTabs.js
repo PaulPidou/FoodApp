@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Image } from 'react-native'
+import { Image, Platform, ScrollView, Text, View } from 'react-native'
 import {Tab, TabHeading, Icon, Tabs, Spinner, H1, List, ListItem, Left, Right, Body, Badge} from 'native-base'
-
-import {Platform, ScrollView, Text, View} from 'react-native'
-import GenericStyles from '../../constants/Style'
 import {Avatar} from 'react-native-elements'
+
+import GenericStyles from '../../constants/Style'
+import Colors from '../../constants/Colors'
 
 export default class RecipeTabs extends React.Component {
 
@@ -39,14 +39,14 @@ export default class RecipeTabs extends React.Component {
         const recipe = this.props.recipe
         let content
         if (recipe === null) {
-            content = (<Spinner color='#007aff' />)
+            content = (<Spinner color={Colors.tintColor} />)
         } else {
             content = (
                 <ScrollView>
                     <Image
                         source={ !recipe.picture ? null : { uri: recipe.picture }}
                         style={ !recipe.picture ? {height: 0} : {height: 150, width: null, flex: 1, resizeMode: 'cover'}} />
-                    <H1 style={{textAlign: 'center', marginTop: 5, color: '#888'}}>{recipe.title}</H1>
+                    <H1 style={{textAlign: 'center', marginTop: 5, color: '#555'}}>{recipe.title}</H1>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent:'center'}}>
                         {
                             recipe.tags.map((tag) => {
@@ -150,7 +150,7 @@ export default class RecipeTabs extends React.Component {
         const recipe = this.props.recipe
         let content
         if (recipe === null) {
-            content = (<Spinner color='#007aff' />)
+            content = (<Spinner color={Colors.tintColor} />)
         } else {
             content = (
                 <ScrollView>
@@ -195,7 +195,7 @@ export default class RecipeTabs extends React.Component {
         const recipe = this.props.recipe
         let content
         if (recipe === null) {
-            content = (<Spinner color='#007aff' />)
+            content = (<Spinner color={Colors.tintColor} />)
         } else {
             content = (
                 <ScrollView>

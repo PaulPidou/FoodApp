@@ -2,6 +2,9 @@ import {Platform, StyleSheet} from "react-native"
 import Constants from 'expo-constants'
 
 const GenericStyles = StyleSheet.create({
+    activityIndicator: {
+        color: "#3cff9a"
+    },
     header: {
         backgroundColor: "#3cff9a", // "#10ff82", // #fff
         marginTop: Constants.statusBarHeight
@@ -17,7 +20,7 @@ const GenericStyles = StyleSheet.create({
         flex: 1
     },
     icon : {
-        color: "#bbb" // 007aff
+        color: "#ddd" // 007aff
     },
     headerIcon : {
         color: '#fff' // 007aff
@@ -27,7 +30,8 @@ const GenericStyles = StyleSheet.create({
         margin: 10
     },
     tabText: {
-        fontFamily: (Platform.OS === 'ios' ? 'System' : 'Roboto_medium')
+        fontFamily: (Platform.OS === 'ios' ? 'System' : 'Roboto_medium'),
+        color: '#fff'
     },
     settingIcon: {
         backgroundColor: '#007AFF'
@@ -61,7 +65,7 @@ const GenericStyles = StyleSheet.create({
         backgroundColor: '#b3ffde'
     },
     recipeTitle: {
-        color: '#888'
+        color: '#555'
     },
     commonIngredientsCircle: {
         width: 10,

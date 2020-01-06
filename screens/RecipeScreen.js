@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import GenericStyles from '../constants/Style'
+import Colors from '../constants/Colors'
 import RecipeTabs from '../components/contents/RecipeTabs'
 import { getRecipeFromId } from '../store/api/public'
 import { saveRecipes, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../store/api/user'
@@ -64,7 +65,7 @@ class RecipeScreen extends React.Component {
                     <Button
                         key={'cart'}
                         transparent>
-                        <ActivityIndicator size="small" color='#007aff'/>
+                        <ActivityIndicator size="small" color={Colors.tintColor}/>
                     </Button>
                 ) : (
                     <Button
@@ -81,7 +82,7 @@ class RecipeScreen extends React.Component {
                     <Button
                         key={'trash'}
                         transparent>
-                        <ActivityIndicator size="small" color='#007aff'/>
+                        <ActivityIndicator size="small" color={Colors.tintColor}/>
                     </Button>
                 ) : (<Button
                     key={'trash'}
@@ -104,7 +105,7 @@ class RecipeScreen extends React.Component {
             ]) : (
                 this.state.requestSave || (this.props.isSaved === undefined) ? (
                     <Button transparent>
-                        <ActivityIndicator size="small" color='#007aff'/>
+                        <ActivityIndicator size="small" color={Colors.tintColor}/>
                     </Button>
                 ) : (
                     <Button
