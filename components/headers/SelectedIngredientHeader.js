@@ -33,7 +33,7 @@ export default class SelectedIngredientHeader extends React.Component {
                     {
                         this.props.requestTransfer ? (
                             <Button transparent>
-                                <ActivityIndicator size="small" color='#007aff' />
+                                <ActivityIndicator size="small" color='#fff' />
                             </Button>
                         ) : (
                         this.props.origin === 'shoppinglist' && (
@@ -65,7 +65,7 @@ export default class SelectedIngredientHeader extends React.Component {
                     {
                         this.props.requestDelete ? (
                             <Button transparent>
-                                <ActivityIndicator size="small" color='#007aff' />
+                                <ActivityIndicator size="small" color='#fff' />
                             </Button>
                         ) : (
                             <Button

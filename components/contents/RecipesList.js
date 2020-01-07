@@ -17,6 +17,7 @@ class RecipesList extends React.Component {
     }
 
     _getCommonIngredients(recipeIngredients) {
+        if(this.props.fridge === undefined) return undefined
         const ingredients = recipeIngredients.map(ingredient => ingredient.ingredientID)
         return this.props.fridge.filter(value => ingredients.includes(value))
     }
@@ -67,24 +68,26 @@ class RecipesList extends React.Component {
                             this.props.origin === 'search' && (
                                 <CardItem style={{marginTop: 0, paddingTop: 0}}>
                                     {
-                                        commonIngredients.length > 0 && (
-                                            <>
-                                                <View style={GenericStyles.commonIngredientsCircle}/>
-                                                <Text>{commonIngredients.length} {
-                                                    commonIngredients.length > 1 ? "ingrédients" : "ingrédient"
-                                                }</Text>
-                                            </>
-                                        )
+                                        commonIngredients !== undefined && (
+                                            commonIngredients.length > 0 && (
+                                                <>
+                                                    <View style={GenericStyles.commonIngredientsCircle}/>
+                                                    <Text>{commonIngredients.length} {
+                                                        commonIngredients.length > 1 ? "ingrédients" : "ingrédient"
+                                                    }</Text>
+                                                </>
+                                        ))
                                     }
                                     {
-                                        (item.ingredients.length - commonIngredients.length) > 0 && (
-                                            <>
-                                                <View style={GenericStyles.missingIngredientsCircle}/>
-                                                <Text>{item.ingredients.length - commonIngredients.length} {
-                                                    commonIngredients.length > 1 ? "ingrédients" : "ingrédient"
-                                                }</Text>
-                                            </>
-                                        )
+                                        commonIngredients !== undefined && (
+                                            (item.ingredients.length - commonIngredients.length) > 0 && (
+                                                <>
+                                                    <View style={GenericStyles.missingIngredientsCircle}/>
+                                                    <Text>{item.ingredients.length - commonIngredients.length} {
+                                                        commonIngredients.length > 1 ? "ingrédients" : "ingrédient"
+                                                    }</Text>
+                                                </>
+                                        ))
                                     }
                                 </CardItem>)
                         }
@@ -181,7 +184,8 @@ const mapStateToProps = (state) => {
     return {
         savedRecipes: state.generalReducer.savedRecipes !== undefined ?
             state.generalReducer.savedRecipes.map(recipe => recipe._id) : undefined,
-        fridge: state.generalReducer.fridge.map(ingredient => ingredient.ingredientID)
+        fridge: state.generalReducer.fridge === undefined ? undefined :
+            state.generalReducer.fridge.map(ingredient => ingredient.ingredientID)
     }
 }
 

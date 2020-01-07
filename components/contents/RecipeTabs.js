@@ -175,11 +175,12 @@ export default class RecipeTabs extends React.Component {
                                     </Body>
                                     <Right>
                                         {
-                                            this.props.commonIngredientsWithFridge.includes(item.ingredientID) ? (
-                                                <View style={GenericStyles.commonIngredientsCircle}/>
-                                            ) : (
-                                                <View style={GenericStyles.missingIngredientsCircle}/>
-                                            )
+                                            this.props.commonIngredientsWithFridge !== undefined && (
+                                                this.props.commonIngredientsWithFridge.includes(item.ingredientID) ? (
+                                                    <View style={GenericStyles.commonIngredientsCircle}/>
+                                                ) : (
+                                                    <View style={GenericStyles.missingIngredientsCircle}/>
+                                                ))
                                         }
                                     </Right>
                                 </ListItem>

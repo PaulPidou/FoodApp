@@ -54,6 +54,7 @@ class RecipeScreen extends React.Component {
 
     _getCommonIngredients(recipe) {
         if (!recipe) { return [] }
+        if (this.props.fridge === undefined) { return undefined }
         const ingredients = recipe.ingredients.map(ingredient => ingredient.ingredientID)
         return this.props.fridge.filter(value => ingredients.includes(value))
     }
@@ -171,7 +172,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
         isSaved: state.generalReducer.savedRecipes !== undefined ? state.generalReducer.savedRecipes.map(recipe => recipe._id)
             .includes(ownProps.navigation.getParam('recipeId', null)) : undefined,
-        fridge: state.generalReducer.fridge.map(ingredient => ingredient.ingredientID)
+        fridge: state.generalReducer.fridge === undefined ? undefined :
+            state.generalReducer.fridge.map(ingredient => ingredient.ingredientID)
     }
 }
 
