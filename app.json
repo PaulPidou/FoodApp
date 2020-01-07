@@ -10,11 +10,11 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon_large.png",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/icon_large.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#36FF9B"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
