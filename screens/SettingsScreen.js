@@ -26,7 +26,7 @@ export default class SettingsScreen extends React.Component {
                             transparent
                             onPress={() => this.props.navigation.openDrawer()} >
                             <Icon
-                                style={GenericStyles.icon}
+                                style={GenericStyles.headerIcon}
                                 name='menu'
                             />
                         </Button>
