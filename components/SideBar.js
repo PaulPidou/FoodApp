@@ -12,39 +12,25 @@ export default class SideBar extends React.Component {
 
     render() {
         return (
-            <Container>
+            <Container style={GenericStyles.header}>
                 <Content>
                     <Image
-                        source={require('../assets/images/drawer_header_color.jpg')}
-                        style={{ height: 180 }}
+                        source={require('../assets/images/icon_large.png')}
+                        style={{ height: 180, resizeMode: 'contain' }}
                     />
-                    <List>
+                    <List style={{borderBottomColor: '#fff'}}>
                         <ListItem
                             icon
                             onPress={() => this.props.navigation.navigate("Home")}>
                             <Left>
                                 <Icon
-                                    style={GenericStyles.icon}
+                                    style={GenericStyles.headerIcon}
                                     name='home'
                                     type="MaterialIcons"
                                 />
                             </Left>
-                            <Body>
-                                <Text>Accueil</Text>
-                            </Body>
-                        </ListItem>
-                        <ListItem
-                            icon
-                            onPress={() => this.props.navigation.navigate("Profile")}>
-                            <Left>
-                                <Icon
-                                    style={GenericStyles.icon}
-                                    name='person'
-                                    type="MaterialIcons"
-                                />
-                            </Left>
-                            <Body>
-                                <Text>Profil</Text>
+                            <Body style={{borderBottomColor: '#fff'}}>
+                                <Text style={GenericStyles.headerIcon}>Accueil</Text>
                             </Body>
                         </ListItem>
                         <ListItem
@@ -52,13 +38,13 @@ export default class SideBar extends React.Component {
                             onPress={() => this.props.navigation.navigate("Settings")}>
                             <Left>
                                 <Icon
-                                    style={GenericStyles.icon}
+                                    style={GenericStyles.headerIcon}
                                     name='settings'
                                     type="MaterialIcons"
                                 />
                             </Left>
-                            <Body>
-                                <Text>Paramètres</Text>
+                            <Body style={{borderBottomColor: '#fff'}}>
+                                <Text style={GenericStyles.headerIcon}>Paramètres</Text>
                             </Body>
                         </ListItem>
                         <ListItem
@@ -66,12 +52,12 @@ export default class SideBar extends React.Component {
                             onPress={() => this._signOutAsync()}>
                             <Left>
                                 <Icon
-                                    style={GenericStyles.icon}
+                                    style={GenericStyles.headerIcon}
                                     name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
                                 />
                             </Left>
-                            <Body>
-                            <Text>Me déconnecter</Text>
+                            <Body style={{borderBottomColor: '#fff'}}>
+                            <Text style={GenericStyles.headerIcon}>Me déconnecter</Text>
                             </Body>
                         </ListItem>
                     </List>
