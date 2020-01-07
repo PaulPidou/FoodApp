@@ -5,10 +5,12 @@ import { Avatar } from 'react-native-elements'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import GenericStyles from "../constants/Style"
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from '../components/headers/SelectedIngredientHeader'
 import { transferItemsFromShoppingListToFridge, deleteItemsFromShoppingList } from "../store/api/user"
+
+import GenericStyles from "../constants/Style"
+import Colors from '../constants/Colors'
 
 class ShoppingListScreen extends React.Component {
     constructor(props) {
@@ -99,7 +101,7 @@ class ShoppingListScreen extends React.Component {
                             style={{flex: 0}}
                     >
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
                         />
                     </Button>
@@ -109,7 +111,7 @@ class ShoppingListScreen extends React.Component {
                             style={{flex: 0}}
                     >
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name={Platform.OS === 'ios' ? 'ios-filing' : 'md-filing'}
                         />
                     </Button>
@@ -133,7 +135,7 @@ class ShoppingListScreen extends React.Component {
                             )}
                     >
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name={Platform.OS === 'ios' ? 'ios-flag' : 'md-flag'}
                         />
                     </Button>
@@ -141,7 +143,7 @@ class ShoppingListScreen extends React.Component {
                         transparent
                         onPress={() => this.props.navigation.navigate('SearchIngredient', {origin: 'shoppinglist'})} >
                         <Icon
-                            style={GenericStyles.icon}
+                            style={GenericStyles.headerIcon}
                             name='add'
                             type="MaterialIcons"
                         />
@@ -193,7 +195,7 @@ class ShoppingListScreen extends React.Component {
                                     transparent
                                     onPress={() => this.handlePress(item)}
                                 >
-                                    <Icon name={iconLeft} />
+                                    <Icon name={iconLeft} style={{color: '#2ed583'}} />
                                 </Button>) : (
                                     <Avatar
                                         size="small"
@@ -248,7 +250,7 @@ class ShoppingListScreen extends React.Component {
         }
 
         if (this.props.ingredients === undefined) {
-            content = (<Spinner color='#007aff' />)
+            content = (<Spinner color={Colors.tintColor} />)
         } else if (this.props.ingredients.length === 0) {
             content = (<Text style={{margin: 10, textAlign: 'center'}}>
                 Votre liste de courses est vide, commencez dès maintenant à la compléter !</Text>)

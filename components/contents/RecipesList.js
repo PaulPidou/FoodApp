@@ -145,7 +145,7 @@ class RecipesList extends React.Component {
     render() {
         let content
         if (this.props.recipes === undefined) {
-            content = (<Spinner color='#007aff' />)
+            content = (<Spinner color={Colors.tintColor} />)
         } else if (this.props.recipes.length === 0) {
             content = (
                 <Text

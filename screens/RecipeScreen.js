@@ -8,7 +8,7 @@ import GenericStyles from '../constants/Style'
 import Colors from '../constants/Colors'
 import RecipeTabs from '../components/contents/RecipeTabs'
 import { getRecipeFromId } from '../store/api/public'
-import { saveRecipes, deleteSavedRecipes, upsertItemsToShoppingListFromRecipes } from '../store/api/user'
+import { saveRecipes, deleteSavedRecipes, cookSavedRecipes } from '../store/api/user'
 
 class RecipeScreen extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class RecipeScreen extends React.Component {
         this.state = {
             recipeId: props.navigation.getParam('recipeId', null),
             recipe: null,
-            requestAddToCart: false,
+            requestCook: false,
             requestDelete: false,
             requestSave: false
         }
@@ -34,10 +34,10 @@ class RecipeScreen extends React.Component {
         )
     }
 
-    async addIngredientsToCart() {
-        this.setState({ requestAddToCart: true })
-        await upsertItemsToShoppingListFromRecipes([this.state.recipeId])
-        this.setState({ requestAddToCart: false })
+    async cookRecipe() {
+        this.setState({ requestCook: true })
+        await cookSavedRecipes([this.state.recipeId])
+        this.setState({ requestCook: false })
     }
 
     async deleteRecipe() {
@@ -61,20 +61,29 @@ class RecipeScreen extends React.Component {
     header() {
         const rightButton = this.state.recipeId &&
             this.props.isSaved ? ([
-                this.state.requestAddToCart ? (
+                this.state.requestCook ? (
                     <Button
-                        key={'cart'}
+                        key={'color-fill'}
                         transparent>
                         <ActivityIndicator size="small" color={Colors.tintColor}/>
                     </Button>
                 ) : (
                     <Button
-                        key={'cart'}
+                        key={'color-fill'}
                         transparent
-                        onPress={() => this.addIngredientsToCart()}>
+                        onPress={() => {
+                            Alert.alert(
+                                'Recette cusinée',
+                                'Retirer la recette et ses ingrédients de vos listes ?',
+                                [
+                                    {text: 'Annuler', style: 'cancel'},
+                                    {text: 'Oui', onPress: () => this.cookRecipe()}
+                                ]
+                            )
+                        }}>
                         <Icon
                             style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
+                            name={Platform.OS === 'ios' ? 'ios-color-fill' : 'md-color-fill'}
                         />
                     </Button>
                 ),
@@ -90,7 +99,7 @@ class RecipeScreen extends React.Component {
                     onPress={() => {
                         Alert.alert(
                             'Confirmation',
-                            'Confirmez vous la suppression ?',
+                            'Retirer la recette des recettes sauvegardées ?',
                             [
                                 {text: 'Annuler', style: 'cancel'},
                                 {text: 'Oui', onPress: () => this.deleteRecipe()}
