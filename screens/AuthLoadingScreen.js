@@ -34,7 +34,7 @@ class AuthLoadingScreen extends React.Component {
                     source={require('../assets/images/icon_large.png')}
                 />
                 <ActivityIndicator size='large' color='#fff' />
-                <Text style={{ color: '#454545', fontSize: 27, fontWeight: '100', marginTop: 40 }}>Groceries (Re)Cycle</Text>
+                <Text style={{ color: '#fff', fontSize: 27, fontWeight: '100', marginTop: 40 }}>Groceries (Re)Cycle</Text>
             </View>
         )
     }

@@ -42,7 +42,8 @@ HomeStack.navigationOptions = ({ navigation }) => {
     return {
         tabBarVisible,
         tabBarOptions: {
-            activeTintColor: Colors.tintColor
+            activeTintColor: Colors.tabIconSelected,
+            activeBackgroundColor: Colors.tintColor
         },
         tabBarLabel: 'Recettes',
         tabBarIcon: RecipeTabBarIcon
@@ -77,7 +78,8 @@ ShoppingListStack.navigationOptions = ({ navigation }) => {
     return {
         tabBarVisible,
         tabBarOptions: {
-            activeTintColor: Colors.tintColor
+            activeTintColor: Colors.tabIconSelected,
+            activeBackgroundColor: Colors.tintColor
         },
         tabBarLabel: 'Liste de courses',
         tabBarIcon: ShoppingListTabBarIcon
@@ -113,7 +115,8 @@ FridgeStack.navigationOptions = ({ navigation }) => {
     return {
         tabBarVisible,
         tabBarOptions: {
-            activeTintColor: Colors.tintColor
+            activeTintColor: Colors.tabIconSelected,
+            activeBackgroundColor: Colors.tintColor
         },
         tabBarLabel: 'Frigo',
         tabBarIcon: FridgeTabBarIcon
