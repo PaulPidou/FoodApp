@@ -58,7 +58,7 @@ class SearchIngredientScreen extends React.Component {
     async handlePress() {
         const screen = this.props.navigation.state.params.origin === 'fridge' ? 'Fridge' : 'ShoppingList'
         const ingredients = this.state.ingredientsSelected.map((item) => {
-            return { ingredientID: item }
+            return { ingredientID: item, unit: 'INFINITY', quantity: 0 }
         })
         if(this.props.navigation.state.params.origin === 'fridge') {
             await upsertItemsToFridge(ingredients)
