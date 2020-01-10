@@ -158,11 +158,11 @@ export default class RecipeTabs extends React.Component {
                         recipe.ingredients.map((item) => {
                             return (
                                 <ListItem
-                                    icon
                                     avatar
+                                    icon={item.display.length < 73}
                                     key={item.ingredientID}
                                 >
-                                    <Left style={{height: 30}}>
+                                    <Left style={item.display.length < 73 ? {height: 30} : {marginRight: 15}}>
                                         <Avatar
                                             size="small"
                                             rounded
@@ -171,7 +171,7 @@ export default class RecipeTabs extends React.Component {
                                         />
                                     </Left>
                                     <Body>
-                                    <Text>{item.display}</Text>
+                                        <Text>{item.display}</Text>
                                     </Body>
                                     <Right>
                                         {

@@ -37,7 +37,7 @@ class RecipeScreen extends React.Component {
     async cookRecipe() {
         this.setState({ requestCook: true })
         await cookSavedRecipes([this.state.recipeId])
-        this.setState({ requestCook: false })
+        this.props.navigation.goBack()
     }
 
     async deleteRecipe() {
