@@ -12,7 +12,14 @@ class RecipesList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            requestActionOnRecipes: []
+            requestActionOnRecipes: [],
+            selectedRecipes: props.selectedRecipes === undefined ? [] : props.selectedRecipes
+        }
+    }
+
+    static getDerivedStateFromProps(nextProps) {
+        return {
+            selectedRecipes: nextProps.selectedRecipes === undefined ? [] : nextProps.selectedRecipes,
         }
     }
 
@@ -42,10 +49,16 @@ class RecipesList extends React.Component {
             return (
                 <TouchableOpacity
                     key={this.props.origin + item._id}
-                    onPress={() => this.props.handlePress(item._id)}
+                    onPress={this.state.selectedRecipes.length === 0 ?
+                        () => this.props.handlePress(item._id) : () => this.props.handleLongPress(item._id)}
+                    onLongPress={this.props.origin === 'home' ?
+                        () => this.props.handleLongPress(item._id) : () => this.props.handlePress(item._id)
+                    }
                 >
                     <Card
-                        style={{marginLeft: 15, marginRight: 15, marginTop: 10}}
+                        style={[{marginLeft: 15, marginRight: 15, marginTop: 10},
+                            this.state.selectedRecipes.includes(item._id) && {borderColor: Colors.tintColor,
+                                borderWidth: 0, backgroundColor: Colors.tintColor}]}
                     >
                         <CardItem cardBody>
                             <Image
@@ -53,15 +66,20 @@ class RecipesList extends React.Component {
                                         require('../../assets/images/cooking-icon.png') : { uri: item.picture }}
                                     style={{height: 120, width: null, flex: 1, resizeMode: 'cover'}} />
                         </CardItem>
-                        <CardItem>
-                            <Body><H2 style={GenericStyles.recipeTitle}>{item.title}</H2></Body>
+                        <CardItem style={this.state.selectedRecipes.includes(item._id) ?
+                            {backgroundColor: Colors.tintColor} : {}}>
+                            <Body><H2 style={this.state.selectedRecipes.includes(item._id) ?
+                                {color: Colors.counterTintColor} : GenericStyles.recipeTitle}>{item.title}</H2></Body>
                             <Right style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
                                 <Icon
                                     name='timer'
                                     type='MaterialIcons'
-                                    style={{paddingRight: 5}}
+                                    style={[{paddingRight: 5}, this.state.selectedRecipes.includes(item._id) &&
+                                        {color: Colors.counterTintColor}]}
                                 />
-                                <Text style={GenericStyles.recipeTitle}>{item.totalTime} min</Text>
+                                <Text style={this.state.selectedRecipes.includes(item._id) ?
+                                    {color: Colors.counterTintColor} : GenericStyles.recipeTitle}>
+                                    {item.totalTime} min</Text>
                             </Right>
                         </CardItem>
                         {
@@ -176,6 +194,8 @@ RecipesList.propTypes = {
     savedRecipes: PropTypes.array,
     fridge: PropTypes.array,
     handlePress: PropTypes.func,
+    handleLongPress: PropTypes.func,
+    selectedRecipes: PropTypes.array,
     origin: PropTypes.string,
     firstSearch: PropTypes.bool
 }
