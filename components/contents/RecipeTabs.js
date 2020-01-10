@@ -47,7 +47,7 @@ export default class RecipeTabs extends React.Component {
                         source={ !recipe.picture ? null : { uri: recipe.picture }}
                         style={ !recipe.picture ? {height: 0} : {height: 150, width: null, flex: 1, resizeMode: 'cover'}} />
                     <H1 style={{textAlign: 'center', marginTop: 5, color: '#555'}}>{recipe.title}</H1>
-                    <View style={{flex: 1, flexDirection: 'row', justifyContent:'center'}}>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent:'center', flexWrap: 'wrap'}}>
                         {
                             recipe.tags.map((tag) => {
                                 return(
