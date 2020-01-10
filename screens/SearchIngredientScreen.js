@@ -165,7 +165,7 @@ class SearchIngredientScreen extends React.Component {
                 </Header>
                 <Content>
                     {
-                        this.state.ingredientsCache === undefined ? (<Spinner color='#007aff' />) : (
+                        this.state.ingredientsCache === undefined ? (<Spinner color={Colors.tintColor} />) : (
                             <View style={{marginLeft: 10, marginRight: 10}}>
                                 <ScrollView style={{ marginBottom: 55 }}>
                                     {this.renderList()}
