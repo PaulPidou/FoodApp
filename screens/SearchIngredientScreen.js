@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Content, Input, Button, Text, Header, Left, Right, Icon, Spinner, Toast } from 'native-base'
-import { Platform, ScrollView, View, TouchableOpacity, Dimensions } from 'react-native'
+import {Platform, ScrollView, View, TouchableOpacity, Dimensions, ActivityIndicator} from 'react-native'
 import { Avatar } from 'react-native-elements'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import GenericStyles from '../constants/Style'
 import { getAllIngredients } from '../store/api/public'
 import { upsertItemsToShoppingList, upsertItemsToFridge } from '../store/api/user'
+import Colors from "../constants/Colors"
 
 class SearchIngredientScreen extends React.Component {
     constructor(props) {
@@ -16,7 +17,8 @@ class SearchIngredientScreen extends React.Component {
             ingredients: undefined,
             ingredientsCache: undefined,
             ingredientsSelected: [],
-            sortByFame: false
+            sortByFame: false,
+            requestAdd: false
         }
     }
 
@@ -56,6 +58,7 @@ class SearchIngredientScreen extends React.Component {
     }
 
     async handlePress() {
+        this.setState({ requestAdd: true })
         const screen = this.props.navigation.state.params.origin === 'fridge' ? 'Fridge' : 'ShoppingList'
         const ingredients = this.state.ingredientsSelected.map((item) => {
             return { ingredientID: item, unit: 'INFINITY', quantity: 0 }
@@ -65,6 +68,7 @@ class SearchIngredientScreen extends React.Component {
         } else {
             await upsertItemsToShoppingList(ingredients)
         }
+        this.setState({ requestAdd: false })
         this.props.navigation.navigate(screen)
     }
 
@@ -183,16 +187,17 @@ class SearchIngredientScreen extends React.Component {
                                     zIndex:5
                                 }}
                                 onPress={() => {
+                                    !this.state.requestAdd && (
                                     this.state.ingredientsSelected.length === 0 ? (
                                         Toast.show({
                                             text: "Aucun ingrédient sélectionné",
                                             textStyle: { textAlign: 'center' },
                                             buttonText: 'Ok'
                                         })
-                                    ) : (this.handlePress()) }}
-                        >
-                                <Text>Ajouter</Text>
-                            </Button>
+                                    ) : (this.handlePress())) }}
+                        >{ this.state.requestAdd ? (<ActivityIndicator size="small" color='#fff'/>) :
+                                (<Text>Ajouter</Text>)
+                        }</Button>
                         )
                 }
             </Container>
