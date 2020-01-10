@@ -66,7 +66,7 @@ class RecipeScreen extends React.Component {
                     <Button
                         key={'color-fill'}
                         transparent>
-                        <ActivityIndicator size="small" color={Colors.tintColor}/>
+                        <ActivityIndicator size="small" color={Colors.counterTintColor}/>
                     </Button>
                 ) : (
                     <Button
@@ -92,7 +92,7 @@ class RecipeScreen extends React.Component {
                     <Button
                         key={'trash'}
                         transparent>
-                        <ActivityIndicator size="small" color={Colors.tintColor}/>
+                        <ActivityIndicator size="small" color={Colors.counterTintColor}/>
                     </Button>
                 ) : (<Button
                     key={'trash'}
@@ -115,7 +115,7 @@ class RecipeScreen extends React.Component {
             ]) : (
                 this.state.requestSave || (this.props.isSaved === undefined) ? (
                     <Button transparent>
-                        <ActivityIndicator size="small" color={Colors.tintColor}/>
+                        <ActivityIndicator size="small" color={Colors.counterTintColor}/>
                     </Button>
                 ) : (
                     <Button
