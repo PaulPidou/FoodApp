@@ -30,7 +30,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
     "react-native-elements": "^0.19.1",
     "react-native-gesture-handler": "^1.5.3",
-    "react-native-offline": "^4.3.0",
+    "react-native-offline": "^5.2.0",
     "react-navigation": "^3.11.0",
     "react-redux": "^6.0.0",
     "react-timer-mixin": "^0.13.4",
