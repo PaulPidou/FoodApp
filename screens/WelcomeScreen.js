@@ -48,7 +48,7 @@ class WelcomeScreen extends React.Component {
                         style={GenericStyles.welcomeScreenInstructionText}
                     >Vérifier votre liste de courses</Text>
                     <Button
-                        onPress={() => this.props.navigation.navigate('SearchIngredient')}
+                        onPress={() => this.props.navigation.navigate('SearchIngredient', {origin: 'welcome'})}
                         style={{backgroundColor: '#5D9599', height: 50, marginTop: 15}}
                         full>
                         <Text style={{color:'#fff', fontSize: 22}}>

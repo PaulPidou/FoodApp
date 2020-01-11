@@ -135,14 +135,17 @@ class SearchIngredientScreen extends React.Component {
             <Container>
                 <Header searchbar style={GenericStyles.header} >
                     <Left style={GenericStyles.headerLeft}>
-                        <Button
-                            transparent
-                            onPress={() => this.props.navigation.goBack()} >
-                            <Icon
-                                style={GenericStyles.headerIcon}
-                                name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
-                            />
-                        </Button>
+                        {
+                            this.props.navigation.state.params.origin !== 'welcome' && (
+                                <Button
+                                    transparent
+                                    onPress={() => this.props.navigation.goBack()} >
+                                    <Icon
+                                        style={GenericStyles.headerIcon}
+                                        name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
+                                    />
+                                </Button>)
+                        }
                     </Left>
                     <Input
                         style={GenericStyles.headerTitle}
@@ -163,11 +166,33 @@ class SearchIngredientScreen extends React.Component {
                         </Button>
                     </Right>
                 </Header>
+                {
+                    this.props.navigation.state.params.origin === 'welcome' && (
+                        <View style={{alignItems: 'center'}}>
+                            <Text style={{marginTop: 5, marginBottom: 5}}>
+                                <Text style={{color: Colors.tintColor}}>Frigidaire</Text>
+                                <Text style={{color: '#286064'}}> > Recettes</Text>
+                                <Text style={{color: '#286064'}}> > Liste de courses</Text>
+                            </Text>
+                            <Button
+                                style={{marginBottom: 5}}
+                                onPress={() => {
+                                    this.props.navigation.navigate('SearchRecipe',
+                                        {ingredients: this.state.ingredientsSelected})
+                                }}
+                                rounded success iconRight>
+                                <Text>Prochaine étape</Text>
+                                <Icon name='arrow-forward' />
+                            </Button>
+                        </View>
+                    )
+                }
                 <Content>
                     {
                         this.state.ingredientsCache === undefined ? (<Spinner color={Colors.tintColor} />) : (
                             <View style={{marginLeft: 10, marginRight: 10}}>
-                                <ScrollView style={{ marginBottom: 55 }}>
+                                <ScrollView style={this.props.navigation.state.params.origin !== 'welcome' ?
+                                    { marginBottom: 55 } : {}}>
                                     {this.renderList()}
                                 </ScrollView>
                             </View>
@@ -175,7 +200,8 @@ class SearchIngredientScreen extends React.Component {
                     }
                 </Content>
                 {
-                    this.state.ingredientsCache !== undefined && (
+                    this.state.ingredientsCache !== undefined &&
+                    this.props.navigation.state.params.origin !== 'welcome' && (
                         <Button rounded success
                                 style={{
                                     position: 'absolute',

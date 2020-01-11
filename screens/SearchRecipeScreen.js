@@ -4,7 +4,7 @@ import {Container, Header, Left, Button, Icon, Input, Body } from 'native-base'
 
 import GenericStyles from '../constants/Style'
 import RecipesList from '../components/contents/RecipesList'
-import { getRecipesSummaryFromKeywords, getRecipesSummaryFromIngredients } from '../store/api/public'
+import { getRecipesSummaryFromKeywords, getRecipesSummaryFromIngredients, getMostFamousRecipesSummary } from '../store/api/public'
 
 export default class SearchRecipeScreen extends React.Component {
     constructor(props) {
@@ -25,10 +25,18 @@ export default class SearchRecipeScreen extends React.Component {
     componentDidMount() {
         if (this.state.ingredients) {
             this.setState({ recipes: undefined })
-            getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item.ingredientID)).then(
-                recipes => {
-                    this.setState({ recipes, firstSearch: false })
-                })
+            if(this.state.ingredients.length === 0) {
+                getMostFamousRecipesSummary().then(
+                    recipes => {
+                        this.setState({ recipes, firstSearch: false })
+                    }
+                )
+            } else {
+                getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item.ingredientID)).then(
+                    recipes => {
+                        this.setState({ recipes, firstSearch: false })
+                    })
+            }
         }
     }
 

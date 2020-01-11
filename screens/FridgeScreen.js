@@ -5,6 +5,7 @@ import {Avatar} from 'react-native-elements'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import Colors from "../constants/Colors"
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from "../components/headers/SelectedIngredientHeader"
@@ -115,7 +116,7 @@ class Fridge extends React.Component {
     render() {
         let content
         if (this.props.ingredients === undefined) {
-            content = (<Spinner color='#007aff' />)
+            content = (<Spinner color={Colors.tintColor} />)
         } else if (this.props.ingredients.length === 0) {
             content = (<Text style={{margin: 10, textAlign: 'center'}}>
                 Votre frigidaire est vide, commencez dès maintenant à la compléter !</Text>)
