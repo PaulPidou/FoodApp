@@ -30,7 +30,7 @@ class RecipeScreen extends React.Component {
         getRecipeFromId(this.state.recipeId).then(
             recipe => {
                 this.setState({ recipe })
-            }
+            } // Add check for empty recipe here
         )
     }
 

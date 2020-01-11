@@ -4,10 +4,11 @@ import { connect } from 'react-redux'
 import { NetworkConsumer } from 'react-native-offline'
 
 import RecipesList from '../components/contents/RecipesList'
-import GenericStyles from "../constants/Style"
 import PropTypes from "prop-types"
 import { ActivityIndicator, Alert, Platform } from "react-native"
-import { deleteSavedRecipes } from "../store/api/user"
+import { cookSavedRecipes, deleteSavedRecipes } from "../store/api/user"
+import GenericStyles from "../constants/Style"
+import Colors from "../constants/Colors"
 
 class HomeScreen extends React.Component {
     constructor(props) {
@@ -15,6 +16,7 @@ class HomeScreen extends React.Component {
         this.state = {
             selected: false,
             selectedRecipes: [],
+            requestCook: false,
             requestDelete: false
         }
         this.handlePress = this.handlePress.bind(this)
@@ -60,6 +62,12 @@ class HomeScreen extends React.Component {
         })
     }
 
+    async cookSelectedRecipes() {
+        this.setState({ requestCook: true })
+        await cookSavedRecipes(this.state.selectedRecipes)
+        this.setState({ requestCook: false, selected: false, selectedRecipes: [] })
+    }
+
     async deleteSelectedRecipes() {
         this.setState({ requestDelete: true })
         await deleteSavedRecipes(this.state.selectedRecipes)
@@ -86,18 +94,23 @@ class HomeScreen extends React.Component {
                 <Right>
                     <NetworkConsumer>
                         {({ isConnected }) => (
-                            isConnected && (
                                 <Button
                                     transparent
-                                    onPress={() => this.props.navigation.navigate("SearchRecipe")}>
+                                    onPress={() => {
+                                        isConnected ?
+                                            this.props.navigation.navigate("SearchRecipe") :
+                                            Alert.alert(
+                                                'Serveur hors ligne',
+                                                'Vous ne pouvez pas effectuer cette action',
+                                            )
+                                    }}>
                                     <Icon
                                         style={GenericStyles.headerIcon}
                                         name='search'
                                         type='MaterialIcons'
                                     />
                                 </Button>
-                            )
-                        )}
+                            )}
                     </NetworkConsumer>
                 </Right>
             </Header>
@@ -105,8 +118,7 @@ class HomeScreen extends React.Component {
     }
 
     selectedHeader() {
-        const message = this.state.selectedRecipes.length > 1 ?
-            'Retirer les recettes des recettes sauvegardées ?' : 'Retirer la recette des recettes sauvegardées ?'
+        const message = this.state.selectedRecipes.length > 1 ? 'les recettes' : 'la recette'
         return (
             <Header style={GenericStyles.header}>
                 <Left style={{flex: 1, flexDirection: 'row'}}>
@@ -132,9 +144,37 @@ class HomeScreen extends React.Component {
                 </Left>
                 <Right>
                     {
+                        this.state.requestCook ? (
+                            <Button
+                                key={'color-fill'}
+                                transparent>
+                                <ActivityIndicator size="small" color={Colors.counterTintColor}/>
+                            </Button>
+                        ) : (
+                            <Button
+                                key={'color-fill'}
+                                transparent
+                                onPress={() => {
+                                    Alert.alert(
+                                        'Recette cusinée',
+                                        'Retirer '.concat(message, ' et les ingrédients associés de vos listes ?'),
+                                        [
+                                            {text: 'Annuler', style: 'cancel'},
+                                            {text: 'Oui', onPress: () => this.cookSelectedRecipes()}
+                                        ]
+                                    )
+                                }}>
+                                <Icon
+                                    style={GenericStyles.headerIcon}
+                                    name={Platform.OS === 'ios' ? 'ios-color-fill' : 'md-color-fill'}
+                                />
+                            </Button>
+                        )
+                    }
+                    {
                         this.state.requestDelete ? (
                             <Button transparent>
-                                <ActivityIndicator size="small" color='#fff' />
+                                <ActivityIndicator size="small" color={Colors.counterTintColor} />
                             </Button>
                         ) : (
                             <Button
@@ -142,7 +182,7 @@ class HomeScreen extends React.Component {
                                 onPress={() => {
                                     Alert.alert(
                                         'Confirmation',
-                                        message,
+                                        'Retirer '.concat(message, ' des recettes sauvegardées ?'),
                                         [
                                             {text: 'Annuler', style: 'cancel'},
                                             {text: 'Oui', onPress: () => this.deleteSelectedRecipes()},
