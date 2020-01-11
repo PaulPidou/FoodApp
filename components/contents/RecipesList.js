@@ -1,8 +1,8 @@
 import React from "react"
-import {View, ScrollView, Text, Image, TouchableOpacity, Platform, ActivityIndicator} from 'react-native'
+import {View, ScrollView, Image, TouchableOpacity, Platform, ActivityIndicator} from 'react-native'
 import PropTypes from 'prop-types'
 
-import {Right, Body, Content, H2, List, Spinner, Card, CardItem, Icon, Button} from 'native-base'
+import {Right, Body, Content, H2, List, Spinner, Card, CardItem, Icon, Button, Text} from 'native-base'
 import { connect } from 'react-redux'
 import { saveRecipes, deleteSavedRecipes } from '../../store/api/user'
 import GenericStyles from '../../constants/Style'
@@ -67,7 +67,7 @@ class RecipesList extends React.Component {
                                     style={{height: 120, width: null, flex: 1, resizeMode: 'cover'}} />
                         </CardItem>
                         <CardItem style={this.state.selectedRecipes.includes(item._id) ?
-                            {backgroundColor: Colors.tintColor} : {}}>
+                            {backgroundColor: Colors.tintColor} : this.props.origin === 'search' ? {paddingBottom: 2} : {}}>
                             <Body><H2 style={this.state.selectedRecipes.includes(item._id) ?
                                 {color: Colors.counterTintColor} : GenericStyles.recipeTitle}>{item.title}</H2></Body>
                             <Right style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
@@ -102,7 +102,7 @@ class RecipesList extends React.Component {
                                                 <>
                                                     <View style={GenericStyles.missingIngredientsCircle}/>
                                                     <Text>{item.ingredients.length - commonIngredients.length} {
-                                                        commonIngredients.length > 1 ? "ingrédients" : "ingrédient"
+                                                        (item.ingredients.length - commonIngredients.length) > 1 ? "ingrédients" : "ingrédient"
                                                     }</Text>
                                                 </>
                                         ))
@@ -125,35 +125,33 @@ class RecipesList extends React.Component {
                                             <Button iconLeft rounded
                                                     style={{
                                                         alignSelf: 'center',
-                                                        width: 120,
-                                                        height: 35,
+                                                        marginTop: 2,
                                                         bottom: 10,
+                                                        height: 35,
                                                         backgroundColor: '#5D9599'
                                                     }}
                                                     onPress={() => this._deleteRecipe(item._id)}
                                             >
                                                 <Icon
-                                                    style={{marginLeft: 20}}
                                                     name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
                                                 />
-                                                <Text style={{color: '#fff', marginLeft: 15}}>Retirer</Text>
+                                                <Text style={{color: Colors.counterTintColor, textTransform: 'capitalize'}}>Retirer</Text>
                                             </Button>
                                         ) : (
                                             <Button iconLeft rounded
                                                     style={{
                                                         alignSelf: 'center',
-                                                        width: 150,
-                                                        height: 35,
+                                                        marginTop: 2,
                                                         bottom: 10,
+                                                        height: 35,
                                                         backgroundColor: '#36FF9B'
                                                     }}
                                                     onPress={() => this._saveRecipe(item._id)}
                                             >
                                                 <Icon
-                                                    style={{marginLeft: 20}}
                                                     name={Platform.OS === 'ios' ? 'ios-heart-empty' : 'md-heart-empty'}
                                                 />
-                                                <Text style={{color: '#fff', marginLeft: 15}}>Sauvegarder</Text>
+                                                <Text style={{color: Colors.counterTintColor, textTransform: 'capitalize'}}>Sauvegarder</Text>
                                             </Button>
                                         )))
                         }

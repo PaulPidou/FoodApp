@@ -63,13 +63,17 @@ class SearchIngredientScreen extends React.Component {
         const ingredients = this.state.ingredientsSelected.map((item) => {
             return { ingredientID: item, unit: 'INFINITY', quantity: 0 }
         })
-        if(this.props.navigation.state.params.origin === 'fridge') {
-            await upsertItemsToFridge(ingredients)
-        } else {
+        if(this.props.navigation.state.params.origin === 'shoppinglist') {
             await upsertItemsToShoppingList(ingredients)
+        } else {
+            await upsertItemsToFridge(ingredients)
         }
         this.setState({ requestAdd: false })
-        this.props.navigation.navigate(screen)
+        if(['fridge', 'shoppinglist'].includes(this.props.navigation.state.params.origin)) {
+            this.props.navigation.navigate(screen)
+        } else {
+            this.props.navigation.navigate('SearchRecipe', {ingredients: ingredients, origin: 'welcome'})
+        }
     }
 
     renderList() {
@@ -171,19 +175,27 @@ class SearchIngredientScreen extends React.Component {
                         <View style={{alignItems: 'center'}}>
                             <Text style={{marginTop: 5, marginBottom: 5}}>
                                 <Text style={{color: Colors.tintColor, textDecorationLine: 'underline'}}>Frigidaire</Text>
-                                <Text style={{color: '#286064'}}> > Recettes</Text>
-                                <Text style={{color: '#286064'}}> > Liste de courses</Text>
+                                <Text style={{color: '#286064'}}> > Recettes > Liste de courses</Text>
                             </Text>
-                            <Button
-                                style={{marginBottom: 5}}
-                                onPress={() => {
-                                    this.props.navigation.navigate('SearchRecipe',
-                                        {ingredients: this.state.ingredientsSelected, origin: 'welcome'})
-                                }}
-                                rounded success iconRight>
-                                <Text>Prochaine étape</Text>
-                                <Icon name='arrow-forward' />
-                            </Button>
+                            {
+                                this.state.requestAdd ? (
+                                    <Button transparent
+                                            style={{
+                                                alignSelf: 'center',
+                                                bottom: 10,
+                                            }}
+                                    >
+                                        <ActivityIndicator size="small" color={Colors.tintColor}/>
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        style={{marginBottom: 5}}
+                                        onPress={() => this.handlePress()}
+                                        rounded success iconRight>
+                                        <Text>Prochaine étape</Text>
+                                        <Icon name='arrow-forward' />
+                                    </Button>
+                                )}
                         </View>
                     )
                 }
@@ -221,7 +233,7 @@ class SearchIngredientScreen extends React.Component {
                                             buttonText: 'Ok'
                                         })
                                     ) : (this.handlePress())) }}
-                        >{ this.state.requestAdd ? (<ActivityIndicator size="small" color='#fff'/>) :
+                        >{ this.state.requestAdd ? (<ActivityIndicator size="small" color={Colors.counterTintColor} />) :
                                 (<Text>Ajouter</Text>)
                         }</Button>
                         )

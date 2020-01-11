@@ -103,8 +103,7 @@ export default class SearchRecipeScreen extends React.Component {
                             <Button
                                 style={{marginBottom: 5}}
                                 onPress={() => {
-                                    this.props.navigation.navigate('ShoppingList',
-                                        {ingredients: this.state.ingredientsSelected, origin: 'welcome'})
+                                    this.props.navigation.navigate('ShoppingList', {origin: 'welcome'})
                                 }}
                                 rounded success iconRight>
                                 <Text>Prochaine étape</Text>

@@ -1,6 +1,6 @@
 import React from 'react'
-import {Platform, ScrollView, Text} from 'react-native'
-import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet} from 'native-base'
+import {Platform, ScrollView, View} from 'react-native'
+import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet, Text} from 'native-base'
 import { Avatar } from 'react-native-elements'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -21,7 +21,8 @@ class ShoppingListScreen extends React.Component {
             shoppingMode: false,
             checkedIngredients: [],
             requestTransfer: false,
-            requestDelete: false
+            requestDelete: false,
+            origin: props.navigation.getParam('origin', null)
         }
         this.emptySelected = this.emptySelected.bind(this)
         this.updateSelected = this.updateSelected.bind(this)
@@ -209,7 +210,7 @@ class ShoppingListScreen extends React.Component {
                     </Left>
                     <Body>
                     <Text
-                        style={isChecked && {textDecorationLine: 'line-through'}}
+                        style={isChecked ? {textDecorationLine: 'line-through'} : {}}
                     >{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)}</Text>
                     </Body>
                 </ListItem>
@@ -237,6 +238,21 @@ class ShoppingListScreen extends React.Component {
                 />)
         } else if(this.state.shoppingMode) {
             header = this.shoppingHeader()
+        } else if(this.state.origin === 'welcome') {
+            header = (
+                <Header style={GenericStyles.header}>
+                    <Right style={GenericStyles.headerFoodListComponent}>
+                        <Button
+                            transparent
+                            onPress={() => this.props.navigation.navigate('SearchIngredientForSL', {origin: 'shoppinglist'})} >
+                            <Icon
+                                style={GenericStyles.headerIcon}
+                                name='add'
+                                type="MaterialIcons"
+                            />
+                        </Button>
+                    </Right>
+                </Header>)
         } else {
             header = (
                 <FoodListHeader
@@ -260,6 +276,25 @@ class ShoppingListScreen extends React.Component {
         return (
             <Container>
                 {header}
+                {
+                    this.state.origin === 'welcome' && (
+                        <View style={{alignItems: 'center'}}>
+                            <Text style={{marginTop: 5, marginBottom: 5}}>
+                                <Text style={{color: Colors.tintColor}}>Frigidaire > Recettes > </Text>
+                                <Text style={{color: Colors.tintColor, textDecorationLine: 'underline'}}>Liste de courses</Text>
+                            </Text>
+                            <Button
+                                style={{marginBottom: 5}}
+                                onPress={() => {
+                                    this.props.navigation.navigate('App')
+                                }}
+                                rounded success iconRight>
+                                <Text>Accéder à l'app</Text>
+                                <Icon name='arrow-forward' />
+                            </Button>
+                        </View>
+                    )
+                }
                 <Content>{content}</Content>
             </Container>
         )

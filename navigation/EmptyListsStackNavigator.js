@@ -12,4 +12,5 @@ export default createStackNavigator({
     SearchRecipe: SearchRecipeScreen,
     RecipeDetails: RecipeScreen,
     ShoppingList: ShoppingListScreen,
+    SearchIngredientForSL: SearchIngredientScreen,
 })
