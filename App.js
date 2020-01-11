@@ -41,7 +41,6 @@ export default class App extends React.Component {
   _loadResourcesAsync = async () => {
     return Promise.all([
       Font.loadAsync({
-        // This is the font that we are using for our tab bar
           ...Ionicons.font,
           Roboto: require("native-base/Fonts/Roboto.ttf"),
           Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),

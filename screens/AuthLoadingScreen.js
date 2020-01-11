@@ -3,6 +3,7 @@ import { AsyncStorage, View, ActivityIndicator, Image, Text } from 'react-native
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getUserLists } from '../store/api/user'
+import Colors from "../constants/Colors"
 
 class AuthLoadingScreen extends React.Component {
     constructor(props) {
@@ -17,7 +18,13 @@ class AuthLoadingScreen extends React.Component {
             const action = { type: 'UPDATE_USER_LISTS', lists: userLists ?
                     userLists : { savedRecipes: [], shoppingList: [], fridge: []} }
             this.props.dispatch(action)
-            this.props.navigation.navigate('App')
+
+            if(action.lists.savedRecipes.length === 0 && action.lists.shoppingList.length === 0 &&
+                action.lists.fridge.length === 0) {
+                this.props.navigation.navigate('EmptyLists')
+            } else {
+                this.props.navigation.navigate('App')
+            }
         } else {
             this.props.navigation.navigate('Auth')
         }
@@ -27,14 +34,14 @@ class AuthLoadingScreen extends React.Component {
     render() {
         return (
             <View
-                style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#36FF9B' }}
+                style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.splashScreenColor }}
             >
                 <Image
                     style={{ marginBottom: 50}}
                     source={require('../assets/images/icon_large.png')}
                 />
                 <ActivityIndicator size='large' color='#fff' />
-                <Text style={{ color: '#fff', fontSize: 27, fontWeight: '100', marginTop: 40 }}>Groceries (Re)Cycle</Text>
+                <Text style={{ color: Colors.counterTintColor, fontSize: 27, fontWeight: '100', marginTop: 40 }}>Groceries (Re)Cycle</Text>
             </View>
         )
     }

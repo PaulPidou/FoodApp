@@ -6,7 +6,7 @@ const GenericStyles = StyleSheet.create({
         color: "#3cff9a"
     },
     header: {
-        backgroundColor: "#3cff9a", // "#10ff82", // #fff
+        backgroundColor: "#3cff9a",
         marginTop: Constants.statusBarHeight
     },
     headerTab: {
@@ -80,6 +80,15 @@ const GenericStyles = StyleSheet.create({
         borderRadius: 10/2,
         backgroundColor: '#D3275C',
         margin: 5
+    },
+    welcomeScreenInstructionNumber: {
+        fontSize: 35,
+        color: '#286064'
+    },
+    welcomeScreenInstructionText: {
+        fontSize: 20,
+        color: '#286064',
+        marginBottom: 5
     }
 })
 
