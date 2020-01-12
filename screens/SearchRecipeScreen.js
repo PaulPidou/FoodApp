@@ -1,10 +1,11 @@
 import React from 'react'
 import {Platform, View} from 'react-native'
 import {Container, Header, Left, Button, Icon, Input, Body, Text} from 'native-base'
+import Modal from 'react-native-modal'
 
-import GenericStyles from '../constants/Style'
 import RecipesList from '../components/contents/RecipesList'
 import { getRecipesSummaryFromKeywords, getRecipesSummaryFromIngredients, getMostFamousRecipesSummary } from '../store/api/public'
+import GenericStyles from '../constants/Style'
 import Colors from "../constants/Colors"
 
 export default class SearchRecipeScreen extends React.Component {
@@ -15,7 +16,8 @@ export default class SearchRecipeScreen extends React.Component {
             recipes: [],
             firstSearch: true,
             ingredients: props.navigation.getParam('ingredients', null),
-            origin: props.navigation.getParam('origin', null)
+            origin: props.navigation.getParam('origin', null),
+            isModalVisible: props.navigation.getParam('origin', null) === 'welcome'
         }
         this.handlePress = this.handlePress.bind(this)
     }
@@ -40,6 +42,10 @@ export default class SearchRecipeScreen extends React.Component {
                     })
             }
         }
+    }
+
+    toggleModal() {
+        this.setState({ isModalVisible: !this.state.isModalVisible })
     }
 
     handlePress(itemID) {

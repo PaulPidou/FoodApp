@@ -66,7 +66,9 @@ class SearchIngredientScreen extends React.Component {
         if(this.props.navigation.state.params.origin === 'shoppinglist') {
             await upsertItemsToShoppingList(ingredients)
         } else {
-            await upsertItemsToFridge(ingredients)
+            if(ingredients.length) {
+                await upsertItemsToFridge(ingredients)
+            }
         }
         this.setState({ requestAdd: false })
         if(['fridge', 'shoppinglist'].includes(this.props.navigation.state.params.origin)) {
