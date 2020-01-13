@@ -98,6 +98,36 @@ export default class SearchRecipeScreen extends React.Component {
         return (
             <Container>
                 {this.header()}
+                <View>
+                    <Modal isVisible={this.state.isModalVisible}>
+                        <View style={{backgroundColor: '#fff', margin: 10, padding: 15}}>
+                            <Text style={{color: '#286064', fontSize: 27, fontWeight: '100', marginBottom: 10}}>
+                                Vous allez maintenant voir une liste de recettes suggérées</Text>
+                            <View style={{flexDirection: 'row', marginBottom: 10}}>
+                                <View style={{width: 10, height: 10, borderRadius: 10/2, backgroundColor: '#5CD327', marginTop: 35}}/>
+                                <Text
+                                    style={{color: '#286064', fontSize: 20, marginLeft: 15}}
+                                >Ce label indique le nombre d'ingrédients de la recette
+                                    <Text style={{color: '#286064', fontSize: 20, fontWeight: 'bold'}}> déjà dans votre fridigdaire</Text>
+                                </Text>
+                            </View>
+                            <View style={{flexDirection: 'row'}}>
+                                <View style={{width: 10, height: 10, borderRadius: 10/2, backgroundColor: '#D3275C', marginTop: 35}}/>
+                                <Text
+                                    style={{color: '#286064', fontSize: 20, marginLeft: 15}}
+                                >Ce label indique le nombre d'ingredients de la recette
+                                    <Text style={{color: '#286064', fontSize: 20, fontWeight: 'bold'}}> manquants de votre frigidaire</Text>
+                                </Text>
+                            </View>
+                            <Text
+                                style={{color: '#888', fontSize: 20, fontWeight: '100', marginTop: 10}}
+                            >Quand vous sauvegardez une recette les ingrédients manquants sont automatiquement ajoutés à votre liste de courses</Text>
+                            <Button transparent style={{width: 60, alignSelf: 'flex-end'}} onPress={() => {this.toggleModal()}}>
+                                <Text style={{fontSize: 16}}>Ok</Text>
+                            </Button>
+                        </View>
+                    </Modal>
+                </View>
                 {
                     this.state.origin === 'welcome' && (
                         <View style={{alignItems: 'center'}}>
