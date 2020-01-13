@@ -89,6 +89,30 @@ const GenericStyles = StyleSheet.create({
         fontSize: 20,
         color: '#286064',
         marginBottom: 5
+    },
+    modalText: {
+        color: '#286064',
+        fontSize: 20,
+        marginLeft: 15
+    },
+    modalTextBold: {
+        color: '#286064',
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    commonIngredientsCircleModal: {
+        width: 12,
+        height: 12,
+        borderRadius: 12/2,
+        backgroundColor: '#5CD327',
+        marginTop: 35
+    },
+    missingIngredientsCircleModal: {
+        width: 12,
+        height: 12,
+        borderRadius: 12/2,
+        backgroundColor: '#D3275C',
+        marginTop: 35
     }
 })
 

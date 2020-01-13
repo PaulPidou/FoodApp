@@ -5,7 +5,7 @@ import {Button} from "native-base"
 import GenericStyles from "../constants/Style"
 import Colors from "../constants/Colors"
 
-class WelcomeScreen extends React.Component {
+export default class WelcomeScreen extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -64,5 +64,3 @@ class WelcomeScreen extends React.Component {
         )
     }
 }
-
-export default (WelcomeScreen)
