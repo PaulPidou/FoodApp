@@ -45,10 +45,6 @@ export default class SearchRecipeScreen extends React.Component {
         }
     }
 
-    toggleModal() {
-        this.setState({ isModalVisible: !this.state.isModalVisible })
-    }
-
     handlePress(itemID) {
         if(this.state.selected) {
             this._updateSelectedRecipes(itemID)
