@@ -46,7 +46,10 @@ const GenericStyles = StyleSheet.create({
         alignSelf:'center'
     },
     formBlockButton: {
-        margin: 10
+        marginTop: 15,
+        width: 350,
+        alignSelf:'center',
+        backgroundColor: '#5D9599'
     },
     ingredientBlock: {
         width: 150,
