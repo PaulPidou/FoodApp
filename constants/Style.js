@@ -1,5 +1,6 @@
 import {Platform, StyleSheet} from "react-native"
 import Constants from 'expo-constants'
+import Colors from "./Colors"
 
 const GenericStyles = StyleSheet.create({
     activityIndicator: {
@@ -44,6 +45,32 @@ const GenericStyles = StyleSheet.create({
         fontSize: 14,
         marginLeft: 0,
         alignSelf:'center'
+    },
+    loginContainer: {
+        marginTop: Constants.statusBarHeight,
+        backgroundColor: Colors.splashScreenColor
+    },
+    loginContent: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    loginImage: {
+        width: 200,
+        height: 200,
+        resizeMode: 'contain',
+        marginBottom: 10,
+        marginTop: 15
+    },
+    loginTitle: {
+        color: Colors.counterTintColor,
+        fontSize: 32,
+        fontWeight: '100',
+        marginBottom: 10
+    },
+    loginFormItem: {
+        backgroundColor: Colors.counterTintColor,
+        width: 350,
+        marginTop: 10
     },
     formBlockButton: {
         marginTop: 15,

@@ -133,15 +133,15 @@ export class SignUpScreen extends React.Component {
 
     render() {
         return (
-            <Container style={{marginTop: Constants.statusBarHeight, backgroundColor: Colors.splashScreenColor}}>
-                <Content contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
+            <Container style={GenericStyles.loginContainer}>
+                <Content contentContainerStyle={GenericStyles.loginContent}>
                     <Image
-                        style={{width: 200, height: 200, resizeMode: 'contain', marginBottom: 10, marginTop: 15}}
+                        style={GenericStyles.loginImage}
                         source={require('../assets/images/icon_large.png')}
                     />
-                    <Text style={{color: Colors.counterTintColor, fontSize: 32, fontWeight: '100', marginBottom: 10}}>Groceries (Re)Cycle</Text>
+                    <Text style={GenericStyles.loginTitle}>Groceries (Re)Cycle</Text>
                     <Form>
-                        <Item style={{backgroundColor: '#fff', width: 350, marginTop: 10}} regular>
+                        <Item style={GenericStyles.loginFormItem} regular>
                             <Input
                                 placeholder="Email"
                                 keyboardType={"email-address"}
@@ -151,7 +151,7 @@ export class SignUpScreen extends React.Component {
                                 blurOnSubmit={false}
                             />
                         </Item>
-                        <Item style={{backgroundColor: '#fff', width: 350, marginTop: 10}} regular>
+                        <Item style={GenericStyles.loginFormItem} regular>
                             <Input
                                 ref={input => { this.password = input }}
                                 placeholder="Mot de passe"
@@ -162,7 +162,7 @@ export class SignUpScreen extends React.Component {
                                 blurOnSubmit={false}
                             />
                         </Item>
-                        <Item style={{backgroundColor: '#fff', width: 350, marginTop: 10}} regular>
+                        <Item style={GenericStyles.loginFormItem} regular>
                             <Input
                                 ref={input => { this.confirmPassword = input }}
                                 placeholder="Confirmer le mot de passe"
