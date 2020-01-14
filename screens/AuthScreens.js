@@ -45,9 +45,9 @@ export class LogInScreen extends React.Component {
                         style={{width: 200, height: 200, resizeMode: 'contain', marginBottom: 10, marginTop: 15}}
                         source={require('../assets/images/icon_large.png')}
                     />
-                    <Text style={{color: Colors.counterTintColor, fontSize: 32, fontWeight: '100', marginBottom: 20}}>Groceries (Re)Cycle</Text>
+                    <Text style={{color: Colors.counterTintColor, fontSize: 32, fontWeight: '100', marginBottom: 10}}>Groceries (Re)Cycle</Text>
                     <Form>
-                        <Item style={{backgroundColor: '#fff', width: 350}} regular>
+                        <Item style={{backgroundColor: '#fff', width: 350, marginTop: 10}} regular>
                             <Input
                                 placeholder="Email"
                                 keyboardType={"email-address"}
@@ -79,7 +79,7 @@ export class LogInScreen extends React.Component {
                                 <Text>Me connecter</Text>
                             </Button>)
                     }
-                    <Text style={{color: Colors.counterTintColor, fontSize: 22, marginTop: 10}}>────────  OU  ────────</Text>
+                    <Text style={{color: Colors.counterTintColor, fontSize: 22, marginTop: 15}}>────────  OU  ────────</Text>
                     <Button
                         block
                         style={GenericStyles.formBlockButton}
@@ -133,25 +133,15 @@ export class SignUpScreen extends React.Component {
 
     render() {
         return (
-            <Container>
-                <Header style={GenericStyles.header}>
-                    <Left style={GenericStyles.headerLeft}>
-                        <Button
-                            transparent
-                            onPress={() => this.props.navigation.goBack()}>
-                            <Icon
-                                style={GenericStyles.icon}
-                                name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
-                            />
-                        </Button>
-                    </Left>
-                    <Body>
-                    <Title style={GenericStyles.headerTitle}>S&apos;enregistrer</Title>
-                    </Body>
-                </Header>
-                <Content>
+            <Container style={{marginTop: Constants.statusBarHeight, backgroundColor: Colors.splashScreenColor}}>
+                <Content contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Image
+                        style={{width: 200, height: 200, resizeMode: 'contain', marginBottom: 10, marginTop: 15}}
+                        source={require('../assets/images/icon_large.png')}
+                    />
+                    <Text style={{color: Colors.counterTintColor, fontSize: 32, fontWeight: '100', marginBottom: 10}}>Groceries (Re)Cycle</Text>
                     <Form>
-                        <Item>
+                        <Item style={{backgroundColor: '#fff', width: 350, marginTop: 10}} regular>
                             <Input
                                 placeholder="Email"
                                 keyboardType={"email-address"}
@@ -161,7 +151,7 @@ export class SignUpScreen extends React.Component {
                                 blurOnSubmit={false}
                             />
                         </Item>
-                        <Item>
+                        <Item style={{backgroundColor: '#fff', width: 350, marginTop: 10}} regular>
                             <Input
                                 ref={input => { this.password = input }}
                                 placeholder="Mot de passe"
@@ -172,7 +162,7 @@ export class SignUpScreen extends React.Component {
                                 blurOnSubmit={false}
                             />
                         </Item>
-                        <Item last>
+                        <Item style={{backgroundColor: '#fff', width: 350, marginTop: 10}} regular>
                             <Input
                                 ref={input => { this.confirmPassword = input }}
                                 placeholder="Confirmer le mot de passe"
