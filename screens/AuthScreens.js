@@ -1,9 +1,8 @@
 import React from 'react'
 import {AsyncStorage, Platform, Keyboard, Image} from 'react-native'
-import {Container, Content, Header, Button, Icon, Text, Form, Item, Input, Left, Title, Body, Toast, Spinner} from 'native-base'
+import {Container, Content, Button, Icon, Text, Form, Item, Input, Toast, Spinner} from 'native-base'
 import GenericStyles from '../constants/Style'
 import { logInUser, signUpUser } from '../store/api/public'
-import Constants from "expo-constants"
 import Colors from "../constants/Colors"
 
 
@@ -39,15 +38,15 @@ export class LogInScreen extends React.Component {
 
     render() {
         return (
-            <Container style={{marginTop: Constants.statusBarHeight, backgroundColor: Colors.splashScreenColor}}>
-                <Content contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
+            <Container style={GenericStyles.loginContainer}>
+                <Content contentContainerStyle={GenericStyles.loginContent}>
                     <Image
-                        style={{width: 200, height: 200, resizeMode: 'contain', marginBottom: 10, marginTop: 15}}
+                        style={GenericStyles.loginImage}
                         source={require('../assets/images/icon_large.png')}
                     />
-                    <Text style={{color: Colors.counterTintColor, fontSize: 32, fontWeight: '100', marginBottom: 10}}>Groceries (Re)Cycle</Text>
+                    <Text style={GenericStyles.loginTitle}>Groceries (Re)Cycle</Text>
                     <Form>
-                        <Item style={{backgroundColor: '#fff', width: 350, marginTop: 10}} regular>
+                        <Item style={GenericStyles.loginFormItem} regular>
                             <Input
                                 placeholder="Email"
                                 keyboardType={"email-address"}
@@ -57,7 +56,7 @@ export class LogInScreen extends React.Component {
                                 onChangeText={(text) => this.setState({ email: text })}
                             />
                         </Item>
-                        <Item style={{backgroundColor: '#fff', width: 350, marginTop: 10}} regular>
+                        <Item style={GenericStyles.loginFormItem} regular>
                             <Input
                                 ref={input => { this.password = input }}
                                 placeholder="Mot de passe"
