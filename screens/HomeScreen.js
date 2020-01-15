@@ -151,24 +151,29 @@ class HomeScreen extends React.Component {
                                 <ActivityIndicator size="small" color={Colors.counterTintColor}/>
                             </Button>
                         ) : (
-                            <Button
-                                key={'color-fill'}
-                                transparent
-                                onPress={() => {
-                                    Alert.alert(
-                                        'Recette cusinée',
-                                        'Retirer '.concat(message, ' et les ingrédients associés de vos listes ?'),
-                                        [
-                                            {text: 'Annuler', style: 'cancel'},
-                                            {text: 'Oui', onPress: () => this.cookSelectedRecipes()}
-                                        ]
-                                    )
-                                }}>
-                                <Icon
-                                    style={GenericStyles.headerIcon}
-                                    name={Platform.OS === 'ios' ? 'ios-color-fill' : 'md-color-fill'}
-                                />
-                            </Button>
+                            <NetworkConsumer>
+                                {({ isConnected }) => (
+                                <Button
+                                    key={'color-fill'}
+                                    transparent
+                                    onPress={() => {
+                                        isConnected ? Alert.alert(
+                                            'Recette cusinée',
+                                            'Retirer '.concat(message, ' et les ingrédients associés de vos listes ?'),
+                                            [
+                                                {text: 'Annuler', style: 'cancel'},
+                                                {text: 'Oui', onPress: () => this.cookSelectedRecipes()}
+                                            ]) : Alert.alert(
+                                            'Serveur hors ligne',
+                                            'Vous ne pouvez pas effectuer cette action',
+                                        )
+                                    }}>
+                                    <Icon
+                                        style={GenericStyles.headerIcon}
+                                        name={Platform.OS === 'ios' ? 'ios-color-fill' : 'md-color-fill'}
+                                    />
+                                </Button>)}
+                            </NetworkConsumer>
                         )
                     }
                     {
@@ -177,22 +182,28 @@ class HomeScreen extends React.Component {
                                 <ActivityIndicator size="small" color={Colors.counterTintColor} />
                             </Button>
                         ) : (
-                            <Button
-                                transparent
-                                onPress={() => {
-                                    Alert.alert(
-                                        'Confirmation',
-                                        'Retirer '.concat(message, ' des recettes sauvegardées ?'),
-                                        [
-                                            {text: 'Annuler', style: 'cancel'},
-                                            {text: 'Oui', onPress: () => this.deleteSelectedRecipes()},
-                                        ]
-                                    )}}>
-                                <Icon
-                                    style={GenericStyles.headerIcon}
-                                    name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
-                                />
-                            </Button>
+                            <NetworkConsumer>
+                                {({ isConnected }) => (
+                                <Button
+                                    transparent
+                                    onPress={() => {
+                                        isConnected ? Alert.alert(
+                                            'Confirmation',
+                                            'Retirer '.concat(message, ' des recettes sauvegardées ?'),
+                                            [
+                                                {text: 'Annuler', style: 'cancel'},
+                                                {text: 'Oui', onPress: () => this.deleteSelectedRecipes()},
+                                            ]): Alert.alert(
+                                            'Serveur hors ligne',
+                                            'Vous ne pouvez pas effectuer cette action',
+                                        )
+                                    }}>
+                                    <Icon
+                                        style={GenericStyles.headerIcon}
+                                        name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
+                                    />
+                                </Button>)}
+                            </NetworkConsumer>
                         )
                     }
                 </Right>
