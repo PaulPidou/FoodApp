@@ -1,7 +1,8 @@
 import React from 'react'
-import {Platform, ScrollView, View} from 'react-native'
+import {Alert, Platform, ScrollView, View} from 'react-native'
 import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet, Text} from 'native-base'
 import { Avatar } from 'react-native-elements'
+import { NetworkConsumer } from "react-native-offline"
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -117,39 +118,56 @@ class ShoppingListScreen extends React.Component {
                         />
                     </Button>
                 </Left>
-                <Right>
-                    <Button
-                        transparent
-                        onPress={() =>
-                            ActionSheet.show(
-                                {
-                                    title: "Que voulez-vous faire ?",
-                                    options: [
-                                        "Transférer les aliments dans le frigidaire",
-                                        "Supprimer les aliments de la liste de courses",
-                                        "Garder les aliments dans la liste de courses",
-                                        "Annuler"
-                                    ],
-                                    cancelButtonIndex: 3
-                                },
-                                (index) => this.handleActionSheetOptions(index)
-                            )}
-                    >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-flag' : 'md-flag'}
-                        />
-                    </Button>
-                    <Button
-                        transparent
-                        onPress={() => this.props.navigation.navigate('SearchIngredient', {origin: 'shoppinglist'})} >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name='add'
-                            type="MaterialIcons"
-                        />
-                    </Button>
-                </Right>
+                <NetworkConsumer>
+                    {({ isConnected }) => (
+                    <Right>
+                        <Button
+                            transparent
+                            onPress={() => { isConnected ?
+                                ActionSheet.show(
+                                    {
+                                        title: "Que voulez-vous faire ?",
+                                        options: [
+                                            "Transférer les aliments dans le frigidaire",
+                                            "Supprimer les aliments de la liste de courses",
+                                            "Garder les aliments dans la liste de courses",
+                                            "Annuler"
+                                        ],
+                                        cancelButtonIndex: 3
+                                    },
+                                    (index) => this.handleActionSheetOptions(index)
+                                ) : Alert.alert(
+                                    'Serveur hors ligne',
+                                    'Les aliments seront conservés dans la liste de courses',
+                                    [
+                                        {text: 'Annuler', style: 'cancel'},
+                                        {text: 'Ok', onPress: () => this.handleActionSheetOptions(2)},
+                                    ]
+                                )
+                            }}
+                        >
+                            <Icon
+                                style={GenericStyles.headerIcon}
+                                name={Platform.OS === 'ios' ? 'ios-flag' : 'md-flag'}
+                            />
+                        </Button>
+                        <Button
+                            transparent
+                            onPress={() => { isConnected ?
+                                this.props.navigation.navigate('SearchIngredient', {origin: 'shoppinglist'}) :
+                                Alert.alert(
+                                    'Serveur hors ligne',
+                                    'Vous ne pouvez pas effectuer cette action',
+                                )
+                            }} >
+                            <Icon
+                                style={GenericStyles.headerIcon}
+                                name='add'
+                                type="MaterialIcons"
+                            />
+                        </Button>
+                    </Right>)}
+                </NetworkConsumer>
             </Header>
         )
     }
