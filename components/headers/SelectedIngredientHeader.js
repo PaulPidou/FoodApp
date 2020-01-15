@@ -4,6 +4,7 @@ import { Left, Right, Header, Button, Icon } from "native-base"
 
 import {Alert, Platform, ActivityIndicator} from "react-native"
 import GenericStyles from "../../constants/Style"
+import {NetworkConsumer} from "react-native-offline"
 
 export default class SelectedIngredientHeader extends React.Component {
     render() {
@@ -37,30 +38,44 @@ export default class SelectedIngredientHeader extends React.Component {
                             </Button>
                         ) : (
                         this.props.origin === 'shoppinglist' && (
-                            <Button
-                                transparent
-                                onPress={() => {
-                                    this.props.transferItemsToFridge()
-                                }}>
-                                <Icon
-                                    style={GenericStyles.headerIcon}
-                                    name={Platform.OS === 'ios' ? 'ios-egg' : 'md-egg'}
-                                />
-                            </Button>))
+                                <NetworkConsumer>
+                                    {({ isConnected }) => (
+                                    <Button
+                                        transparent
+                                        onPress={() => { isConnected ?
+                                            this.props.transferItemsToFridge() :
+                                            Alert.alert(
+                                                'Serveur hors ligne',
+                                                'Vous ne pouvez pas effectuer cette action',
+                                            )
+                                        }}>
+                                        <Icon
+                                            style={GenericStyles.headerIcon}
+                                            name={Platform.OS === 'ios' ? 'ios-egg' : 'md-egg'}
+                                        />
+                                    </Button>)}
+                                </NetworkConsumer>))
                     }
                     {
                         this.props.origin === 'fridge' && (
-                            <Button
-                                transparent
-                                onPress={() => {
-                                    this.props.navigation.navigate('SearchRecipe', {ingredients: this.props.selectedIngredients})
-                                }}
-                            >
-                                <Icon
-                                    style={GenericStyles.headerIcon}
-                                    name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
-                                />
-                            </Button>)
+                            <NetworkConsumer>
+                                {({ isConnected }) => (
+                                <Button
+                                    transparent
+                                    onPress={() => { isConnected ?
+                                        this.props.navigation.navigate('SearchRecipe', {ingredients: this.props.selectedIngredients}) :
+                                        Alert.alert(
+                                            'Serveur hors ligne',
+                                            'Vous ne pouvez pas effectuer cette action',
+                                        )
+                                    }}
+                                >
+                                    <Icon
+                                        style={GenericStyles.headerIcon}
+                                        name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
+                                    />
+                                </Button>)}
+                            </NetworkConsumer>)
                     }
                     {
                         this.props.requestDelete ? (
@@ -68,22 +83,28 @@ export default class SelectedIngredientHeader extends React.Component {
                                 <ActivityIndicator size="small" color='#fff' />
                             </Button>
                         ) : (
-                            <Button
-                                transparent
-                                onPress={() => {
-                                    Alert.alert(
-                                        'Confirmation',
-                                        'Confirmez vous la suppression ?',
-                                        [
-                                            {text: 'Annuler', style: 'cancel'},
-                                            {text: 'Oui', onPress: () => this.props.deleteSelectedIngredients()},
-                                        ]
-                                    )}}>
-                                <Icon
-                                    style={GenericStyles.headerIcon}
-                                    name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-                                />
-                            </Button>
+                            <NetworkConsumer>
+                                {({ isConnected }) => (
+                                <Button
+                                    transparent
+                                    onPress={() => { isConnected ?
+                                        Alert.alert(
+                                            'Confirmation',
+                                            'Confirmez vous la suppression ?',
+                                            [
+                                                {text: 'Annuler', style: 'cancel'},
+                                                {text: 'Oui', onPress: () => this.props.deleteSelectedIngredients()},
+                                            ]) : Alert.alert(
+                                            'Serveur hors ligne',
+                                            'Vous ne pouvez pas effectuer cette action',
+                                        )
+                                    }}>
+                                    <Icon
+                                        style={GenericStyles.headerIcon}
+                                        name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
+                                    />
+                                </Button>)}
+                            </NetworkConsumer>
                         )
                     }
                 </Right>
