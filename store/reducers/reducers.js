@@ -53,6 +53,7 @@ export const generalReducer = function(state = initialState, action) {
             for(const recipe of action.recipesDetails) {
                 recipesDetails[recipe._id] = recipe
             }
+            AsyncStorage.setItem('recipesDetails', JSON.stringify(recipesDetails))
             return {
                 ...state,
                 recipesDetails: recipesDetails
@@ -61,6 +62,7 @@ export const generalReducer = function(state = initialState, action) {
             for(const recipeID of action.recipesIDs) {
                 if(recipesDetails.hasOwnProperty(recipeID)) { delete recipesDetails[recipeID] }
             }
+            AsyncStorage.setItem('recipesDetails', JSON.stringify(recipesDetails))
             return {
                 ...state,
                 recipesDetails: recipesDetails

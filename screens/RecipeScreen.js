@@ -1,5 +1,5 @@
 import React from 'react'
-import {ActivityIndicator, Alert, Platform, Text} from 'react-native'
+import {ActivityIndicator, Alert, AsyncStorage, Platform, Text} from 'react-native'
 import {Container, Left, Right, Button, Icon, Header} from 'native-base'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -15,7 +15,7 @@ class RecipeScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            recipeId: props.navigation.getParam('recipeId', null),
+            recipeId: props.navigation.getParam('recipeId', 'null'),
             recipe: props.recipe,
             requestCook: false,
             requestDelete: false,
@@ -29,12 +29,20 @@ class RecipeScreen extends React.Component {
 
     async componentDidMount() {
         const isConnected = await checkInternetConnection('http://192.168.43.163:3000')
-        if(this.state.recipe == null && isConnected) {
-            getRecipeFromId(this.state.recipeId).then(
-                recipe => {
-                    this.setState({ recipe })
+        if(this.state.recipe == null) {
+            if(isConnected) {
+                getRecipeFromId(this.state.recipeId).then(
+                    recipe => {
+                        this.setState({recipe})
+                    }
+                )
+            } else {
+                const recipesDetailsStored = await AsyncStorage.getItem('recipesDetails')
+                const recipesDetails = recipesDetailsStored ? JSON.parse(recipesDetailsStored) : {}
+                if(recipesDetails.hasOwnProperty(this.state.recipeId)) {
+                    this.setState({ recipe: recipesDetails[this.state.recipeId] })
                 }
-            )
+            }
         }
     }
 
