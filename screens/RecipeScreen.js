@@ -9,13 +9,14 @@ import Colors from '../constants/Colors'
 import RecipeTabs from '../components/contents/RecipeTabs'
 import { getRecipeFromId } from '../store/api/public'
 import { saveRecipes, deleteSavedRecipes, cookSavedRecipes } from '../store/api/user'
+import {checkInternetConnection} from "react-native-offline"
 
 class RecipeScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             recipeId: props.navigation.getParam('recipeId', null),
-            recipe: null,
+            recipe: props.recipe,
             requestCook: false,
             requestDelete: false,
             requestSave: false
@@ -26,12 +27,15 @@ class RecipeScreen extends React.Component {
         header: null
     }
 
-    componentDidMount() {
-        getRecipeFromId(this.state.recipeId).then(
-            recipe => {
-                this.setState({ recipe })
-            } // Add check for empty recipe here
-        )
+    async componentDidMount() {
+        const isConnected = await checkInternetConnection('http://192.168.43.163:3000')
+        if(this.state.recipe == null && isConnected) {
+            getRecipeFromId(this.state.recipeId).then(
+                recipe => {
+                    this.setState({ recipe })
+                }
+            )
+        }
     }
 
     async cookRecipe() {
@@ -165,15 +169,19 @@ class RecipeScreen extends React.Component {
 
 RecipeScreen.propTypes = {
     isSaved: PropTypes.bool,
-    fridge: PropTypes.array
+    fridge: PropTypes.array,
+    recipe: PropTypes.object
 }
 
 const mapStateToProps = (state, ownProps) => {
+    const recipeID = ownProps.navigation.getParam('recipeId', 'null')
     return {
         isSaved: state.generalReducer.savedRecipes !== undefined ? state.generalReducer.savedRecipes.map(recipe => recipe._id)
-            .includes(ownProps.navigation.getParam('recipeId', null)) : undefined,
+            .includes(recipeID) : undefined,
         fridge: state.generalReducer.fridge === undefined ? undefined :
-            state.generalReducer.fridge.map(ingredient => ingredient.ingredientID)
+            state.generalReducer.fridge.map(ingredient => ingredient.ingredientID),
+        recipe: state.generalReducer.recipesDetails.hasOwnProperty(recipeID) ?
+            state.generalReducer.recipesDetails[recipeID] : null
     }
 }
 

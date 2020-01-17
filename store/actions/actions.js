@@ -1,6 +1,6 @@
 import { Toast } from 'native-base'
 import { FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR,
-    FETCH_RECIPES_DETAILS_PENDING, FETCH_RECIPES_DETAILS_SUCCESS, FETCH_RECIPES_DETAILS_ERROR,
+    FETCH_RECIPES_DETAILS_PENDING, FETCH_RECIPES_DETAILS_SUCCESS, REMOVE_RECIPES_DETAILS,
     FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR,
     FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR } from './types'
 import store from '../reducers/index'
@@ -55,8 +55,12 @@ export const fetchRecipesDetails = function(recipeIDs) {
             buttonText: 'Ok',
             duration: 3000,
         })
-        store.dispatch({ type: FETCH_RECIPES_DETAILS_ERROR, recipesIDs: recipeIDs })
+        store.dispatch({ type: REMOVE_RECIPES_DETAILS, recipesIDs: recipeIDs })
     })
+}
+
+export const removeRecipesDetails = function(recipeIDs) {
+    store.dispatch({ type: REMOVE_RECIPES_DETAILS, recipesIDs: recipeIDs })
 }
 
 export const fetchShoppingList = function(userToken) {

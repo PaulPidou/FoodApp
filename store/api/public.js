@@ -1,6 +1,5 @@
 import { Toast } from 'native-base'
 const api_ip = "http://192.168.43.163:3000/api"
-//const api_ip = "http://192.168.1.27:3000/api"
 
 export const getAllIngredients = async function() {
     return fetch(`${api_ip}/public/ingredients`)
@@ -28,7 +27,7 @@ export const getRecipeFromId = async function(recipeID) {
                 textStyle: { textAlign: 'center' },
                 buttonText: 'Ok'
             })
-            return {}
+            return null
         })
 }
 

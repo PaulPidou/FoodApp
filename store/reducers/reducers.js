@@ -1,7 +1,7 @@
 import { UPDATE_USER_LISTS, FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR,
-    FETCH_RECIPES_DETAILS_PENDING, FETCH_RECIPES_DETAILS_SUCCESS, FETCH_RECIPES_DETAILS_ERROR,
+    FETCH_RECIPES_DETAILS_PENDING, FETCH_RECIPES_DETAILS_SUCCESS, REMOVE_RECIPES_DETAILS,
     FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR,
-    FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR } from './types'
+    FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR } from '../actions/types'
 import { AsyncStorage } from "react-native"
 
 const initialState = {
@@ -43,7 +43,7 @@ export const generalReducer = function(state = initialState, action) {
             }
         case FETCH_RECIPES_DETAILS_PENDING:
             for(const recipeID of action.recipesIDs) {
-                recipesDetails[recipeID] = undefined
+                recipesDetails[recipeID] = null
             }
             return {
                 ...state,
@@ -57,9 +57,9 @@ export const generalReducer = function(state = initialState, action) {
                 ...state,
                 recipesDetails: recipesDetails
             }
-        case FETCH_RECIPES_DETAILS_ERROR:
+        case REMOVE_RECIPES_DETAILS:
             for(const recipeID of action.recipesIDs) {
-                delete recipesDetails[recipeID]
+                if(recipesDetails.hasOwnProperty(recipeID)) { delete recipesDetails[recipeID] }
             }
             return {
                 ...state,

@@ -1,7 +1,8 @@
 import { AsyncStorage } from 'react-native'
 import { Toast } from 'native-base'
 
-import { fetchSavedRecipes, fetchShoppingList, fetchFridge } from '../actions/actions'
+import { fetchSavedRecipes, fetchRecipesDetails, removeRecipesDetails,
+    fetchShoppingList, fetchFridge } from '../actions/actions'
 const api_ip = "http://192.168.43.163:3000/api"
 let userParamaters = {
     keepFoodListIndependent: false
@@ -48,6 +49,7 @@ export const saveRecipes = async function(recipeIDs) {
                 buttonText: 'Ok'
             })
             fetchSavedRecipes(userToken)
+            fetchRecipesDetails(recipeIDs)
             if(!userParamaters.keepFoodListIndependent) {
                 fetchShoppingList(userToken)
             }
@@ -82,6 +84,7 @@ export const deleteSavedRecipes = async function(recipeIDs) {
                 buttonText: 'Ok'
             })
             fetchSavedRecipes(userToken)
+            removeRecipesDetails(recipeIDs)
             if(!userParamaters.keepFoodListIndependent) {
                 fetchShoppingList(userToken)
             }
