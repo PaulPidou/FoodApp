@@ -9,6 +9,7 @@ import AppNavigator from './navigation/AppNavigator'
 import { Provider } from 'react-redux'
 import { NetworkProvider } from 'react-native-offline'
 import store  from './store/reducers/index'
+import Constants from './constants/Constants'
 
 export default class App extends React.Component {
   state = {
@@ -27,7 +28,7 @@ export default class App extends React.Component {
     } else {
         return (
             <Provider store={store}>
-                <NetworkProvider pingServerUrl={"http://192.168.43.163:3000"} pingInterval={60000}>
+                <NetworkProvider pingServerUrl={Constants.serverURL}>
                     <Root style={styles.container}>
                         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
                         <AppNavigator />

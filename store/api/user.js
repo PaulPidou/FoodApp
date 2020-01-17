@@ -3,14 +3,15 @@ import { Toast } from 'native-base'
 
 import { fetchSavedRecipes, fetchRecipesDetails, removeRecipesDetails,
     fetchShoppingList, fetchFridge } from '../actions/actions'
-const api_ip = "http://192.168.43.163:3000/api"
+import Constants from "../../constants/Constants"
+
 let userParamaters = {
     keepFoodListIndependent: false
 }
 
 export const getUserLists = async function() {
     const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/lists`,
+    return fetch(`${Constants.apiEndpoint}/user/lists`,
         {
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
@@ -30,7 +31,7 @@ export const getUserLists = async function() {
 
 export const saveRecipes = async function(recipeIDs) {
     const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/save/recipes`,
+    return fetch(`${Constants.apiEndpoint}/user/save/recipes`,
         {
             method: 'POST',
             headers: {
@@ -65,7 +66,7 @@ export const saveRecipes = async function(recipeIDs) {
 
 export const deleteSavedRecipes = async function(recipeIDs) {
     const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/savedrecipes/delete/recipes`,
+    return fetch(`${Constants.apiEndpoint}/user/savedrecipes/delete/recipes`,
         {
             method: 'POST',
             headers: {
@@ -100,7 +101,7 @@ export const deleteSavedRecipes = async function(recipeIDs) {
 
 export const cookSavedRecipes = async function(recipeIDs) {
     const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/savedrecipes/cook/recipes`,
+    return fetch(`${Constants.apiEndpoint}/user/savedrecipes/cook/recipes`,
         {
             method: 'POST',
             headers: {
@@ -132,7 +133,7 @@ export const cookSavedRecipes = async function(recipeIDs) {
 
 export const upsertItemsToShoppingList = async function(items) {
     const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/shoppinglist/items`,
+    return fetch(`${Constants.apiEndpoint}/user/shoppinglist/items`,
         {
             method: 'POST',
             headers: {
@@ -163,7 +164,7 @@ export const upsertItemsToShoppingList = async function(items) {
 
 export const upsertItemsToShoppingListFromRecipes = async function(recipeIDs) {
     const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/shoppinglist/items/from/recipes`,
+    return fetch(`${Constants.apiEndpoint}/user/shoppinglist/items/from/recipes`,
         {
             method: 'POST',
             headers: {
@@ -194,7 +195,7 @@ export const upsertItemsToShoppingListFromRecipes = async function(recipeIDs) {
 
 export const deleteItemsFromShoppingList = async function(itemIDs) {
     const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/shoppinglist/delete/items`,
+    return fetch(`${Constants.apiEndpoint}/user/shoppinglist/delete/items`,
         {
             method: 'POST',
             headers: {
@@ -225,7 +226,7 @@ export const deleteItemsFromShoppingList = async function(itemIDs) {
 
 export const transferItemsFromShoppingListToFridge = async function(itemIDs) {
     const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/move/items/from/shoppinglist/to/fridge`,
+    return fetch(`${Constants.apiEndpoint}/user/move/items/from/shoppinglist/to/fridge`,
         {
             method: 'POST',
             headers: {
@@ -257,7 +258,7 @@ export const transferItemsFromShoppingListToFridge = async function(itemIDs) {
 
 export const upsertItemsToFridge = async function(items) {
     const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/fridge/items`,
+    return fetch(`${Constants.apiEndpoint}/user/fridge/items`,
         {
             method: 'POST',
             headers: {
@@ -288,7 +289,7 @@ export const upsertItemsToFridge = async function(items) {
 
 export const deleteItemsFromFridge = async function(itemIDs) {
     const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/fridge/delete/items`,
+    return fetch(`${Constants.apiEndpoint}/user/fridge/delete/items`,
         {
             method: 'POST',
             headers: {
@@ -319,7 +320,7 @@ export const deleteItemsFromFridge = async function(itemIDs) {
 
 export const transferItemsFromFridgeToShoppingList = async function(itemIDs) {
     const userToken = await AsyncStorage.getItem('userToken')
-    return fetch(`${api_ip}/user/move/items/from/fridge/to/shoppinglist`,
+    return fetch(`${Constants.apiEndpoint}/user/move/items/from/fridge/to/shoppinglist`,
         {
             method: 'POST',
             headers: {

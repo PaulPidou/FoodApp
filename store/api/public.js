@@ -1,8 +1,8 @@
 import { Toast } from 'native-base'
-const api_ip = "http://192.168.43.163:3000/api"
+import Constants from "../../constants/Constants"
 
 export const getAllIngredients = async function() {
-    return fetch(`${api_ip}/public/ingredients`)
+    return fetch(`${Constants.apiEndpoint}/public/ingredients`)
         .then((response) => {
             return response.json()
         })
@@ -17,7 +17,7 @@ export const getAllIngredients = async function() {
 }
 
 export const getRecipeFromId = async function(recipeID) {
-    return fetch(`${api_ip}/public/recipe/${recipeID}`)
+    return fetch(`${Constants.apiEndpoint}/public/recipe/${recipeID}`)
         .then((response) => {
             return response.json()
         })
@@ -32,7 +32,7 @@ export const getRecipeFromId = async function(recipeID) {
 }
 
 export const getMostFamousRecipesSummary = async function() {
-    return fetch(`${api_ip}/public/recipes/by/fame`)
+    return fetch(`${Constants.apiEndpoint}/public/recipes/by/fame`)
         .then((response) => {
             return response.json()
         })
@@ -47,7 +47,7 @@ export const getMostFamousRecipesSummary = async function() {
 }
 
 export const getRecipesSummaryFromKeywords = async function(keywords) {
-    return fetch(`${api_ip}/public/recipes/by/keywords`,
+    return fetch(`${Constants.apiEndpoint}/public/recipes/by/keywords`,
         {
             method: 'POST',
             headers: {
@@ -71,7 +71,7 @@ export const getRecipesSummaryFromKeywords = async function(keywords) {
 }
 
 export const getRecipesSummaryFromIngredients = async function(ingredientIDs) {
-    return fetch(`${api_ip}/public/recipes/by/ingredients`,
+    return fetch(`${Constants.apiEndpoint}/public/recipes/by/ingredients`,
         {
             method: 'POST',
             headers: {

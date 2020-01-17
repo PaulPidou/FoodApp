@@ -3,15 +3,15 @@ import { FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR,
     FETCH_RECIPES_DETAILS_PENDING, FETCH_RECIPES_DETAILS_SUCCESS, LOAD_RECIPES_DETAILS, REMOVE_RECIPES_DETAILS,
     FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR,
     FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR } from './types'
-import store from '../reducers/index'
 import { AsyncStorage } from "react-native"
+import store from '../reducers/index'
+import Constants from "../../constants/Constants"
 
-const api_ip = 'http://192.168.43.163:3000/api'
 
 export const fetchSavedRecipes = function(userToken) {
     store.dispatch({ type: FETCH_RECIPES_PENDING })
 
-    fetch(`${api_ip}/user/savedrecipes`, {
+    fetch(`${Constants.apiEndpoint}/user/savedrecipes`, {
         method: 'GET',
         headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
     }).then((response) => response.json())
@@ -34,7 +34,7 @@ export const fetchSavedRecipes = function(userToken) {
 export const fetchRecipesDetails = function(recipeIDs) {
     store.dispatch({ type: FETCH_RECIPES_DETAILS_PENDING, recipesIDs: recipeIDs })
 
-    fetch(`${api_ip}/public/recipes/details`, {
+    fetch(`${Constants.apiEndpoint}/public/recipes/details`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -73,7 +73,7 @@ export const removeRecipesDetails = function(recipeIDs) {
 export const fetchShoppingList = function(userToken) {
     store.dispatch({ type: FETCH_SHOPPINGLIST_PENDING })
 
-    fetch(`${api_ip}/user/shoppinglist`, {
+    fetch(`${Constants.apiEndpoint}/user/shoppinglist`, {
         method: 'GET',
         headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
     }).then((response) => response.json())
@@ -96,7 +96,7 @@ export const fetchShoppingList = function(userToken) {
 export const fetchFridge = function(userToken) {
     store.dispatch({ type: FETCH_FRIDGE_PENDING })
 
-    fetch(`${api_ip}/user/fridge`, {
+    fetch(`${Constants.apiEndpoint}/user/fridge`, {
         method: 'GET',
         headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
     }).then((response) => response.json())

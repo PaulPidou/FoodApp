@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { loadRecipesDetails } from "../store/actions/actions"
 import { getUserLists } from '../store/api/user'
 import Colors from "../constants/Colors"
+import Constants from "../constants/Constants"
 
 class AuthLoadingScreen extends React.Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class AuthLoadingScreen extends React.Component {
         const userToken = await AsyncStorage.getItem('userToken')
         if (userToken) {
             let action = {}
-            const isConnected = await checkInternetConnection('http://192.168.43.163:3000')
+            const isConnected = await checkInternetConnection(Constants.serverURL)
             if(isConnected) {
                 const userLists = await getUserLists()
                 action = { type: 'UPDATE_USER_LISTS', lists: userLists ?

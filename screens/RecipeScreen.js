@@ -5,12 +5,13 @@ import { checkInternetConnection, NetworkConsumer } from "react-native-offline"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import GenericStyles from '../constants/Style'
-import Colors from '../constants/Colors'
 import RecipeTabs from '../components/contents/RecipeTabs'
 import { getRecipeFromId } from '../store/api/public'
 import { loadRecipesDetails } from "../store/actions/actions"
 import { saveRecipes, deleteSavedRecipes, cookSavedRecipes } from '../store/api/user'
+import GenericStyles from '../constants/Style'
+import Colors from '../constants/Colors'
+import Constants from "../constants/Constants"
 
 class RecipeScreen extends React.Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class RecipeScreen extends React.Component {
     }
 
     async componentDidMount() {
-        const isConnected = await checkInternetConnection('http://192.168.43.163:3000')
+        const isConnected = await checkInternetConnection(Constants.serverURL)
         if(this.state.recipe == null) {
             if(isConnected) {
                 getRecipeFromId(this.state.recipeId).then(
