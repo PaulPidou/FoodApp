@@ -1,6 +1,7 @@
 import React from 'react'
-import {ActivityIndicator, Alert, AsyncStorage, Platform, Text} from 'react-native'
+import {ActivityIndicator, Alert, Platform, Text} from 'react-native'
 import {Container, Left, Right, Button, Icon, Header} from 'native-base'
+import { checkInternetConnection } from "react-native-offline"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -8,8 +9,8 @@ import GenericStyles from '../constants/Style'
 import Colors from '../constants/Colors'
 import RecipeTabs from '../components/contents/RecipeTabs'
 import { getRecipeFromId } from '../store/api/public'
+import { loadRecipesDetails } from "../store/actions/actions"
 import { saveRecipes, deleteSavedRecipes, cookSavedRecipes } from '../store/api/user'
-import {checkInternetConnection} from "react-native-offline"
 
 class RecipeScreen extends React.Component {
     constructor(props) {
@@ -33,15 +34,12 @@ class RecipeScreen extends React.Component {
             if(isConnected) {
                 getRecipeFromId(this.state.recipeId).then(
                     recipe => {
-                        this.setState({recipe})
+                        this.setState({ recipe })
                     }
                 )
             } else {
-                const recipesDetailsStored = await AsyncStorage.getItem('recipesDetails')
-                const recipesDetails = recipesDetailsStored ? JSON.parse(recipesDetailsStored) : {}
-                if(recipesDetails.hasOwnProperty(this.state.recipeId)) {
-                    this.setState({ recipe: recipesDetails[this.state.recipeId] })
-                }
+                await loadRecipesDetails()
+                this.setState({ recipe: this.props.recipe })
             }
         }
     }

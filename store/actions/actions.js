@@ -1,9 +1,10 @@
 import { Toast } from 'native-base'
 import { FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR,
-    FETCH_RECIPES_DETAILS_PENDING, FETCH_RECIPES_DETAILS_SUCCESS, REMOVE_RECIPES_DETAILS,
+    FETCH_RECIPES_DETAILS_PENDING, FETCH_RECIPES_DETAILS_SUCCESS, LOAD_RECIPES_DETAILS, REMOVE_RECIPES_DETAILS,
     FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR,
     FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR } from './types'
 import store from '../reducers/index'
+import { AsyncStorage } from "react-native"
 
 const api_ip = 'http://192.168.43.163:3000/api'
 
@@ -57,6 +58,12 @@ export const fetchRecipesDetails = function(recipeIDs) {
         })
         store.dispatch({ type: REMOVE_RECIPES_DETAILS, recipesIDs: recipeIDs })
     })
+}
+
+export const loadRecipesDetails = async function() {
+    const recipesDetailsStored = await AsyncStorage.getItem('recipesDetails')
+    const recipesDetails = recipesDetailsStored ? JSON.parse(recipesDetailsStored) : {}
+    store.dispatch({ type: LOAD_RECIPES_DETAILS, recipesDetails: recipesDetails })
 }
 
 export const removeRecipesDetails = function(recipeIDs) {
