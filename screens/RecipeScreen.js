@@ -1,7 +1,7 @@
 import React from 'react'
 import {ActivityIndicator, Alert, Platform, Text} from 'react-native'
 import {Container, Left, Right, Button, Icon, Header} from 'native-base'
-import { checkInternetConnection } from "react-native-offline"
+import { checkInternetConnection, NetworkConsumer } from "react-native-offline"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -79,63 +79,82 @@ class RecipeScreen extends React.Component {
                         <ActivityIndicator size="small" color={Colors.counterTintColor}/>
                     </Button>
                 ) : (
-                    <Button
-                        key={'color-fill'}
-                        transparent
-                        onPress={() => {
-                            Alert.alert(
-                                'Recette cusinée',
-                                'Retirer la recette et ses ingrédients de vos listes ?',
-                                [
-                                    {text: 'Annuler', style: 'cancel'},
-                                    {text: 'Oui', onPress: () => this.cookRecipe()}
-                                ]
-                            )
-                        }}>
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-color-fill' : 'md-color-fill'}
-                        />
-                    </Button>
-                ),
+                    <NetworkConsumer key={'color-fill'}>
+                        {({ isConnected }) => (
+                        <Button
+                            transparent
+                            onPress={() => {
+                                isConnected ? Alert.alert(
+                                    'Recette cusinée',
+                                    'Retirer la recette et ses ingrédients de vos listes ?',
+                                    [
+                                        {text: 'Annuler', style: 'cancel'},
+                                        {text: 'Oui', onPress: () => this.cookRecipe()}
+                                    ]
+                                ) : Alert.alert(
+                                    'Serveur hors ligne',
+                                    'Vous ne pouvez pas effectuer cette action',
+                                )
+                            }}>
+                            <Icon
+                                style={GenericStyles.headerIcon}
+                                name={Platform.OS === 'ios' ? 'ios-color-fill' : 'md-color-fill'}
+                            />
+                        </Button>)}
+                    </NetworkConsumer>),
                 this.state.requestDelete ? (
                     <Button
                         key={'trash'}
                         transparent>
                         <ActivityIndicator size="small" color={Colors.counterTintColor}/>
                     </Button>
-                ) : (<Button
-                    key={'trash'}
-                    transparent
-                    onPress={() => {
-                        Alert.alert(
-                            'Confirmation',
-                            'Retirer la recette des recettes sauvegardées ?',
-                            [
-                                {text: 'Annuler', style: 'cancel'},
-                                {text: 'Oui', onPress: () => this.deleteRecipe()}
-                            ]
-                        )
-                    }}>
-                    <Icon
-                        style={GenericStyles.headerIcon}
-                        name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
-                    />
-                </Button>)
+                ) : (
+                    <NetworkConsumer key={'trash'}>
+                        {({ isConnected }) => (
+                            <Button
+                                transparent
+                                onPress={() => {
+                                    isConnected ? Alert.alert(
+                                        'Confirmation',
+                                        'Retirer la recette des recettes sauvegardées ?',
+                                        [
+                                            {text: 'Annuler', style: 'cancel'},
+                                            {text: 'Oui', onPress: () => this.deleteRecipe()}
+                                        ]
+                                    ) : Alert.alert(
+                                        'Serveur hors ligne',
+                                        'Vous ne pouvez pas effectuer cette action',
+                                    )
+                                }}>
+                                <Icon
+                                    style={GenericStyles.headerIcon}
+                                    name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
+                                />
+                            </Button>)}
+                    </NetworkConsumer>)
             ]) : (
                 this.state.requestSave || (this.props.isSaved === undefined) ? (
                     <Button transparent>
                         <ActivityIndicator size="small" color={Colors.counterTintColor}/>
                     </Button>
                 ) : (
-                    <Button
-                        transparent
-                        onPress={() => this.saveRecipe()}>
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-heart-empty' : 'md-heart-empty'}
-                        />
-                    </Button>))
+                    <NetworkConsumer>
+                        {({ isConnected }) => (
+                        <Button
+                            transparent
+                            onPress={() => {
+                                isConnected ? this.saveRecipe() :
+                                    Alert.alert(
+                                        'Serveur hors ligne',
+                                        'Vous ne pouvez pas effectuer cette action',
+                                    )
+                            }}>
+                            <Icon
+                                style={GenericStyles.headerIcon}
+                                name={Platform.OS === 'ios' ? 'ios-heart-empty' : 'md-heart-empty'}
+                            />
+                        </Button>)}
+                    </NetworkConsumer>))
 
         return (
             <Header

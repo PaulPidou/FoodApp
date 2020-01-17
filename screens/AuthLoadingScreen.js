@@ -4,6 +4,7 @@ import { checkInternetConnection } from 'react-native-offline'
 import { Toast } from "native-base"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { loadRecipesDetails } from "../store/actions/actions"
 import { getUserLists } from '../store/api/user'
 import Colors from "../constants/Colors"
 
@@ -32,6 +33,7 @@ class AuthLoadingScreen extends React.Component {
                 const savedRecipes = await AsyncStorage.getItem('savedRecipes')
                 const shoppingList = await AsyncStorage.getItem('shoppingList')
                 const fridge = await AsyncStorage.getItem('fridge')
+                await loadRecipesDetails()
 
                 action = { type: 'UPDATE_USER_LISTS', lists: {
                         savedRecipes: savedRecipes ? JSON.parse(savedRecipes) : [],
