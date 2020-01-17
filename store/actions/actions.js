@@ -1,5 +1,6 @@
 import { Toast } from 'native-base'
 import { FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR,
+    FETCH_RECIPES_DETAILS_PENDING, FETCH_RECIPES_DETAILS_SUCCESS, FETCH_RECIPES_DETAILS_ERROR,
     FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR,
     FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR } from './types'
 import store from '../reducers/index'
@@ -26,6 +27,35 @@ export const fetchSavedRecipes = function(userToken) {
             duration: 3000,
         })
         store.dispatch({ type: FETCH_RECIPES_ERROR })
+    })
+}
+
+export const fetchRecipesDetails = function(recipeIDs) {
+    store.dispatch({ type: FETCH_RECIPES_DETAILS_PENDING, recipesIDs: recipeIDs })
+
+    fetch(`${api_ip}/public/recipes/details`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            recipes: recipeIDs,
+        }),
+    }).then((response) => response.json())
+        .then((responseJSON) => {
+            store.dispatch({
+                type: FETCH_RECIPES_DETAILS_SUCCESS,
+                recipesDetails: responseJSON
+            })
+        }).catch(() => {
+        Toast.show({
+            text: 'Un problème est survenu !',
+            textStyle: { textAlign: 'center' },
+            buttonText: 'Ok',
+            duration: 3000,
+        })
+        store.dispatch({ type: FETCH_RECIPES_DETAILS_ERROR, recipesIDs: recipeIDs })
     })
 }
 

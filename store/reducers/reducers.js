@@ -1,15 +1,19 @@
 import { UPDATE_USER_LISTS, FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR,
+    FETCH_RECIPES_DETAILS_PENDING, FETCH_RECIPES_DETAILS_SUCCESS, FETCH_RECIPES_DETAILS_ERROR,
     FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR,
-    FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR } from '../actions/types'
-import {AsyncStorage} from "react-native"
+    FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR } from './types'
+import { AsyncStorage } from "react-native"
 
 const initialState = {
     savedRecipes: undefined,
     shoppingList: undefined,
-    fridge: undefined
+    fridge: undefined,
+    recipesDetails: {}
 }
 
 export const generalReducer = function(state = initialState, action) {
+    let recipesDetails = state.recipesDetails
+
     switch(action.type) {
         case UPDATE_USER_LISTS:
             AsyncStorage.setItem('savedRecipes', JSON.stringify(action.lists.savedRecipes))
@@ -36,6 +40,30 @@ export const generalReducer = function(state = initialState, action) {
             return {
                 ...state,
                 savedRecipes: []
+            }
+        case FETCH_RECIPES_DETAILS_PENDING:
+            for(const recipeID of action.recipesIDs) {
+                recipesDetails[recipeID] = undefined
+            }
+            return {
+                ...state,
+                recipesDetails: recipesDetails
+            }
+        case FETCH_RECIPES_DETAILS_SUCCESS:
+            for(const recipe of action.recipesDetails) {
+                recipesDetails[recipe._id] = recipe
+            }
+            return {
+                ...state,
+                recipesDetails: recipesDetails
+            }
+        case FETCH_RECIPES_DETAILS_ERROR:
+            for(const recipeID of action.recipesIDs) {
+                delete recipesDetails[recipeID]
+            }
+            return {
+                ...state,
+                recipesDetails: recipesDetails
             }
         case FETCH_SHOPPINGLIST_PENDING:
             return {
