@@ -1,6 +1,7 @@
 import { UPDATE_USER_LISTS, FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR,
     FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR,
     FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR } from '../actions/types'
+import {AsyncStorage} from "react-native"
 
 const initialState = {
     savedRecipes: undefined,
@@ -11,6 +12,9 @@ const initialState = {
 export const generalReducer = function(state = initialState, action) {
     switch(action.type) {
         case UPDATE_USER_LISTS:
+            AsyncStorage.setItem('savedRecipes', JSON.stringify(action.lists.savedRecipes))
+            AsyncStorage.setItem('shoppingList', JSON.stringify(action.lists.shoppingList))
+            AsyncStorage.setItem('fridge', JSON.stringify(action.lists.fridge))
             return {
                 ...state,
                 savedRecipes: action.lists.savedRecipes,
@@ -23,6 +27,7 @@ export const generalReducer = function(state = initialState, action) {
                 savedRecipes: undefined
             }
         case FETCH_RECIPES_SUCCESS:
+            AsyncStorage.setItem('savedRecipes', JSON.stringify(action.savedRecipes))
             return {
                 ...state,
                 savedRecipes: action.savedRecipes
@@ -38,6 +43,7 @@ export const generalReducer = function(state = initialState, action) {
                 shoppingList: undefined
             }
         case FETCH_SHOPPINGLIST_SUCCESS:
+            AsyncStorage.setItem('shoppingList', JSON.stringify(action.shoppingList))
             return {
                 ...state,
                 shoppingList: action.shoppingList
@@ -53,6 +59,7 @@ export const generalReducer = function(state = initialState, action) {
                 fridge: undefined
             }
         case FETCH_FRIDGE_SUCCESS:
+            AsyncStorage.setItem('fridge', JSON.stringify(action.fridge))
             return {
                 ...state,
                 fridge: action.fridge
