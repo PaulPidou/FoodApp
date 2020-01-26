@@ -95,11 +95,57 @@ export const getRecipesSummaryFromIngredients = async function(ingredientIDs) {
 }
 
 export const logInUser = async function(user, password) {
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBpZG91LnBhdWxAZ21haWwuY29tIiwiaWF0IjoxNTQ0ODk1NTM2fQ.US2s6kEKmEuhO_LIsH_vPAfEYBN-36_PUbY4sKKjalY'
+    return fetch(`${Constants.apiEndpoint}/public/login`,
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: user,
+                password: password
+            }),
+        }).then((response) => {
+            return response.json()
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            return {}
+        })
 }
 
 export const signUpUser = async function(user, password) {
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    return 'abc'
+    return fetch(`${Constants.apiEndpoint}/public/register`,
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: user,
+                password: password
+            }),
+        }).then((response) => {
+            const r = response.json()
+            Toast.show({
+                text: r.message,
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        return true
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            return false
+        })
 }

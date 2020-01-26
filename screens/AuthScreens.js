@@ -23,11 +23,17 @@ export class LogInScreen extends React.Component {
     logInAsync = async () => {
         if (this.state.email && this.state.password) {
             this.setState({requestLogIn: true})
-            const token = await logInUser(this.state.email, this.state.password)
-            if (token) {
-                await AsyncStorage.setItem('userToken', token)
-                this.props.navigation.navigate('AuthLoading')
+            const response = await logInUser(this.state.email, this.state.password)
+            if (response.hasOwnProperty('token')) {
+                await AsyncStorage.setItem('userToken', response.token)
+            } else if(response.hasOwnProperty('message')) {
+                Toast.show({
+                    text: response.message,
+                    textStyle: { textAlign: 'center' },
+                    buttonText: 'Ok'
+                })
             }
+            this.props.navigation.navigate('AuthLoading')
         } else {
             Toast.show({
                 text: 'Vous devez fournir votre email et votre mot de passe !',
@@ -117,14 +123,17 @@ export class SignUpScreen extends React.Component {
                 duration: 3000,
             })
         } else if(this.state.password === this.state.confirmPassword) {
-            const token = await signUpUser(this.state.email, this.state.password)
-            if (token) {
-                await AsyncStorage.setItem('userToken', token)
+            const register = await signUpUser(this.state.email, this.state.password)
+            if (register) {
+                const response = await logInUser(this.state.email, this.state.password)
+                if (response.hasOwnProperty('token')) {
+                    await AsyncStorage.setItem('userToken', response.token)
+                }
                 this.props.navigation.navigate('AuthLoading')
             }
         } else {
             Toast.show({
-                text: 'Les deux mots de passe ne sont identiques !',
+                text: 'Les deux mots de passe ne sont pas identiques !',
                 duration: 3000,
             })
         }
