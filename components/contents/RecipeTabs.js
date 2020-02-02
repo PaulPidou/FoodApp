@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Image, Platform, ScrollView, Text, View } from 'react-native'
-import {Tab, TabHeading, Icon, Tabs, Spinner, H1, List, ListItem, Left, Right, Body, Badge} from 'native-base'
-import {Avatar} from 'react-native-elements'
+import { Image, Platform, ScrollView, View, Text } from 'react-native'
+import { Tab, TabHeading, Icon, Tabs, Spinner, H1, List, ListItem, Left, Right, Body, Badge } from 'native-base'
+import { Avatar } from 'react-native-elements'
 
 import GenericStyles from '../../constants/Style'
 import Colors from '../../constants/Colors'
@@ -155,12 +155,12 @@ export default class RecipeTabs extends React.Component {
             content = (
                 <ScrollView>
                     <List>{
-                        recipe.ingredients.map((item) => {
+                        recipe.ingredients.map((item, index) => {
                             return (
                                 <ListItem
                                     avatar
                                     icon={item.display.length < 73}
-                                    key={item.ingredientID}
+                                    key={index}
                                 >
                                     <Left style={item.display.length < 73 ? {height: 30} : {marginRight: 15}}>
                                         <Avatar
@@ -172,6 +172,13 @@ export default class RecipeTabs extends React.Component {
                                     </Left>
                                     <Body>
                                         <Text>{item.display}</Text>
+                                        {
+                                            item.substitutes.length > 0 && (
+                                                <Text style={{ color: '#808080', fontSize: 12 }}>
+                                                    Peut être remplacé par : {item.substitutes[0].ingredientName}
+                                                </Text>
+                                            )
+                                        }
                                     </Body>
                                     <Right>
                                         {
