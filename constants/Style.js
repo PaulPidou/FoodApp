@@ -21,13 +21,13 @@ const GenericStyles = StyleSheet.create({
         flex: 1
     },
     icon : {
-        color: "#ddd" // 007aff
+        color: "#ddd"
     },
     headerIcon : {
-        color: '#fff' // 007aff
+        color: '#fff'
     },
     tabIcon : {
-        color: '#fff', // '#007aff'
+        color: '#fff',
         margin: 10
     },
     tabText: {
@@ -35,10 +35,10 @@ const GenericStyles = StyleSheet.create({
         color: '#fff'
     },
     settingIcon: {
-        backgroundColor: '#007AFF'
+        backgroundColor: '#3cff9a'
     },
     headerTitle: {
-        color: '#fff' // 007aff
+        color: '#fff'
     },
     headerButton: {
         color: '#007aff',
