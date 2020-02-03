@@ -1,8 +1,8 @@
 import { combineReducers, createStore } from 'redux'
 
-import { generalReducer } from './reducers'
+import { generalReducer, settingsReducer } from './reducers'
 
-const AppReducers = combineReducers({ generalReducer })
+const AppReducers = combineReducers({ generalReducer, settingsReducer })
 
 const rootReducer = (state, action) => {
     return AppReducers(state, action)
