@@ -173,7 +173,7 @@ export default class RecipeTabs extends React.Component {
                                     <Body>
                                         <Text>{item.display}</Text>
                                         {
-                                            item.substitutes.length > 0 && (
+                                            this.props.showSubstitutes && item.substitutes.length > 0 && (
                                                 <Text style={{ color: '#808080', fontSize: 12 }}>
                                                     Peut être remplacé par : {item.substitutes[0].ingredientName}
                                                 </Text>
@@ -289,5 +289,6 @@ export default class RecipeTabs extends React.Component {
 
 RecipeTabs.propTypes = {
     recipe: PropTypes.object,
-    commonIngredientsWithFridge: PropTypes.array
+    commonIngredientsWithFridge: PropTypes.array,
+    showSubstitutes: PropTypes.bool
 }

@@ -21,7 +21,8 @@ class RecipeScreen extends React.Component {
             recipe: props.recipe,
             requestCook: false,
             requestDelete: false,
-            requestSave: false
+            requestSave: false,
+            showSubstitutes: props.showSubstitutes
         }
     }
 
@@ -184,6 +185,7 @@ class RecipeScreen extends React.Component {
                         (<RecipeTabs
                             recipe={this.state.recipe}
                             commonIngredientsWithFridge={this._getCommonIngredients(this.state.recipe)}
+                            showSubstitutes={this.state.showSubstitutes}
                         />) :
                         (<Text style={{margin: 10, textAlign: 'center'}}>Un problème est survenu !</Text>)
                 }
@@ -196,7 +198,8 @@ class RecipeScreen extends React.Component {
 RecipeScreen.propTypes = {
     isSaved: PropTypes.bool,
     fridge: PropTypes.array,
-    recipe: PropTypes.object
+    recipe: PropTypes.object,
+    showSubstitutes: PropTypes.bool
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -207,7 +210,8 @@ const mapStateToProps = (state, ownProps) => {
         fridge: state.generalReducer.fridge === undefined ? undefined :
             state.generalReducer.fridge.map(ingredient => ingredient.ingredientID),
         recipe: state.generalReducer.recipesDetails.hasOwnProperty(recipeID) ?
-            state.generalReducer.recipesDetails[recipeID] : null
+            state.generalReducer.recipesDetails[recipeID] : null,
+        showSubstitutes: state.settingsReducer.showSubstitutes
     }
 }
 
