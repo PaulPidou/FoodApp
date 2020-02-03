@@ -2,19 +2,26 @@ import React from 'react'
 import {Platform, Text} from 'react-native'
 import {Container, Header, Content, Left, Button, Icon, Body, Title, List, ListItem, Right, Switch, Picker} from 'native-base'
 
+import { toggleShowSubstitutes } from '../store/actions/actions'
 import GenericStyles from "../constants/Style"
 
 export default class SettingsScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            switchValue: false,
-            selected: "key1"
+            switchValueAutomaticFilling: true,
+            switchValueShowSubstitutes: true,
+            selected: "key0"
         }
     }
 
     static navigationOptions = {
         header: null
+    }
+
+    toggleShowSubstitutes(value) {
+        this.setState({ switchValueShowSubstitutes: value })
+        toggleShowSubstitutes(value)
     }
 
     render() {
@@ -44,12 +51,28 @@ export default class SettingsScreen extends React.Component {
                                 </Button>
                             </Left>
                             <Body>
-                            <Text>Automatiquement ajouter les ingrédients à la liste de courses à la sauvegarde d&apos;une recette</Text>
+                                <Text>Ajouter automatiquement les ingrédients à la liste de courses à la sauvegarde d&apos;une recette</Text>
                             </Body>
                             <Right>
                                 <Switch
-                                    onValueChange={(value) => this.setState({switchValue: value})}
-                                    value={this.state.switchValue}
+                                    onValueChange={(value) => this.setState({switchValueAutomaticFilling: value})}
+                                    value={this.state.switchValueAutomaticFilling}
+                                />
+                            </Right>
+                        </ListItem>
+                        <ListItem icon>
+                            <Left>
+                                <Button style={GenericStyles.settingIcon}>
+                                    <Icon name={Platform.OS === 'ios' ? 'ios-nutrition' : 'md-nutrition'} />
+                                </Button>
+                            </Left>
+                            <Body>
+                                <Text>Afficher les ingrédients de substitution</Text>
+                            </Body>
+                            <Right>
+                                <Switch
+                                    onValueChange={(value) => this.toggleShowSubstitutes(value)}
+                                    value={ this.state.switchValueShowSubstitutes }
                                 />
                             </Right>
                         </ListItem>
