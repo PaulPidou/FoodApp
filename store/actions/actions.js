@@ -2,7 +2,8 @@ import { Toast } from 'native-base'
 import { FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR,
     FETCH_RECIPES_DETAILS_PENDING, FETCH_RECIPES_DETAILS_SUCCESS, LOAD_RECIPES_DETAILS, REMOVE_RECIPES_DETAILS,
     FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR,
-    FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR, TOGGLE_SHOW_SUBSTITUTES } from './types'
+    FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR, TOGGLE_SHOW_SUBSTITUTES,
+    HANDLE_INGREDIENTS_MANAGEMENT } from './types'
 import { AsyncStorage } from "react-native"
 import store from '../reducers/index'
 import Constants from "../../constants/Constants"
@@ -118,4 +119,8 @@ export const fetchFridge = function(userToken) {
 
 export const toggleShowSubstitutes = function(value) {
     store.dispatch({ type: TOGGLE_SHOW_SUBSTITUTES, value: value })
+}
+
+export const handleIngredientsManagement = function(value) {
+    store.dispatch({ type: HANDLE_INGREDIENTS_MANAGEMENT, value: value })
 }

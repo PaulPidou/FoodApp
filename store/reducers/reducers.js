@@ -1,7 +1,8 @@
 import { UPDATE_USER_LISTS, FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_RECIPES_ERROR,
     FETCH_RECIPES_DETAILS_PENDING, FETCH_RECIPES_DETAILS_SUCCESS, LOAD_RECIPES_DETAILS, REMOVE_RECIPES_DETAILS,
     FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR,
-    FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR, TOGGLE_SHOW_SUBSTITUTES } from '../actions/types'
+    FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR, TOGGLE_SHOW_SUBSTITUTES,
+    HANDLE_INGREDIENTS_MANAGEMENT } from '../actions/types'
 import { AsyncStorage } from "react-native"
 
 const initialState = {
@@ -120,6 +121,11 @@ export const settingsReducer = function(state = initialUserSettings, action) {
             return {
                 ...state,
                 showSubstitutes: action.value
+            }
+        case HANDLE_INGREDIENTS_MANAGEMENT:
+            return {
+                ...state,
+                shoppingListManagement: action.value
             }
         default:
             return state

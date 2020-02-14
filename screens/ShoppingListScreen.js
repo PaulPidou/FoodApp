@@ -94,6 +94,71 @@ class ShoppingListScreen extends React.Component {
 
     startShopping = () => { this.setState({ shoppingMode: true }) }
 
+    handleIngredientsManagement() {
+        switch(this.props.shoppingListManagement) {
+            case 'ALWAYS_ASK':
+                ActionSheet.show(
+                    {
+                        title: "Que voulez-vous faire ?",
+                        options: [
+                            "Transférer les aliments dans le frigidaire",
+                            "Supprimer les aliments de la liste de courses",
+                            "Garder les aliments dans la liste de courses",
+                            "Annuler"
+                        ],
+                        cancelButtonIndex: 3
+                    },
+                    (index) => this.handleActionSheetOptions(index))
+                break
+            case 'TRANSFER':
+                Alert.alert(
+                    'Confirmation',
+                    'Les aliments seront transférés dans le frigidaire',
+                    [
+                        {text: 'Annuler', style: 'cancel'},
+                        {text: 'Ok', onPress: () => this.handleActionSheetOptions(0)},
+                    ])
+                break
+            case 'DELETE':
+                Alert.alert(
+                    'Confirmation',
+                    'Les aliments seront supprimés de la liste de courses',
+                    [
+                        {text: 'Annuler', style: 'cancel'},
+                        {text: 'Ok', onPress: () => this.handleActionSheetOptions(1)},
+                    ])
+                break
+            case 'KEEP':
+                Alert.alert(
+                    'Confirmation',
+                    'Les aliments seront gardés dans la liste de courses',
+                    [
+                        {text: 'Annuler', style: 'cancel'},
+                        {text: 'Ok', onPress: () => this.handleActionSheetOptions(2)},
+                    ])
+                break
+        }
+
+    }
+
+    async handleActionSheetOptions(index) {
+        switch(index) {
+            case 0:
+                await transferItemsFromShoppingListToFridge(this.state.checkedIngredients)
+                break
+            case 1:
+                await deleteItemsFromShoppingList(this.state.checkedIngredients)
+                break
+            case 2:
+                break
+            case 3:
+                return
+            default:
+                return
+        }
+        this.setState({ shoppingMode: false, checkedIngredients: [] })
+    }
+
     shoppingHeader() {
         return (
             <Header style={GenericStyles.header}>
@@ -123,20 +188,7 @@ class ShoppingListScreen extends React.Component {
                     <Right>
                         <Button
                             transparent
-                            onPress={() => { isConnected ?
-                                ActionSheet.show(
-                                    {
-                                        title: "Que voulez-vous faire ?",
-                                        options: [
-                                            "Transférer les aliments dans le frigidaire",
-                                            "Supprimer les aliments de la liste de courses",
-                                            "Garder les aliments dans la liste de courses",
-                                            "Annuler"
-                                        ],
-                                        cancelButtonIndex: 3
-                                    },
-                                    (index) => this.handleActionSheetOptions(index)
-                                ) : Alert.alert(
+                            onPress={() => { isConnected ? this.handleIngredientsManagement() : Alert.alert(
                                     'Serveur hors ligne',
                                     'Les aliments seront conservés dans la liste de courses',
                                     [
@@ -170,24 +222,6 @@ class ShoppingListScreen extends React.Component {
                 </NetworkConsumer>
             </Header>
         )
-    }
-
-    async handleActionSheetOptions(index) {
-        switch(index) {
-            case 0:
-                await transferItemsFromShoppingListToFridge(this.state.checkedIngredients)
-                break
-            case 1:
-                await deleteItemsFromShoppingList(this.state.checkedIngredients)
-                break
-            case 2:
-                break
-            case 3:
-                return
-            default:
-                return
-        }
-        this.setState({ shoppingMode: false, checkedIngredients: [] })
     }
 
     renderList() {
@@ -320,12 +354,14 @@ class ShoppingListScreen extends React.Component {
 }
 
 ShoppingListScreen.propTypes = {
-    ingredients: PropTypes.array
+    ingredients: PropTypes.array,
+    shoppingListManagement: PropTypes.string
 }
 
 const mapStateToProps = (state) => {
     return {
-        ingredients: state.generalReducer.shoppingList
+        ingredients: state.generalReducer.shoppingList,
+        shoppingListManagement: state.settingsReducer.shoppingListManagement
     }
 }
 

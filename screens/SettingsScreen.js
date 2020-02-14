@@ -2,7 +2,7 @@ import React from 'react'
 import {Platform, Text} from 'react-native'
 import {Container, Header, Content, Left, Button, Icon, Body, Title, List, ListItem, Right, Switch, Picker} from 'native-base'
 
-import { toggleShowSubstitutes } from '../store/actions/actions'
+import { toggleShowSubstitutes, handleIngredientsManagement } from '../store/actions/actions'
 import GenericStyles from "../constants/Style"
 
 export default class SettingsScreen extends React.Component {
@@ -11,7 +11,7 @@ export default class SettingsScreen extends React.Component {
         this.state = {
             switchValueAutomaticFilling: true,
             switchValueShowSubstitutes: true,
-            selected: "key0"
+            shoppingListManagement: 'ALWAYS_ASK'
         }
     }
 
@@ -22,6 +22,11 @@ export default class SettingsScreen extends React.Component {
     toggleShowSubstitutes(value) {
         this.setState({ switchValueShowSubstitutes: value })
         toggleShowSubstitutes(value)
+    }
+
+    handleIngredientsManagement(value) {
+        this.setState({shoppingListManagement: value})
+        handleIngredientsManagement(value)
     }
 
     render() {
@@ -72,7 +77,7 @@ export default class SettingsScreen extends React.Component {
                             <Right>
                                 <Switch
                                     onValueChange={(value) => this.toggleShowSubstitutes(value)}
-                                    value={ this.state.switchValueShowSubstitutes }
+                                    value={this.state.switchValueShowSubstitutes}
                                 />
                             </Right>
                         </ListItem>
@@ -90,13 +95,13 @@ export default class SettingsScreen extends React.Component {
                                     note
                                     mode="dropdown"
                                     style={{ width: 120 }}
-                                    selectedValue={this.state.selected}
-                                    onValueChange={(value) => this.setState({selected: value})}
+                                    selectedValue={this.state.shoppingListManagement}
+                                    onValueChange={(value) => this.handleIngredientsManagement(value)}
                                 >
-                                    <Picker.Item label="Toujours demander" value="key0" />
-                                    <Picker.Item label="Transférer les aliments dans le frigidaire" value="key1" />
-                                    <Picker.Item label="Supprimer les aliments de la liste de courses" value="key2" />
-                                    <Picker.Item label="Garder les aliments dans la liste de courses" value="key3" />
+                                    <Picker.Item label="Toujours demander" value="ALWAYS_ASK" />
+                                    <Picker.Item label="Transférer les aliments dans le frigidaire" value="TRANSFER" />
+                                    <Picker.Item label="Supprimer les aliments de la liste de courses" value="DELETE" />
+                                    <Picker.Item label="Garder les aliments dans la liste de courses" value="KEEP" />
                                 </Picker>
                             </Right>
                         </ListItem>
