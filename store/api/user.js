@@ -9,6 +9,58 @@ let userParamaters = {
     keepFoodListIndependent: false
 }
 
+export const getUserProfile = async function() {
+    const userToken = await AsyncStorage.getItem('userToken')
+    return fetch(`${Constants.apiEndpoint}/user/profile/me`,
+        {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
+        }).then((response) => response.json())
+        .then((responseJSON) => {
+            userParamaters.keepFoodListIndependent = responseJSON.parameters.keepFoodListIndependent
+            return responseJSON
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok',
+                duration: 3000,
+            })
+            return null
+        })
+}
+
+export const updateUserParameters = async function(parameters) {
+    const userToken = await AsyncStorage.getItem('userToken')
+    return fetch(`${Constants.apiEndpoint}/user/parameters`,
+        {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + userToken,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                parameters: parameters,
+            }),
+        }).then((response) => response.json())
+        .then((responseJSON) => {
+            Toast.show({
+                text: responseJSON.message,
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            getUserProfile()
+        }).catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        })
+}
+
 export const getUserLists = async function() {
     const userToken = await AsyncStorage.getItem('userToken')
     return fetch(`${Constants.apiEndpoint}/user/lists`,

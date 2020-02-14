@@ -1,9 +1,12 @@
 import React from 'react'
 import {Platform, Text} from 'react-native'
 import {Container, Header, Content, Left, Button, Icon, Body, Title, List, ListItem, Right, Switch, Picker} from 'native-base'
+import {checkInternetConnection} from "react-native-offline"
 
+import { getUserProfile, updateUserParameters } from '../store/api/user'
 import { toggleShowSubstitutes, handleIngredientsManagement } from '../store/actions/actions'
 import GenericStyles from "../constants/Style"
+import Constants from "../constants/Constants"
 
 export default class SettingsScreen extends React.Component {
     constructor(props) {
@@ -17,6 +20,20 @@ export default class SettingsScreen extends React.Component {
 
     static navigationOptions = {
         header: null
+    }
+
+    async componentDidMount() {
+        const isConnected = await checkInternetConnection(Constants.serverURL)
+        if(isConnected) {
+            const userProfile = await getUserProfile()
+            this.setState({ switchValueAutomaticFilling: !userProfile.parameters.keepFoodListsIndependent })
+        }
+
+    }
+
+    async toggleAutomaticFilling(value) {
+        this.setState({ switchValueAutomaticFilling: value })
+        await updateUserParameters({ keepFoodListsIndependent: !value })
     }
 
     toggleShowSubstitutes(value) {
@@ -60,8 +77,8 @@ export default class SettingsScreen extends React.Component {
                             </Body>
                             <Right>
                                 <Switch
-                                    onValueChange={(value) => this.setState({switchValueAutomaticFilling: value})}
-                                    value={this.state.switchValueAutomaticFilling}
+                                    onValueChange={(value) => this.toggleAutomaticFilling(value)}
+                                    value={ this.state.switchValueAutomaticFilling }
                                 />
                             </Right>
                         </ListItem>
