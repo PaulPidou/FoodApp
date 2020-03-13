@@ -18,8 +18,8 @@ export default class SideBar extends React.Component {
             <Container style={GenericStyles.header}>
                 <Content>
                     <Image
-                        source={require('../assets/images/icon_large.png')}
-                        style={{ height: 180, resizeMode: 'contain' }}
+                        source={require('../assets/images/logo.png')}
+                        style={{ width: 250, height: 100, marginLeft: 15, resizeMode: 'contain' }}
                     />
                     <List style={{borderBottomColor: '#fff'}}>
                         <ListItem
