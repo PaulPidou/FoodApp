@@ -1,5 +1,5 @@
 import React from 'react'
-import { AsyncStorage, View, ActivityIndicator, Image, Text } from 'react-native'
+import { AsyncStorage, View, Image } from 'react-native'
 import { checkInternetConnection } from 'react-native-offline'
 import { Toast } from "native-base"
 import PropTypes from 'prop-types'
@@ -61,12 +61,20 @@ class AuthLoadingScreen extends React.Component {
             <View
                 style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.splashScreenColor }}
             >
+
+                <View style={{ width: 120, height: 120, borderRadius: 120/2,
+                    justifyContent: 'center', alignItems: 'center',
+                    backgroundColor: '#fff', marginTop: 150 }}>
+                    <Image
+                        style={{ width : 80, height: 80 }}
+                        source={require('../assets/images/food-icons-loading-animation.gif')}
+                    />
+                </View>
                 <Image
-                    style={{ marginBottom: 50}}
-                    source={require('../assets/images/icon_large.png')}
+                    style={{ width: 350, height: 100, marginTop: 150 }}
+                    resizeMode={'contain'}
+                    source={require('../assets/images/logo.png')}
                 />
-                <ActivityIndicator size='large' color='#fff' />
-                <Text style={{ color: Colors.counterTintColor, fontSize: 27, fontWeight: '100', marginTop: 40 }}>Groceries (Re)Cycle</Text>
             </View>
         )
     }
