@@ -41,7 +41,7 @@ export class LogInScreen extends React.Component {
             })
         }
     }
-    
+
     render() {
         return (
             <Container style={GenericStyles.loginContainer}>
