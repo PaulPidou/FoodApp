@@ -339,6 +339,37 @@ export const upsertItemsToFridge = async function(items) {
         })
 }
 
+export const updateFridgeItem = async function(item) {
+    const userToken = await AsyncStorage.getItem('userToken')
+    return fetch(`${Constants.apiEndpoint}/user/fridge/update/item`,
+        {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + userToken,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                item: item,
+            }),
+        }).then((response) => response.json())
+        .then((responseJSON) => {
+            Toast.show({
+                text: responseJSON.message,
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            fetchFridge(userToken)
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        })
+}
+
 export const deleteItemsFromFridge = async function(itemIDs) {
     const userToken = await AsyncStorage.getItem('userToken')
     return fetch(`${Constants.apiEndpoint}/user/fridge/delete/items`,
