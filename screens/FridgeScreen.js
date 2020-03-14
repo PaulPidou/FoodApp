@@ -9,6 +9,7 @@ import Colors from "../constants/Colors"
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from "../components/headers/SelectedIngredientHeader"
+import UpdateIngredientModal from "../components/contents/UpdateIngredientModal"
 import { transferItemsFromFridgeToShoppingList, deleteItemsFromFridge } from "../store/api/user"
 
 class Fridge extends React.Component {
@@ -18,10 +19,13 @@ class Fridge extends React.Component {
             selected: false,
             selectedIngredients: [],
             requestTransfer: false,
-            requestDelete: false
+            requestDelete: false,
+            ingredientClicked: null,
+            isIngredientModalVisible: false
         }
         this.emptySelected = this.emptySelected.bind(this)
         this.updateSelected = this.updateSelected.bind(this)
+        this.toggleModal = this.toggleModal.bind(this)
         this.deleteSelectedIngredients = this.deleteSelectedIngredients.bind(this)
         this.transferItemsToShoppingList = this.transferItemsToShoppingList.bind(this)
     }
@@ -33,6 +37,9 @@ class Fridge extends React.Component {
     handlePress(item) {
         if(this.state.selected) {
             this._updateStateArray(item.ingredientID)
+        } else {
+            this.setState({ ingredientClicked: item })
+            this.toggleModal()
         }
     }
 
@@ -45,6 +52,10 @@ class Fridge extends React.Component {
                 selectedIngredients: [itemID]
             })
         }
+    }
+
+    toggleModal() {
+        this.setState({ isIngredientModalVisible: !this.state.isIngredientModalVisible })
     }
 
     _updateStateArray(itemID) {
@@ -103,11 +114,16 @@ class Fridge extends React.Component {
                         />
                     </Left>
                     <Body>
-                    <Text>{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)}</Text>
+                        <Text>{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)}</Text>
+                        {
+                            item.expirationDate && (
+                                <Text style={{ color: '#808080', fontSize: 12 }}>
+                                    {"Périme le ".concat(moment(item.expirationDate).format('DD/MM/YYYY'))}
+                                </Text>
+                            )
+                        }
+
                     </Body>
-                    <Right>
-                        <Text>{item.expirationDate && (moment(item.expirationDate).format('DD/MM/YYYY'))}</Text>
-                    </Right>
                 </ListItem>
             )
         })
@@ -149,6 +165,11 @@ class Fridge extends React.Component {
                         ingredients={this.props.ingredients}
                     />
                 }
+                <UpdateIngredientModal
+                    isModalVisible={this.state.isIngredientModalVisible}
+                    toggleModal={this.toggleModal}
+                    ingredient={this.state.ingredientClicked}
+                    origin={'fridge'} />
                 <Content>{content}</Content>
             </Container>
         )
