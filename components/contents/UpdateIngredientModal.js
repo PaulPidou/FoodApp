@@ -48,7 +48,7 @@ export default class SearchRecipeModal extends React.Component {
                         </Text>
                         <Form>
                             <Text style={{color: '#888', fontSize: 22}}>
-                                Date d'expiration</Text>
+                                Date de péremption</Text>
                                 <DatePicker
                                     locale={"fr"}
                                     modalTransparent={false}
