@@ -41,7 +41,7 @@ export class LogInScreen extends React.Component {
             })
         }
     }
-
+    
     render() {
         return (
             <Container style={GenericStyles.loginContainer}>
@@ -50,7 +50,10 @@ export class LogInScreen extends React.Component {
                         style={GenericStyles.loginImage}
                         source={require('../assets/images/icon_large.png')}
                     />
-                    <Text style={GenericStyles.loginTitle}>Groceries (Re)Cycle</Text>
+                    <Image
+                        style={{resizeMode: 'contain', height: 100, width: 350}}
+                        source={require('../assets/images/logo.png')}
+                    />
                     <Form>
                         <Item style={GenericStyles.loginFormItem} regular>
                             <Input
@@ -147,7 +150,10 @@ export class SignUpScreen extends React.Component {
                         style={GenericStyles.loginImage}
                         source={require('../assets/images/icon_large.png')}
                     />
-                    <Text style={GenericStyles.loginTitle}>Groceries (Re)Cycle</Text>
+                    <Image
+                        style={{resizeMode: 'contain', height: 100, width: 350}}
+                        source={require('../assets/images/logo.png')}
+                    />
                     <Form>
                         <Item style={GenericStyles.loginFormItem} regular>
                             <Input

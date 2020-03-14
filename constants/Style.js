@@ -55,11 +55,11 @@ const GenericStyles = StyleSheet.create({
         alignItems: 'center'
     },
     loginImage: {
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
         resizeMode: 'contain',
         marginBottom: 10,
-        marginTop: 15
+        marginTop: 20
     },
     loginTitle: {
         color: Colors.counterTintColor,
