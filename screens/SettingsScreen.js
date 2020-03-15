@@ -13,6 +13,7 @@ export default class SettingsScreen extends React.Component {
         super(props)
         this.state = {
             switchValueAutomaticFilling: true,
+            switchValueSeasonalRecipes: true,
             switchValueShowSubstitutes: true,
             shoppingListManagement: 'ALWAYS_ASK'
         }
@@ -34,6 +35,11 @@ export default class SettingsScreen extends React.Component {
     async toggleAutomaticFilling(value) {
         this.setState({ switchValueAutomaticFilling: value })
         await updateUserParameters({ keepFoodListsIndependent: !value })
+    }
+
+    async toggleSeasonalRecipes(value) {
+        this.setState({ switchValueSeasonalRecipes: value })
+        //await updateUserParameters({ keepFoodListsIndependent: !value }) No endpoint yet
     }
 
     toggleShowSubstitutes(value) {
@@ -79,6 +85,22 @@ export default class SettingsScreen extends React.Component {
                                 <Switch
                                     onValueChange={(value) => this.toggleAutomaticFilling(value)}
                                     value={ this.state.switchValueAutomaticFilling }
+                                />
+                            </Right>
+                        </ListItem>
+                        <ListItem icon>
+                            <Left>
+                                <Button style={GenericStyles.settingIcon}>
+                                    <Icon active name={Platform.OS === 'ios' ? 'ios-calendar' : 'md-calendar'} />
+                                </Button>
+                            </Left>
+                            <Body>
+                                <Text>{"N'afficher que les recettes avec des fruits et légumes de saison"}</Text>
+                            </Body>
+                            <Right>
+                                <Switch
+                                    onValueChange={(value) => this.toggleSeasonalRecipes(value)}
+                                    value={ this.state.switchValueSeasonalRecipes }
                                 />
                             </Right>
                         </ListItem>
