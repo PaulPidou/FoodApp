@@ -35,7 +35,7 @@ const GenericStyles = StyleSheet.create({
         color: '#fff'
     },
     settingIcon: {
-        backgroundColor: '#3cff9a'
+        backgroundColor: '#2ba55d'
     },
     headerTitle: {
         color: '#fff'
