@@ -4,7 +4,7 @@ import {Container, Header, Content, Left, Button, Icon, Body, Title, List, ListI
 import {checkInternetConnection} from "react-native-offline"
 
 import { getUserProfile, updateUserParameters } from '../store/api/user'
-import { toggleShowSubstitutes, handleIngredientsManagement } from '../store/actions/actions'
+import { toggleShowSubstitutes, toggleSeasonalRecipes, handleIngredientsManagement } from '../store/actions/actions'
 import GenericStyles from "../constants/Style"
 import Constants from "../constants/Constants"
 
@@ -39,6 +39,7 @@ export default class SettingsScreen extends React.Component {
 
     async toggleSeasonalRecipes(value) {
         this.setState({ switchValueSeasonalRecipes: value })
+        toggleSeasonalRecipes(value)
         //await updateUserParameters({ keepFoodListsIndependent: !value }) No endpoint yet
     }
 
