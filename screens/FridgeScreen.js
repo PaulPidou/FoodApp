@@ -1,6 +1,6 @@
 import React from 'react'
 import {ScrollView} from 'react-native'
-import {Body, Container, Content, Left, List, ListItem, Right, Spinner, Text} from 'native-base'
+import {Body, Container, Content, Left, List, ListItem, Spinner, Text} from 'native-base'
 import {Avatar} from 'react-native-elements'
 import moment from 'moment'
 import { connect } from 'react-redux'
