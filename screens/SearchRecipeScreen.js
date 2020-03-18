@@ -1,15 +1,18 @@
 import React from 'react'
 import {Platform, View} from 'react-native'
 import {Container, Header, Left, Button, Icon, Input, Body, Text} from 'native-base'
+import {connect} from "react-redux"
 
 import RecipesList from '../components/contents/RecipesList'
 import SearchRecipeModal from "../components/contents/SearchRecipeModal"
 
-import { getRecipesSummaryFromKeywords, getRecipesSummaryFromIngredients, getMostFamousRecipesSummary } from '../store/api/public'
+import { getRecipesSummaryFromKeywords, getRecipesSummaryFromIngredients,
+    getMostFamousRecipesSummary, getMostFamousSeasonalRecipesSummary } from '../store/api/public'
 import GenericStyles from '../constants/Style'
 import Colors from "../constants/Colors"
+import PropTypes from "prop-types"
 
-export default class SearchRecipeScreen extends React.Component {
+class SearchRecipeScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -31,11 +34,19 @@ export default class SearchRecipeScreen extends React.Component {
         if (this.state.ingredients) {
             this.setState({ recipes: undefined })
             if(this.state.ingredients.length === 0) {
-                getMostFamousRecipesSummary().then(
-                    recipes => {
-                        this.setState({ recipes, firstSearch: false })
-                    }
-                )
+                if(this.props.seasonalRecipes) {
+                    getMostFamousSeasonalRecipesSummary().then(
+                        recipes => {
+                            this.setState({ recipes, firstSearch: false })
+                        }
+                    )
+                } else {
+                    getMostFamousRecipesSummary().then(
+                        recipes => {
+                            this.setState({ recipes, firstSearch: false })
+                        }
+                    )
+                }
             } else {
                 getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item.ingredientID)).then(
                     recipes => {
@@ -126,3 +137,15 @@ export default class SearchRecipeScreen extends React.Component {
         )
     }
 }
+
+SearchRecipeScreen.propTypes = {
+    seasonalRecipes: PropTypes.bool
+}
+
+const mapStateToProps = (state) => {
+    return {
+        seasonalRecipes: state.settingsReducer.seasonalRecipes
+    }
+}
+
+export default connect(mapStateToProps)(SearchRecipeScreen)
