@@ -46,6 +46,21 @@ export const getMostFamousRecipesSummary = async function() {
         })
 }
 
+export const getMostFamousSeasonalRecipesSummary = async function() {
+    return fetch(`${Constants.apiEndpoint}/public/seasonal/recipes/by/fame`)
+        .then((response) => {
+            return response.json()
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            return []
+        })
+}
+
 export const getRecipesSummaryFromKeywords = async function(keywords) {
     return fetch(`${Constants.apiEndpoint}/public/recipes/by/keywords`,
         {
