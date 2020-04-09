@@ -118,7 +118,7 @@ FridgeStack.navigationOptions = ({ navigation }) => {
             activeTintColor: Colors.tabIconSelected,
             activeBackgroundColor: Colors.tintColor
         },
-        tabBarLabel: 'Frigo',
+        tabBarLabel: 'Frigidaire',
         tabBarIcon: FridgeTabBarIcon
     }
 }

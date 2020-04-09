@@ -55,7 +55,8 @@ export default class RecipeTabs extends React.Component {
                                         key={tag}
                                         style={{margin: 5, backgroundColor: "#33ffb1"}}
                                     >
-                                        <Text style={GenericStyles.headerTitle}>{tag.charAt(0).toUpperCase() + tag.slice(1)}</Text>
+                                        <Text style={{color: '#fff', fontFamily: 'Showlove_Regular', fontSize: 24}}>
+                                            {tag.charAt(0).toUpperCase() + tag.slice(1)}</Text>
                                     </Badge>
                             )})
                         }

@@ -17,10 +17,9 @@ export default class SideBar extends React.Component {
         return (
             <Container style={GenericStyles.header}>
                 <Content>
-                    <Image
-                        source={require('../assets/images/logo.png')}
-                        style={{ width: 250, height: 100, marginLeft: 15, resizeMode: 'contain' }}
-                    />
+                    <Text style={{ fontFamily: 'Showlove_Regular', margin: 18,
+                        fontSize: 36, color: '#fff'}}>
+                        Groceries (Re)Cycle</Text>
                     <List style={{borderBottomColor: '#fff'}}>
                         <ListItem
                             icon

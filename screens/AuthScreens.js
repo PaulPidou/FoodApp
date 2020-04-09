@@ -50,10 +50,8 @@ export class LogInScreen extends React.Component {
                         style={GenericStyles.loginImage}
                         source={require('../assets/images/icon_large.png')}
                     />
-                    <Image
-                        style={{resizeMode: 'contain', height: 100, width: 350}}
-                        source={require('../assets/images/logo.png')}
-                    />
+                    <Text style={{ fontFamily: 'Showlove_Regular', fontSize: 50, marginBottom: 20, color: '#333'}}>
+                        Groceries (Re)Cycle</Text>
                     <Form>
                         <Item style={GenericStyles.loginFormItem} regular>
                             <Input
@@ -150,10 +148,8 @@ export class SignUpScreen extends React.Component {
                         style={GenericStyles.loginImage}
                         source={require('../assets/images/icon_large.png')}
                     />
-                    <Image
-                        style={{resizeMode: 'contain', height: 100, width: 350}}
-                        source={require('../assets/images/logo.png')}
-                    />
+                    <Text style={{ fontFamily: 'Showlove_Regular', fontSize: 50, marginBottom: 20, color: '#333'}}>
+                        Groceries (Re)Cycle</Text>
                     <Form>
                         <Item style={GenericStyles.loginFormItem} regular>
                             <Input

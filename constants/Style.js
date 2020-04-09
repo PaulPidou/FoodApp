@@ -38,7 +38,9 @@ const GenericStyles = StyleSheet.create({
         backgroundColor: '#2ba55d'
     },
     headerTitle: {
-        color: '#fff'
+        color: '#fff',
+        fontFamily: 'Showlove_Regular',
+        fontSize: 26
     },
     headerButton: {
         color: '#007aff',
