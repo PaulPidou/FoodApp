@@ -8,10 +8,12 @@ import PropTypes from 'prop-types'
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from '../components/headers/SelectedIngredientHeader'
+import UpdateIngredientModal from "../components/contents/UpdateIngredientModal"
 import { transferItemsFromShoppingListToFridge, deleteItemsFromShoppingList } from "../store/api/user"
 
 import GenericStyles from "../constants/Style"
 import Colors from '../constants/Colors'
+import {getProductsByIngredient} from "../store/api/public"
 
 class ShoppingListScreen extends React.Component {
     constructor(props) {
@@ -23,10 +25,13 @@ class ShoppingListScreen extends React.Component {
             checkedIngredients: [],
             requestTransfer: false,
             requestDelete: false,
+            ingredientClicked: null,
+            products: undefined,
             origin: props.navigation.getParam('origin', null)
         }
         this.emptySelected = this.emptySelected.bind(this)
         this.updateSelected = this.updateSelected.bind(this)
+        this.toggleModal = this.toggleModal.bind(this)
         this.transferItemsToFridge = this.transferItemsToFridge.bind(this)
         this.deleteSelectedIngredients = this.deleteSelectedIngredients.bind(this)
     }
@@ -40,6 +45,13 @@ class ShoppingListScreen extends React.Component {
             this._updateStateArray(item.ingredientID, 'checkedIngredients')
         } else if(this.state.selected) {
             this._updateStateArray(item.ingredientID, 'selectedIngredients')
+        } else {
+            this.setState({ ingredientClicked: item })
+            this.toggleModal()
+            getProductsByIngredient(item.ingredientID).then(
+                products => {
+                    this.setState({ products: products })
+                })
         }
     }
 
@@ -56,6 +68,10 @@ class ShoppingListScreen extends React.Component {
                 selectedIngredients: [itemID]
             })
         }
+    }
+
+    toggleModal() {
+        this.setState({ products: undefined, isIngredientModalVisible: !this.state.isIngredientModalVisible })
     }
 
     _updateStateArray(itemID, arrayName) {
@@ -347,6 +363,12 @@ class ShoppingListScreen extends React.Component {
                         </View>
                     )
                 }
+                <UpdateIngredientModal
+                    isModalVisible={this.state.isIngredientModalVisible}
+                    toggleModal={this.toggleModal}
+                    ingredient={this.state.ingredientClicked}
+                    products={this.state.products}
+                    origin={'shoppinglist'} />
                 <Content>{content}</Content>
             </Container>
         )

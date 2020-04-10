@@ -1,11 +1,12 @@
 import React from "react"
-import {ActivityIndicator, View} from 'react-native'
+import {ActivityIndicator, ScrollView, View} from 'react-native'
 import Modal from 'react-native-modal'
-import {Button, Form, Text, DatePicker} from "native-base"
+import {Button, Form, Text, DatePicker, List, ListItem, Left, Body} from "native-base"
 import PropTypes from "prop-types"
 import Colors from "../../constants/Colors"
 import { updateFridgeItem } from '../../store/api/user'
 import moment from "moment"
+import {Avatar} from "react-native-elements"
 
 export default class SearchRecipeModal extends React.Component {
     constructor(props) {
@@ -16,6 +17,11 @@ export default class SearchRecipeModal extends React.Component {
             requestUpdate: false
         }
         this.setDate = this.setDate.bind(this)
+    }
+
+    handleClose() {
+        this.setState({ chosenDate: null, products: undefined })
+        this.props.toggleModal()
     }
 
     setDate(newDate) {
@@ -31,8 +37,33 @@ export default class SearchRecipeModal extends React.Component {
             }
             updateFridgeItem(item)
         }
-        this.props.toggleModal()
+        this.handleClose()
         this.setState({ requestUpdate: false })
+    }
+
+    renderProductList() {
+        return this.props.products.map((item) => {
+            return (
+                <ListItem
+                    icon
+                    avatar
+                    key={item._id}
+                >
+                    <Left style={{height: 30}}>
+                                <Avatar
+                                    size="small"
+                                    rounded
+                                    title={item.name.charAt(0).toUpperCase()}
+                                    icon={null}
+                                    activeOpacity={0.7}
+                                />
+                    </Left>
+                    <Body>
+                        <Text>{item.name}</Text>
+                    </Body>
+                </ListItem>
+            )
+        })
     }
 
     render() {
@@ -46,24 +77,32 @@ export default class SearchRecipeModal extends React.Component {
                             {ingredient &&
                             ingredient.ingredientName.charAt(0).toUpperCase() + ingredient.ingredientName.slice(1)}
                         </Text>
-                        <Form>
-                            <Text style={{color: '#888', fontSize: 22}}>
-                                Date de péremption</Text>
-                                <DatePicker
-                                    locale={"fr"}
-                                    modalTransparent={false}
-                                    animationType={"fade"}
-                                    androidMode={"default"}
-                                    placeHolderText={ ingredient.hasOwnProperty('expirationDate') ?
-                                        moment(ingredient.expirationDate).format('DD/MM/YYYY') :
-                                        "Choisissez une date" }
-                                    placeHolderTextStyle={{ color: "#d3d3d3" }}
-                                    onDateChange={this.setDate}
-                                    disabled={false}
-                                />
-                        </Form>
+                        {
+                            this.props.origin === 'fridge' ? (
+                                <Form>
+                                    <Text style={{color: '#888', fontSize: 22}}>
+                                        Date de péremption</Text>
+                                    <DatePicker
+                                        locale={"fr"}
+                                        modalTransparent={false}
+                                        animationType={"fade"}
+                                        androidMode={"default"}
+                                        placeHolderText={ ingredient.hasOwnProperty('expirationDate') ?
+                                            moment(ingredient.expirationDate).format('DD/MM/YYYY') :
+                                            "Choisissez une date" }
+                                        placeHolderTextStyle={{ color: "#d3d3d3" }}
+                                        onDateChange={this.setDate}
+                                        disabled={false}
+                                    />
+                                </Form>) : (
+                                    this.props.products === undefined ? (
+                                        <ActivityIndicator color={Colors.tintColor} />) :
+                                        (<ScrollView><List>{this.renderProductList()}</List></ScrollView>)
+                            )
+                        }
+
                         <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-                            <Button transparent style={{width: 100}} onPress={() => this.props.toggleModal()}>
+                            <Button transparent style={{width: 100}} onPress={() => this.handleClose()}>
                                 <Text style={{fontSize: 14}}>Annuler</Text>
                             </Button>
                             {
@@ -87,5 +126,6 @@ SearchRecipeModal.propTypes = {
     isModalVisible: PropTypes.bool,
     toggleModal: PropTypes.func,
     ingredient: PropTypes.object,
+    products: PropTypes.array,
     origin: PropTypes.string
 }
