@@ -16,6 +16,21 @@ export const getAllIngredients = async function() {
         })
 }
 
+export const getProductsByIngredient = async function(ingredientID) {
+    return fetch(`${Constants.apiEndpoint}/public/products/by/ingredient/${ingredientID}`)
+        .then((response) => {
+            return response.json()
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            return []
+        })
+}
+
 export const getRecipeFromId = async function(recipeID) {
     return fetch(`${Constants.apiEndpoint}/public/recipe/${recipeID}`)
         .then((response) => {
