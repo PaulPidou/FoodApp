@@ -2,25 +2,37 @@ import React from "react"
 import {ActivityIndicator, Platform, ScrollView, View, Linking} from 'react-native'
 import Modal from 'react-native-modal'
 import {Button, Form, Text, DatePicker, List, ListItem, Left, Body, Right, Icon, Thumbnail} from "native-base"
-import PropTypes from "prop-types"
-import Colors from "../../constants/Colors"
-import { updateFridgeItem } from '../../store/api/user'
-import moment from "moment"
 import { Badge } from 'react-native-elements'
+import moment from "moment"
+import PropTypes from "prop-types"
+import { updateFridgeItem, updateShoppingListItem } from '../../store/api/user'
+import Colors from "../../constants/Colors"
 
 export default class SearchRecipeModal extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            origin: props.origin,
             chosenDate: null,
+            chosenProduct: null,
+            associatedProduct: this._getAssociatedProductID(),
             requestUpdate: false
         }
         this.setDate = this.setDate.bind(this)
     }
 
+    _getAssociatedProductID() {
+        if(this.props.ingredient) {
+            if(this.props.ingredient.hasOwnProperty('associatedProduct')) {
+                if(this.props.ingredient.associatedProduct.hasOwnProperty('productID')) {
+                    return this.props.ingredient.associatedProduct.productID
+                }
+            }
+        }
+        return undefined
+    }
+
     handleClose() {
-        this.setState({ chosenDate: null, products: undefined })
+        this.setState({ chosenDate: null, chosenProduct: null })
         this.props.toggleModal()
     }
 
@@ -28,14 +40,35 @@ export default class SearchRecipeModal extends React.Component {
         this.setState({ chosenDate: newDate })
     }
 
+    setProduct(product) {
+        this.setState({
+            chosenProduct: {
+                productID: product._id,
+                name: product.name,
+                brand: product.brand,
+                nutriscore: product.nutriscore
+            }, associatedProduct: product._id
+        })
+    }
+
     updateIngredient() {
         this.setState({ requestUpdate: true })
-        if(this.state.chosenDate) {
-            const item = {
-                ...this.props.ingredient,
-                expirationDate: this.state.chosenDate
+        if(this.props.origin === 'fridge') {
+            if (this.state.chosenDate) {
+                const item = {
+                    ...this.props.ingredient,
+                    expirationDate: this.state.chosenDate
+                }
+                updateFridgeItem(item)
             }
-            updateFridgeItem(item)
+        } else {
+            if(this.state.chosenProduct) {
+                const item = {
+                    ...this.props.ingredient,
+                    associatedProduct: this.state.chosenProduct
+                }
+                updateShoppingListItem(item)
+            }
         }
         this.handleClose()
         this.setState({ requestUpdate: false })
@@ -79,6 +112,7 @@ export default class SearchRecipeModal extends React.Component {
                 <ListItem
                     thumbnail
                     key={item._id}
+                    onPress={() => this.setProduct(item)}
                 >
                     <Left>
                         <View>
@@ -95,11 +129,18 @@ export default class SearchRecipeModal extends React.Component {
                                         >{item.nutriscore.toUpperCase()}</Text>
                                     </Badge>)
                             }
-
                         </View>
                     </Left>
                     <Body>
-                        <Text>{item.name}</Text>
+                        <Text>
+                            {item.name} { item._id === this.state.associatedProduct && (
+                                <Icon
+                                    style={{fontSize: 18, color: Colors.tintColor}}
+                                    name={Platform.OS === 'ios' ? 'ios-checkmark-circle-outline' : 'md-checkmark-circle-outline'}
+                                />)
+                            }
+                        </Text>
+
                         <Text style={{ color: '#808080', fontSize: 12 }}>{item.brand}</Text>
                     </Body>
                     <Right>

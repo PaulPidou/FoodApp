@@ -214,6 +214,37 @@ export const upsertItemsToShoppingList = async function(items) {
         })
 }
 
+export const updateShoppingListItem = async function(item) {
+    const userToken = await AsyncStorage.getItem('userToken')
+    return fetch(`${Constants.apiEndpoint}/user/shoppinglist/update/item`,
+        {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + userToken,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                item: item,
+            }),
+        }).then((response) => response.json())
+        .then((responseJSON) => {
+            Toast.show({
+                text: responseJSON.message,
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            fetchShoppingList(userToken)
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        })
+}
+
 export const upsertItemsToShoppingListFromRecipes = async function(recipeIDs) {
     const userToken = await AsyncStorage.getItem('userToken')
     return fetch(`${Constants.apiEndpoint}/user/shoppinglist/items/from/recipes`,
