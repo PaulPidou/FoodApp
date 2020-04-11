@@ -1,12 +1,12 @@
 import React from "react"
-import {ActivityIndicator, ScrollView, View} from 'react-native'
+import {ActivityIndicator, Platform, ScrollView, View, Linking} from 'react-native'
 import Modal from 'react-native-modal'
-import {Button, Form, Text, DatePicker, List, ListItem, Left, Body} from "native-base"
+import {Button, Form, Text, DatePicker, List, ListItem, Left, Body, Right, Icon, Thumbnail} from "native-base"
 import PropTypes from "prop-types"
 import Colors from "../../constants/Colors"
 import { updateFridgeItem } from '../../store/api/user'
 import moment from "moment"
-import {Avatar} from "react-native-elements"
+import { Badge } from 'react-native-elements'
 
 export default class SearchRecipeModal extends React.Component {
     constructor(props) {
@@ -41,26 +41,77 @@ export default class SearchRecipeModal extends React.Component {
         this.setState({ requestUpdate: false })
     }
 
+    _getNutriscoreColor(nutriGrade) {
+        switch(nutriGrade) {
+            case 'a':
+                return "#008a40"
+            case 'b':
+                return "#70c623"
+            case 'c':
+                return "#ffcf00"
+            case 'd':
+                return "#fc7900"
+            case 'e':
+                return "#f80000"
+            default:
+                return "#fff"
+        }
+    }
+
+    _getNovaColor(novaGroup) {
+        switch(novaGroup) {
+            case 1:
+                return "#0a0"
+            case 2:
+                return "#fc0"
+            case 3:
+                return "#f60"
+            case 4:
+                return "#f00"
+            default:
+                return "#fff"
+        }
+    }
+
     renderProductList() {
         return this.props.products.map((item) => {
             return (
                 <ListItem
-                    icon
-                    avatar
+                    thumbnail
                     key={item._id}
                 >
-                    <Left style={{height: 30}}>
-                                <Avatar
-                                    size="small"
-                                    rounded
-                                    title={item.name.charAt(0).toUpperCase()}
-                                    icon={null}
-                                    activeOpacity={0.7}
-                                />
+                    <Left>
+                        <View>
+                            <Thumbnail small source={ item.picture ? ({ uri:  item.picture}) :
+                                require('../../assets/images/icon_large.png') } />
+                            {
+                                item.nutriscore && (
+                                    <Badge
+                                        containerStyle={{
+                                            backgroundColor: this._getNutriscoreColor(item.nutriscore),
+                                            position: 'absolute', top: -15, right: -10 }}>
+                                        <Text
+                                            style={{color: "#fff", fontWeight: 'bold', fontSize: 14}}
+                                        >{item.nutriscore.toUpperCase()}</Text>
+                                    </Badge>)
+                            }
+
+                        </View>
                     </Left>
                     <Body>
                         <Text>{item.name}</Text>
+                        <Text style={{ color: '#808080', fontSize: 12 }}>{item.brand}</Text>
                     </Body>
+                    <Right>
+                        <Button transparent
+                                onPress={() => Linking.openURL(item.OFFUrl)}
+                        >
+                            <Icon
+                                style={{color: '#aaa'}}
+                                name={Platform.OS === 'ios' ? 'ios-information-circle-outline' : 'md-information-circle-outline'}
+                            />
+                        </Button>
+                    </Right>
                 </ListItem>
             )
         })
@@ -72,7 +123,7 @@ export default class SearchRecipeModal extends React.Component {
         return (
             <View>
                 <Modal isVisible={this.props.isModalVisible} animationIn={'zoomIn'} animationOut={'fadeOut'} >
-                    <View style={{backgroundColor: '#fff', margin: 10, padding: 15}}>
+                    <View style={{backgroundColor: '#fff', margin: 10, padding: 15, maxHeight: 500}}>
                         <Text style={{color: '#286064', fontSize: 27, fontWeight: '100', marginBottom: 10}}>
                             {ingredient &&
                             ingredient.ingredientName.charAt(0).toUpperCase() + ingredient.ingredientName.slice(1)}
@@ -97,7 +148,9 @@ export default class SearchRecipeModal extends React.Component {
                                 </Form>) : (
                                     this.props.products === undefined ? (
                                         <ActivityIndicator color={Colors.tintColor} />) :
-                                        (<ScrollView><List>{this.renderProductList()}</List></ScrollView>)
+                                        this.props.products.length ? (
+                                            <ScrollView><List>{this.renderProductList()}</List></ScrollView>) :
+                                            (<Text>Il n'y a pas de produit référencé pour cet ingrédient</Text>)
                             )
                         }
 
