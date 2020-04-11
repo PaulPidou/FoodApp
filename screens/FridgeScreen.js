@@ -122,7 +122,6 @@ class Fridge extends React.Component {
                                 </Text>
                             )
                         }
-
                     </Body>
                 </ListItem>
             )

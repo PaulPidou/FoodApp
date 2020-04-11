@@ -41,14 +41,18 @@ export default class SearchRecipeModal extends React.Component {
     }
 
     setProduct(product) {
-        this.setState({
-            chosenProduct: {
-                productID: product._id,
-                name: product.name,
-                brand: product.brand,
-                nutriscore: product.nutriscore
-            }, associatedProduct: product._id
-        })
+        if(product._id === this.state.associatedProduct) {
+            this.setState({ chosenProduct: null, associatedProduct: undefined })
+        } else {
+            this.setState({
+                chosenProduct: {
+                    productID: product._id,
+                    name: product.name,
+                    brand: product.brand,
+                    nutriscore: product.nutriscore
+                }, associatedProduct: product._id
+            })
+        }
     }
 
     updateIngredient() {
@@ -62,13 +66,11 @@ export default class SearchRecipeModal extends React.Component {
                 updateFridgeItem(item)
             }
         } else {
-            if(this.state.chosenProduct) {
-                const item = {
-                    ...this.props.ingredient,
-                    associatedProduct: this.state.chosenProduct
-                }
-                updateShoppingListItem(item)
+            const item = {
+                ...this.props.ingredient,
+                associatedProduct: this.state.chosenProduct
             }
+            updateShoppingListItem(item)
         }
         this.handleClose()
         this.setState({ requestUpdate: false })

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Alert, Platform, ScrollView, View} from 'react-native'
 import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet, Text} from 'native-base'
-import { Avatar } from 'react-native-elements'
+import {Avatar, Badge} from 'react-native-elements'
 import { NetworkConsumer } from "react-native-offline"
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -72,6 +72,23 @@ class ShoppingListScreen extends React.Component {
 
     toggleModal() {
         this.setState({ products: undefined, isIngredientModalVisible: !this.state.isIngredientModalVisible })
+    }
+
+    _getNutriscoreColor(nutriGrade) {
+        switch(nutriGrade) {
+            case 'a':
+                return "#008a40"
+            case 'b':
+                return "#70c623"
+            case 'c':
+                return "#ffcf00"
+            case 'd':
+                return "#fc7900"
+            case 'e':
+                return "#f80000"
+            default:
+                return "#fff"
+        }
     }
 
     _updateStateArray(itemID, arrayName) {
@@ -280,7 +297,29 @@ class ShoppingListScreen extends React.Component {
                     <Text
                         style={isChecked ? {textDecorationLine: 'line-through'} : {}}
                     >{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)}</Text>
+                        {
+                            item.associatedProduct && (
+                                <Text
+                                    numberOfLines={1}
+                                    style={{ color: '#808080', fontSize: 12 }}>
+                                    {item.associatedProduct.name} - {item.associatedProduct.brand}
+                                </Text>
+                            )
+                        }
                     </Body>
+                    <Right>
+                        {
+                            item.associatedProduct && item.associatedProduct.nutriscore && (
+                                <Badge
+                                    containerStyle={{
+                                        backgroundColor: this._getNutriscoreColor(item.associatedProduct.nutriscore)}}>
+                                    <Text
+                                        style={{color: "#fff", fontWeight: 'bold'}}
+                                    >{item.associatedProduct.nutriscore.toUpperCase()}</Text>
+                                </Badge>
+                            )
+                        }
+                    </Right>
                 </ListItem>
             )
         })
