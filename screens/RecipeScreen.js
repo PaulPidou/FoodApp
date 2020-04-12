@@ -12,6 +12,7 @@ import { saveRecipes, deleteSavedRecipes, cookSavedRecipes } from '../store/api/
 import GenericStyles from '../constants/Style'
 import Colors from '../constants/Colors'
 import Constants from "../constants/Constants"
+import DeleteButton from "../components/common/DeleteButton"
 
 class RecipeScreen extends React.Component {
     constructor(props) {
@@ -111,29 +112,12 @@ class RecipeScreen extends React.Component {
                         <ActivityIndicator size="small" color={Colors.counterTintColor}/>
                     </Button>
                 ) : (
-                    <NetworkConsumer key={'trash'}>
-                        {({ isConnected }) => (
-                            <Button
-                                transparent
-                                onPress={() => {
-                                    isConnected ? Alert.alert(
-                                        'Confirmation',
-                                        'Retirer la recette des recettes sauvegardées ?',
-                                        [
-                                            {text: 'Annuler', style: 'cancel'},
-                                            {text: 'Oui', onPress: () => this.deleteRecipe()}
-                                        ]
-                                    ) : Alert.alert(
-                                        'Serveur hors ligne',
-                                        'Vous ne pouvez pas effectuer cette action',
-                                    )
-                                }}>
-                                <Icon
-                                    style={GenericStyles.headerIcon}
-                                    name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
-                                />
-                            </Button>)}
-                    </NetworkConsumer>)
+                    <DeleteButton
+                        key={'trash'}
+                        onPress={() => this.deleteRecipe()}
+                        message={'Retirer la recette des recettes sauvegardées ?'}
+                        icon={'heart'}
+                    />)
             ]) : (
                 this.state.requestSave || (this.props.isSaved === undefined) ? (
                     <Button transparent>

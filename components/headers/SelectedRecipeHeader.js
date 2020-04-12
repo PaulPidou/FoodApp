@@ -7,6 +7,7 @@ import PropTypes from "prop-types"
 import SelectionButton from "../common/SelectionButton"
 import GenericStyles from "../../constants/Style"
 import Colors from "../../constants/Colors"
+import DeleteButton from "../common/DeleteButton"
 
 export default class SelectedRecipeHeader extends React.Component {
     render() {
@@ -62,29 +63,11 @@ export default class SelectedRecipeHeader extends React.Component {
                                 <ActivityIndicator size="small" color={Colors.counterTintColor} />
                             </Button>
                         ) : (
-                            <NetworkConsumer>
-                                {({ isConnected }) => (
-                                    <Button
-                                        transparent
-                                        onPress={() => {
-                                            isConnected ? Alert.alert(
-                                                'Confirmation',
-                                                'Retirer '.concat(this.props.message, ' des recettes sauvegardées ?'),
-                                                [
-                                                    {text: 'Annuler', style: 'cancel'},
-                                                    {text: 'Oui', onPress: () => this.props.deleteSelectedRecipes()},
-                                                ]): Alert.alert(
-                                                'Serveur hors ligne',
-                                                'Vous ne pouvez pas effectuer cette action',
-                                            )
-                                        }}>
-                                        <Icon
-                                            style={GenericStyles.headerIcon}
-                                            name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
-                                        />
-                                    </Button>)}
-                            </NetworkConsumer>
-                        )
+                            <DeleteButton
+                                onPress={() => this.props.deleteSelectedRecipes()}
+                                message={'Retirer '.concat(this.props.message, ' des recettes sauvegardées ?')}
+                                icon={'heart'}
+                            />)
                     }
                 </Right>
             </Header>

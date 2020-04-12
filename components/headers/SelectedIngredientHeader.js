@@ -5,6 +5,7 @@ import {NetworkConsumer} from "react-native-offline"
 import PropTypes from 'prop-types'
 
 import SelectionButton from "../common/SelectionButton"
+import DeleteButton from "../common/DeleteButton"
 import GenericStyles from "../../constants/Style"
 
 export default class SelectedIngredientHeader extends React.Component {
@@ -74,28 +75,11 @@ export default class SelectedIngredientHeader extends React.Component {
                                 <ActivityIndicator size="small" color='#fff' />
                             </Button>
                         ) : (
-                            <NetworkConsumer>
-                                {({ isConnected }) => (
-                                <Button
-                                    transparent
-                                    onPress={() => { isConnected ?
-                                        Alert.alert(
-                                            'Confirmation',
-                                            'Confirmez vous la suppression ?',
-                                            [
-                                                {text: 'Annuler', style: 'cancel'},
-                                                {text: 'Oui', onPress: () => this.props.deleteSelectedIngredients()},
-                                            ]) : Alert.alert(
-                                            'Serveur hors ligne',
-                                            'Vous ne pouvez pas effectuer cette action',
-                                        )
-                                    }}>
-                                    <Icon
-                                        style={GenericStyles.headerIcon}
-                                        name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-                                    />
-                                </Button>)}
-                            </NetworkConsumer>
+                            <DeleteButton
+                                onPress={() => this.props.deleteSelectedIngredients()}
+                                message={'Confirmez vous la suppression ?'}
+                                icon={'trash'}
+                            />
                         )
                     }
                 </Right>
