@@ -1,5 +1,5 @@
 import React from "react"
-import {Image, Platform, AsyncStorage} from 'react-native'
+import {Platform, AsyncStorage} from 'react-native'
 import {Container, Content, Text, List, ListItem, Icon, Left, Body} from 'native-base'
 
 import GenericStyles from '../constants/Style'
