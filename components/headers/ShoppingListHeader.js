@@ -1,10 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {Button, Header, Icon, Left, Right} from "native-base"
-import GenericStyles from "../../constants/Style"
 import {Alert, Platform} from "react-native"
+import {Button, Header, Icon, Left, Right} from "native-base"
 import {NetworkConsumer} from "react-native-offline"
+import PropTypes from 'prop-types'
+
 import SelectionButton from "../common/SelectionButton"
+import HeaderActionButton from "../common/HeaderActionButton"
+import GenericStyles from "../../constants/Style"
 
 export default class ShoppingListHeader extends React.Component {
     render() {
@@ -20,9 +22,9 @@ export default class ShoppingListHeader extends React.Component {
                         isSelector={true}
                     />
                 </Left>
-                <NetworkConsumer>
-                    {({ isConnected }) => (
-                        <Right>
+                <Right>
+                    <NetworkConsumer>
+                        {({ isConnected }) => (
                             <Button
                                 transparent
                                 onPress={() => { isConnected ? this.props.handleIngredientsManagement() : Alert.alert(
@@ -39,24 +41,14 @@ export default class ShoppingListHeader extends React.Component {
                                     style={GenericStyles.headerIcon}
                                     name={Platform.OS === 'ios' ? 'ios-flag' : 'md-flag'}
                                 />
-                            </Button>
-                            <Button
-                                transparent
-                                onPress={() => { isConnected ?
-                                    this.props.navigation.navigate('SearchIngredient', {origin: 'shoppinglist'}) :
-                                    Alert.alert(
-                                        'Serveur hors ligne',
-                                        'Vous ne pouvez pas effectuer cette action',
-                                    )
-                                }} >
-                                <Icon
-                                    style={GenericStyles.headerIcon}
-                                    name='add'
-                                    type="MaterialIcons"
-                                />
-                            </Button>
-                        </Right>)}
-                </NetworkConsumer>
+                            </Button>)}
+                    </NetworkConsumer>
+                    <HeaderActionButton
+                        actionFunction={() => this.props.navigation.navigate('SearchIngredient',
+                            {origin: 'shoppinglist'})}
+                        icon={'add'}
+                    />
+                </Right>
             </Header>
         )
     }

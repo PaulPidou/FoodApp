@@ -1,11 +1,11 @@
 import React from "react"
-import {Alert, Platform, ActivityIndicator} from "react-native"
-import { Left, Right, Header, Button, Icon } from "native-base"
-import {NetworkConsumer} from "react-native-offline"
+import {ActivityIndicator} from "react-native"
+import { Left, Right, Header, Button } from "native-base"
 import PropTypes from 'prop-types'
 
 import SelectionButton from "../common/SelectionButton"
 import DeleteButton from "../common/DeleteButton"
+import HeaderActionButton from "../common/HeaderActionButton"
 import GenericStyles from "../../constants/Style"
 
 export default class SelectedIngredientHeader extends React.Component {
@@ -30,44 +30,18 @@ export default class SelectedIngredientHeader extends React.Component {
                             </Button>
                         ) : (
                         this.props.origin === 'shoppinglist' && (
-                                <NetworkConsumer>
-                                    {({ isConnected }) => (
-                                    <Button
-                                        transparent
-                                        onPress={() => { isConnected ?
-                                            this.props.transferItemsToFridge() :
-                                            Alert.alert(
-                                                'Serveur hors ligne',
-                                                'Vous ne pouvez pas effectuer cette action',
-                                            )
-                                        }}>
-                                        <Icon
-                                            style={GenericStyles.headerIcon}
-                                            name={Platform.OS === 'ios' ? 'ios-egg' : 'md-egg'}
-                                        />
-                                    </Button>)}
-                                </NetworkConsumer>))
+                            <HeaderActionButton
+                                actionFunction={() => this.props.transferItemsToFridge()}
+                                icon={'egg'}
+                            />))
                     }
                     {
                         this.props.origin === 'fridge' && (
-                            <NetworkConsumer>
-                                {({ isConnected }) => (
-                                <Button
-                                    transparent
-                                    onPress={() => { isConnected ?
-                                        this.props.navigation.navigate('SearchRecipe', {ingredients: this.props.selectedIngredients}) :
-                                        Alert.alert(
-                                            'Serveur hors ligne',
-                                            'Vous ne pouvez pas effectuer cette action',
-                                        )
-                                    }}
-                                >
-                                    <Icon
-                                        style={GenericStyles.headerIcon}
-                                        name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
-                                    />
-                                </Button>)}
-                            </NetworkConsumer>)
+                            <HeaderActionButton
+                                actionFunction={() => this.props.navigation.navigate('SearchRecipe',
+                                    {ingredients: this.props.selectedIngredients})}
+                                icon={'bookmarks'}
+                            />)
                     }
                     {
                         this.props.requestDelete ? (

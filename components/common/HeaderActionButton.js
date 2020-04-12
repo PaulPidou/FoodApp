@@ -2,27 +2,22 @@ import React from 'react'
 import {Alert, Platform} from "react-native"
 import {Button, Icon} from "native-base"
 import {NetworkConsumer} from "react-native-offline"
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types'
 
 import GenericStyles from "../../constants/Style"
 
-export default class DeleteButton extends React.Component {
+export default class HeaderActionButton extends React.Component {
     render() {
         return (
             <NetworkConsumer>
                 {({ isConnected }) => (
                     <Button
                         transparent
-                        onPress={() => {
-                            isConnected ? Alert.alert(
-                                'Confirmation',
-                                this.props.message,
-                                [
-                                    {text: 'Annuler', style: 'cancel'},
-                                    {text: 'Oui', onPress: () => this.props.onPress()},
-                                ]): Alert.alert(
+                        onPress={() => { isConnected ?
+                            this.props.actionFunction() :
+                            Alert.alert(
                                 'Serveur hors ligne',
-                                'Vous ne pouvez pas effectuer cette action',
+                                this.props.message ? this.props.message : 'Vous ne pouvez pas effectuer cette action',
                             )
                         }}>
                         <Icon
@@ -34,8 +29,8 @@ export default class DeleteButton extends React.Component {
     }
 }
 
-DeleteButton.propTypes = {
-    onPress: PropTypes.func,
+HeaderActionButton.propTypes = {
+    actionFunction: PropTypes.func,
     message: PropTypes.string,
     icon: PropTypes.string
 }

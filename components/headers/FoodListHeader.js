@@ -1,11 +1,11 @@
 import React from "react"
-import {Alert, Platform} from "react-native"
+import {Platform} from "react-native"
 import PropTypes from 'prop-types'
 import {Button, Header, Icon, Left, Right, Title, Body} from 'native-base'
 
 import MenuButton from "../common/MenuButton"
+import HeaderActionButton from "../common/HeaderActionButton"
 import GenericStyles from '../../constants/Style'
-import {NetworkConsumer} from "react-native-offline"
 
 export default class FoodListHeader extends React.Component {
     render() {
@@ -26,50 +26,23 @@ export default class FoodListHeader extends React.Component {
                         this.props.origin === 'shoppinglist' ? (
                             <Button
                                 transparent
-                                onPress={() => {
-                                    this.props.startShopping()
-                                }}
+                                onPress={() => this.props.startShopping() }
                             >
                                 <Icon
                                     style={GenericStyles.headerIcon}
                                     name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
                                 />
                             </Button>) : (
-                            <NetworkConsumer>
-                                {({ isConnected }) => (
-                                    <Button
-                                        transparent
-                                        onPress={() => { isConnected ?
-                                            this.props.navigation.navigate('SearchRecipe', {ingredients: this.props.ingredients}) :
-                                            Alert.alert(
-                                                'Serveur hors ligne',
-                                                'Vous ne pouvez pas effectuer cette action',
-                                            )
-                                        }}>
-                                        <Icon
-                                            style={GenericStyles.headerIcon}
-                                            name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'}
-                                        />
-                                    </Button>)}
-                            </NetworkConsumer>)
+                            <HeaderActionButton
+                                actionFunction={() => this.props.navigation.navigate('SearchRecipe',
+                                    {ingredients: this.props.ingredients})}
+                                icon={'bookmarks'}
+                            />)
                     }
-                    <NetworkConsumer>
-                        {({ isConnected }) => (
-                        <Button
-                            transparent
-                            onPress={() => {isConnected ?
-                                this.props.navigation.navigate('SearchIngredient', {origin: this.props.origin}) :
-                                Alert.alert(
-                                    'Serveur hors ligne',
-                                    'Vous ne pouvez pas effectuer cette action',
-                                )}}>
-                            <Icon
-                                style={GenericStyles.headerIcon}
-                                name='add'
-                                type="MaterialIcons"
-                            />
-                        </Button>)}
-                    </NetworkConsumer>
+                    <HeaderActionButton
+                        actionFunction={() => this.props.navigation.navigate('SearchIngredient', {origin: this.props.origin})}
+                        icon={'add'}
+                    />
                 </Right>
             </Header>
         )

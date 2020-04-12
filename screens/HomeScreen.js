@@ -1,16 +1,14 @@
 import React from 'react'
-import {Container, Left, Body, Right, Button, Icon, Header, Title} from 'native-base'
 import { connect } from 'react-redux'
-import { NetworkConsumer } from 'react-native-offline'
+import {Container, Left, Body, Right, Header, Title} from 'native-base'
 import PropTypes from "prop-types"
 
 import MenuButton from "../components/common/MenuButton"
+import HeaderActionButton from "../components/common/HeaderActionButton"
 import SelectedRecipeHeader from "../components/headers/SelectedRecipeHeader"
 import RecipesList from '../components/contents/RecipesList'
-import { ActivityIndicator, Alert, Platform } from "react-native"
 import { cookSavedRecipes, deleteSavedRecipes } from "../store/api/user"
 import GenericStyles from "../constants/Style"
-import Colors from "../constants/Colors"
 
 class HomeScreen extends React.Component {
     constructor(props) {
@@ -88,26 +86,10 @@ class HomeScreen extends React.Component {
                 <Title style={GenericStyles.headerTitle}>Recettes</Title>
                 </Body>
                 <Right>
-                    <NetworkConsumer>
-                        {({ isConnected }) => (
-                                <Button
-                                    transparent
-                                    onPress={() => {
-                                        isConnected ?
-                                            this.props.navigation.navigate("SearchRecipe") :
-                                            Alert.alert(
-                                                'Serveur hors ligne',
-                                                'Vous ne pouvez pas effectuer cette action',
-                                            )
-                                    }}>
-                                    <Icon
-                                        style={GenericStyles.headerIcon}
-                                        name='search'
-                                        type='MaterialIcons'
-                                    />
-                                </Button>
-                            )}
-                    </NetworkConsumer>
+                    <HeaderActionButton
+                        actionFunction={() => this.props.navigation.navigate("SearchRecipe")}
+                        icon={'search'}
+                    />
                 </Right>
             </Header>
         )
