@@ -6,6 +6,7 @@ import moment from "moment"
 import PropTypes from "prop-types"
 
 import ClickableAvatar from "../common/ClickableAvatar"
+import SubText from "../common/SubText"
 import Colors from "../../constants/Colors"
 
 export default class IngredientsList extends React.Component {
@@ -35,7 +36,7 @@ export default class IngredientsList extends React.Component {
                                                 transparent
                                                 onPress={() => this.props.handlePress(item)}
                                             >
-                                                <Icon name={iconLeft} style={{color: '#2ed583'}} />
+                                                <Icon name={iconLeft} style={{color: Colors.shoppingCheckbox}} />
                                             </Button>) : (
                                             <ClickableAvatar
                                                 title={item.ingredientName.charAt(0).toUpperCase()}
@@ -50,18 +51,16 @@ export default class IngredientsList extends React.Component {
                                     >{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)}</Text>
                                     {
                                         item.associatedProduct && (
-                                            <Text
-                                                numberOfLines={1}
-                                                style={{ color: '#808080', fontSize: 12 }}>
-                                                {item.associatedProduct.name} - {item.associatedProduct.brand}
-                                            </Text>
+                                            <SubText
+                                                value={`${item.associatedProduct.name} - ${item.associatedProduct.brand}`}
+                                            />
                                         )
                                     }
                                     {
                                         item.expirationDate && (
-                                            <Text style={{ color: '#808080', fontSize: 12 }}>
-                                                {"Périme le ".concat(moment(item.expirationDate).format('DD/MM/YYYY'))}
-                                            </Text>
+                                            <SubText
+                                                value={"Périme le ".concat(moment(item.expirationDate).format('DD/MM/YYYY'))}
+                                            />
                                         )
                                     }
                                 </Body>
