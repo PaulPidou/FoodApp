@@ -3,6 +3,7 @@ import {Platform, Text} from 'react-native'
 import {Container, Header, Content, Left, Button, Icon, Body, Title, List, ListItem, Right, Switch, Picker} from 'native-base'
 import {checkInternetConnection} from "react-native-offline"
 
+import MenuButton from "../components/common/MenuButton"
 import { getUserProfile, updateUserParameters } from '../store/api/user'
 import { toggleShowSubstitutes, toggleSeasonalRecipes, handleIngredientsManagement } from '../store/actions/actions'
 import GenericStyles from "../constants/Style"
@@ -58,14 +59,9 @@ export default class SettingsScreen extends React.Component {
             <Container>
                 <Header style={GenericStyles.header}>
                     <Left style={GenericStyles.headerLeft}>
-                        <Button
-                            transparent
-                            onPress={() => this.props.navigation.openDrawer()} >
-                            <Icon
-                                style={GenericStyles.headerIcon}
-                                name='menu'
-                            />
-                        </Button>
+                        <MenuButton
+                            navigation={this.props.navigation}
+                        />
                     </Left>
                     <Body>
                         <Title style={GenericStyles.headerTitle}>{'Paramètres'}</Title>

@@ -3,6 +3,7 @@ import {Alert, Platform} from "react-native"
 import PropTypes from 'prop-types'
 import {Button, Header, Icon, Left, Right, Title, Body} from 'native-base'
 
+import MenuButton from "../common/MenuButton"
 import GenericStyles from '../../constants/Style'
 import {NetworkConsumer} from "react-native-offline"
 
@@ -11,15 +12,9 @@ export default class FoodListHeader extends React.Component {
         return (
             <Header style={GenericStyles.header}>
                 <Left style={GenericStyles.headerLeft}>
-                    <Button
-                        transparent
-                        onPress={() => this.props.navigation.openDrawer()} >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name='menu'
-                            type="MaterialIcons"
-                        />
-                    </Button>
+                    <MenuButton
+                        navigation={this.props.navigation}
+                    />
                 </Left>
                 <Body style={{flex: 3, justifyContent: 'center'}}>
                 <Title style={GenericStyles.headerTitle}>

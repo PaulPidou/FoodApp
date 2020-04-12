@@ -14,7 +14,7 @@ export default class SearchRecipeModal extends React.Component {
         this.state = {
             chosenDate: null,
             chosenProduct: null,
-            associatedProduct: this._getAssociatedProductID(),
+            associatedProduct: this._getAssociatedProductID(), // Wrong way to do it, should be a props !
             requestUpdate: false
         }
         this.setDate = this.setDate.bind(this)
@@ -76,38 +76,6 @@ export default class SearchRecipeModal extends React.Component {
         this.setState({ requestUpdate: false })
     }
 
-    _getNutriscoreColor(nutriGrade) {
-        switch(nutriGrade) {
-            case 'a':
-                return "#008a40"
-            case 'b':
-                return "#70c623"
-            case 'c':
-                return "#ffcf00"
-            case 'd':
-                return "#fc7900"
-            case 'e':
-                return "#f80000"
-            default:
-                return "#fff"
-        }
-    }
-
-    _getNovaColor(novaGroup) {
-        switch(novaGroup) {
-            case 1:
-                return "#0a0"
-            case 2:
-                return "#fc0"
-            case 3:
-                return "#f60"
-            case 4:
-                return "#f00"
-            default:
-                return "#fff"
-        }
-    }
-
     renderProductList() {
         return this.props.products.map((item) => {
             return (
@@ -124,7 +92,7 @@ export default class SearchRecipeModal extends React.Component {
                                 item.nutriscore && (
                                     <Badge
                                         containerStyle={{
-                                            backgroundColor: this._getNutriscoreColor(item.nutriscore),
+                                            backgroundColor: Colors.getNutriscoreColor(item.nutriscore),
                                             position: 'absolute', top: -15, right: -10 }}>
                                         <Text
                                             style={{color: "#fff", fontWeight: 'bold', fontSize: 14}}

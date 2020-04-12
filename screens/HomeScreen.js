@@ -1,10 +1,11 @@
 import React from 'react'
-import {Container, Left, Body, Right, Button, Icon, Header, Title, Text} from 'native-base'
+import {Container, Left, Body, Right, Button, Icon, Header, Title} from 'native-base'
 import { connect } from 'react-redux'
 import { NetworkConsumer } from 'react-native-offline'
-
-import RecipesList from '../components/contents/RecipesList'
 import PropTypes from "prop-types"
+
+import MenuButton from "../components/common/MenuButton"
+import RecipesList from '../components/contents/RecipesList'
 import { ActivityIndicator, Alert, Platform } from "react-native"
 import { cookSavedRecipes, deleteSavedRecipes } from "../store/api/user"
 import GenericStyles from "../constants/Style"
@@ -78,15 +79,9 @@ class HomeScreen extends React.Component {
         return (
             <Header style={GenericStyles.header}>
                 <Left style={GenericStyles.headerLeft}>
-                    <Button
-                        transparent
-                        onPress={() => this.props.navigation.openDrawer()}>
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name='menu'
-                            type="MaterialIcons"
-                        />
-                    </Button>
+                    <MenuButton
+                        navigation={this.props.navigation}
+                    />
                 </Left>
                 <Body>
                 <Title style={GenericStyles.headerTitle}>Recettes</Title>

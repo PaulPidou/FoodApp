@@ -1,14 +1,16 @@
 import React from 'react'
 import {Alert, Platform, ScrollView, View} from 'react-native'
 import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet, Text} from 'native-base'
-import {Avatar, Badge} from 'react-native-elements'
+import {Badge} from 'react-native-elements'
 import { NetworkConsumer } from "react-native-offline"
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from '../components/headers/SelectedIngredientHeader'
+import ShoppingListHeader from "../components/headers/ShoppingListHeader"
 import UpdateIngredientModal from "../components/contents/UpdateIngredientModal"
+import ClickableAvatar from '../components/common/ClickableAvatar'
 import { transferItemsFromShoppingListToFridge, deleteItemsFromShoppingList } from "../store/api/user"
 
 import GenericStyles from "../constants/Style"
@@ -29,11 +31,6 @@ class ShoppingListScreen extends React.Component {
             products: undefined,
             origin: props.navigation.getParam('origin', null)
         }
-        this.emptySelected = this.emptySelected.bind(this)
-        this.updateSelected = this.updateSelected.bind(this)
-        this.toggleModal = this.toggleModal.bind(this)
-        this.transferItemsToFridge = this.transferItemsToFridge.bind(this)
-        this.deleteSelectedIngredients = this.deleteSelectedIngredients.bind(this)
     }
 
     static navigationOptions = {
@@ -74,23 +71,6 @@ class ShoppingListScreen extends React.Component {
         this.setState({ products: undefined, isIngredientModalVisible: !this.state.isIngredientModalVisible })
     }
 
-    _getNutriscoreColor(nutriGrade) {
-        switch(nutriGrade) {
-            case 'a':
-                return "#008a40"
-            case 'b':
-                return "#70c623"
-            case 'c':
-                return "#ffcf00"
-            case 'd':
-                return "#fc7900"
-            case 'e':
-                return "#f80000"
-            default:
-                return "#fff"
-        }
-    }
-
     _updateStateArray(itemID, arrayName) {
         const isSelected = this.state[arrayName].includes(itemID)
         const newArray = isSelected
@@ -111,6 +91,14 @@ class ShoppingListScreen extends React.Component {
 
     updateSelected() {
         this.setState({selectedIngredients: this.props.ingredients.map(item => item.ingredientID)})
+    }
+
+    emptyChecked() {
+        this.setState({ shoppingMode: false, checkedIngredients: [] })
+    }
+
+    updateChecked() {
+        this.setState({checkedIngredients: this.props.ingredients.map(item => item.ingredientID) })
     }
 
     async transferItemsToFridge() {
@@ -192,76 +180,9 @@ class ShoppingListScreen extends React.Component {
         this.setState({ shoppingMode: false, checkedIngredients: [] })
     }
 
-    shoppingHeader() {
-        return (
-            <Header style={GenericStyles.header}>
-                <Left style={{flex: 1, flexDirection: 'row'}}>
-                    <Button transparent
-                            onPress={() => this.setState({ shoppingMode: false, checkedIngredients: [] })}
-                            style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
-                        />
-                    </Button>
-                    <Button transparent
-                            onPress={() => this.setState({checkedIngredients:
-                                    this.props.ingredients.map(item => item.ingredientID) })}
-                            style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-filing' : 'md-filing'}
-                        />
-                    </Button>
-                </Left>
-                <NetworkConsumer>
-                    {({ isConnected }) => (
-                    <Right>
-                        <Button
-                            transparent
-                            onPress={() => { isConnected ? this.handleIngredientsManagement() : Alert.alert(
-                                    'Serveur hors ligne',
-                                    'Les aliments seront conservés dans la liste de courses',
-                                    [
-                                        {text: 'Annuler', style: 'cancel'},
-                                        {text: 'Ok', onPress: () => this.handleActionSheetOptions(2)},
-                                    ]
-                                )
-                            }}
-                        >
-                            <Icon
-                                style={GenericStyles.headerIcon}
-                                name={Platform.OS === 'ios' ? 'ios-flag' : 'md-flag'}
-                            />
-                        </Button>
-                        <Button
-                            transparent
-                            onPress={() => { isConnected ?
-                                this.props.navigation.navigate('SearchIngredient', {origin: 'shoppinglist'}) :
-                                Alert.alert(
-                                    'Serveur hors ligne',
-                                    'Vous ne pouvez pas effectuer cette action',
-                                )
-                            }} >
-                            <Icon
-                                style={GenericStyles.headerIcon}
-                                name='add'
-                                type="MaterialIcons"
-                            />
-                        </Button>
-                    </Right>)}
-                </NetworkConsumer>
-            </Header>
-        )
-    }
-
     renderList() {
         return this.props.ingredients.map((item) => {
             const isSelected = this.state.selectedIngredients.includes(item.ingredientID)
-            const title = isSelected ? null : item.ingredientName.charAt(0).toUpperCase()
-            const icon = isSelected ? {name: 'check'} : null
 
             const isChecked = this.state.checkedIngredients.includes(item.ingredientID)
             const iconLeft = isChecked ? (Platform.OS === 'ios' ? 'ios-checkbox-outline' : 'md-checkbox-outline') :
@@ -283,12 +204,9 @@ class ShoppingListScreen extends React.Component {
                                 >
                                     <Icon name={iconLeft} style={{color: '#2ed583'}} />
                                 </Button>) : (
-                                    <Avatar
-                                        size="small"
-                                        rounded
-                                        title={title}
-                                        icon={icon}
-                                        activeOpacity={0.7}
+                                    <ClickableAvatar
+                                        title={item.ingredientName.charAt(0).toUpperCase()}
+                                        isSelect={isSelected}
                                         onPress={() => this.handleLongPress(item.ingredientID)}
                                     />)
                         }
@@ -312,7 +230,7 @@ class ShoppingListScreen extends React.Component {
                             item.associatedProduct && item.associatedProduct.nutriscore && (
                                 <Badge
                                     containerStyle={{
-                                        backgroundColor: this._getNutriscoreColor(item.associatedProduct.nutriscore)}}>
+                                        backgroundColor: Colors.getNutriscoreColor(item.associatedProduct.nutriscore)}}>
                                     <Text
                                         style={{color: "#fff", fontWeight: 'bold'}}
                                     >{item.associatedProduct.nutriscore.toUpperCase()}</Text>
@@ -336,15 +254,22 @@ class ShoppingListScreen extends React.Component {
                     requestTransfer={this.state.requestTransfer}
                     requestDelete={this.state.requestDelete}
                     origin={'shoppinglist'}
-                    emptySelected={this.emptySelected}
-                    updateSelected={this.updateSelected}
-                    transferItemsToFridge={this.transferItemsToFridge}
-                    deleteSelectedIngredients={this.deleteSelectedIngredients}
+                    emptySelected={() => this.emptySelected()}
+                    updateSelected={() => this.updateSelected()}
+                    transferItemsToFridge={() => this.transferItemsToFridge()}
+                    deleteSelectedIngredients={() => this.deleteSelectedIngredients()}
                     selectedIngredients={this.props.ingredients ?
                         this.props.ingredients.filter(item => this.state.selectedIngredients.includes(item.ingredientID)) : null }
                 />)
         } else if(this.state.shoppingMode) {
-            header = this.shoppingHeader()
+            header = (
+                <ShoppingListHeader
+                    emptyChecked={() => this.emptyChecked()}
+                    updateChecked={() => this.updateChecked()}
+                    handleIngredientsManagement={() => this.handleIngredientsManagement()}
+                    keepIngredientsInShoppingList={() => this.handleActionSheetOptions(2)}
+                />
+            )
         } else if(this.state.origin === 'welcome') {
             header = (
                 <Header style={GenericStyles.header}>
@@ -404,7 +329,7 @@ class ShoppingListScreen extends React.Component {
                 }
                 <UpdateIngredientModal
                     isModalVisible={this.state.isIngredientModalVisible}
-                    toggleModal={this.toggleModal}
+                    toggleModal={() => this.toggleModal()}
                     ingredient={this.state.ingredientClicked}
                     products={this.state.products}
                     origin={'shoppinglist'} />

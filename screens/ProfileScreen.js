@@ -1,7 +1,8 @@
 import React from 'react'
 import { Text } from 'react-native'
-import {Body, Button, Container, Content, Header, Icon, Left, Title} from 'native-base'
+import {Body, Container, Content, Header, Left, Title} from 'native-base'
 
+import MenuButton from "../components/common/MenuButton"
 import GenericStyles from "../constants/Style"
 
 export default class ProfileScreen extends React.Component {
@@ -14,14 +15,9 @@ export default class ProfileScreen extends React.Component {
             <Container>
                 <Header style={GenericStyles.header}>
                     <Left style={GenericStyles.headerLeft}>
-                        <Button
-                            transparent
-                            onPress={() => this.props.navigation.openDrawer()} >
-                            <Icon
-                                style={GenericStyles.icon}
-                                name='menu'
-                            />
-                        </Button>
+                        <MenuButton
+                            navigation={this.props.navigation}
+                        />
                     </Left>
                     <Body>
                         <Title style={GenericStyles.headerTitle}>{'Profil'}</Title>
