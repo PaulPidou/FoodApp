@@ -1,16 +1,18 @@
 import React from 'react'
-import {ActivityIndicator, Alert, Platform, Text} from 'react-native'
-import {Container, Left, Right, Button, Icon, Header} from 'native-base'
-import { checkInternetConnection, NetworkConsumer } from "react-native-offline"
-import PropTypes from 'prop-types'
+import {ActivityIndicator, Alert, Text} from 'react-native'
 import { connect } from 'react-redux'
+import {Container, Left, Right, Button, Header} from 'native-base'
+import { checkInternetConnection } from "react-native-offline"
+import PropTypes from 'prop-types'
 
 import BackButton from "../components/common/BackButton"
 import DeleteButton from "../components/common/DeleteButton"
+import HeaderActionButton from "../components/common/HeaderActionButton"
 import RecipeTabs from '../components/contents/RecipeTabs'
 import { getRecipeFromId } from '../store/api/public'
 import { loadRecipesDetails } from "../store/actions/actions"
 import { saveRecipes, deleteSavedRecipes, cookSavedRecipes } from '../store/api/user'
+
 import GenericStyles from '../constants/Style'
 import Colors from '../constants/Colors'
 import Constants from "../constants/Constants"
@@ -83,29 +85,17 @@ class RecipeScreen extends React.Component {
                         <ActivityIndicator size="small" color={Colors.counterTintColor}/>
                     </Button>
                 ) : (
-                    <NetworkConsumer key={'color-fill'}>
-                        {({ isConnected }) => (
-                        <Button
-                            transparent
-                            onPress={() => {
-                                isConnected ? Alert.alert(
-                                    'Recette cusinée',
-                                    'Retirer la recette et ses ingrédients de vos listes ?',
-                                    [
-                                        {text: 'Annuler', style: 'cancel'},
-                                        {text: 'Oui', onPress: () => this.cookRecipe()}
-                                    ]
-                                ) : Alert.alert(
-                                    'Serveur hors ligne',
-                                    'Vous ne pouvez pas effectuer cette action',
-                                )
-                            }}>
-                            <Icon
-                                style={GenericStyles.headerIcon}
-                                name={Platform.OS === 'ios' ? 'ios-color-fill' : 'md-color-fill'}
-                            />
-                        </Button>)}
-                    </NetworkConsumer>),
+                    <HeaderActionButton
+                        key={'color-fill'}
+                        actionFunction={() => Alert.alert('Recette cusinée',
+                            'Retirer la recette et ses ingrédients de vos listes ?',
+                            [
+                                {text: 'Annuler', style: 'cancel'},
+                                {text: 'Oui', onPress: () => this.cookRecipe()}
+                            ]
+                        )}
+                        icon={'color-fill'}
+                    />),
                 this.state.requestDelete ? (
                     <Button
                         key={'trash'}
@@ -125,23 +115,10 @@ class RecipeScreen extends React.Component {
                         <ActivityIndicator size="small" color={Colors.counterTintColor}/>
                     </Button>
                 ) : (
-                    <NetworkConsumer>
-                        {({ isConnected }) => (
-                        <Button
-                            transparent
-                            onPress={() => {
-                                isConnected ? this.saveRecipe() :
-                                    Alert.alert(
-                                        'Serveur hors ligne',
-                                        'Vous ne pouvez pas effectuer cette action',
-                                    )
-                            }}>
-                            <Icon
-                                style={GenericStyles.headerIcon}
-                                name={Platform.OS === 'ios' ? 'ios-heart-empty' : 'md-heart-empty'}
-                            />
-                        </Button>)}
-                    </NetworkConsumer>))
+                    <HeaderActionButton
+                        actionFunction={() => this.saveRecipe()}
+                        icon={'heart-empty'}
+                    />))
 
         return (
             <Header

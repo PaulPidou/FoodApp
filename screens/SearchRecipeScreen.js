@@ -1,18 +1,16 @@
 import React from 'react'
 import {View} from 'react-native'
-import {Container, Header, Left, Button, Icon, Input, Body, Text} from 'native-base'
 import {connect} from "react-redux"
+import {Container, Button, Icon, Text} from 'native-base'
+import PropTypes from "prop-types"
 
-import BackButton from "../components/common/BackButton"
 import SearchRecipesHeader from "../components/headers/SearchRecipesHeader"
 import RecipesList from '../components/contents/RecipesList'
 import SearchRecipeModal from "../components/contents/SearchRecipeModal"
 
 import { getRecipesSummaryFromKeywords, getRecipesSummaryFromIngredients,
     getMostFamousRecipesSummary, getMostFamousSeasonalRecipesSummary } from '../store/api/public'
-import GenericStyles from '../constants/Style'
 import Colors from "../constants/Colors"
-import PropTypes from "prop-types"
 
 class SearchRecipeScreen extends React.Component {
     constructor(props) {
