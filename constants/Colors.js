@@ -6,6 +6,7 @@ export default {
   tabIconDefault: '#dedede',
   tabIconSelected: '#fff',
   tabBar: '#fefefe',
+  shoppingCheckbox: '#2ed583',
   getNutriscoreColor(nutriGrade) {return getNutriscoreColor(nutriGrade)},
   errorBackground: 'red',
   counterTintColor: '#fff',

@@ -4,14 +4,14 @@ import Colors from "./Colors"
 
 const GenericStyles = StyleSheet.create({
     activityIndicator: {
-        color: "#3cff9a"
+        color: Colors.tintColor
     },
     header: {
-        backgroundColor: "#3cff9a",
+        backgroundColor: Colors.tintColor,
         marginTop: Constants.statusBarHeight
     },
     headerTab: {
-        backgroundColor: "#3cff9a",
+        backgroundColor: Colors.tintColor,
     },
     headerLeft: {
         flex: 0,
@@ -41,12 +41,6 @@ const GenericStyles = StyleSheet.create({
         color: '#fff',
         fontFamily: 'Showlove_Regular',
         fontSize: 26
-    },
-    headerButton: {
-        color: '#007aff',
-        fontSize: 14,
-        marginLeft: 0,
-        alignSelf:'center'
     },
     loginContainer: {
         marginTop: Constants.statusBarHeight,
@@ -145,6 +139,10 @@ const GenericStyles = StyleSheet.create({
         borderRadius: 12/2,
         backgroundColor: '#D3275C',
         marginTop: 35
+    },
+    subText: {
+        color: '#808080',
+        fontSize: 12
     }
 })
 
