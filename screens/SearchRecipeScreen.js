@@ -4,6 +4,7 @@ import {Container, Header, Left, Button, Icon, Input, Body, Text} from 'native-b
 import {connect} from "react-redux"
 
 import BackButton from "../components/common/BackButton"
+import SearchRecipesHeader from "../components/headers/SearchRecipesHeader"
 import RecipesList from '../components/contents/RecipesList'
 import SearchRecipeModal from "../components/contents/SearchRecipeModal"
 
@@ -25,6 +26,7 @@ class SearchRecipeScreen extends React.Component {
             isModalVisible: props.navigation.getParam('origin', null) === 'welcome'
         }
         this.handlePress = this.handlePress.bind(this)
+        this.handleSearch = this.handleSearch.bind(this)
     }
 
     static navigationOptions = {
@@ -71,37 +73,15 @@ class SearchRecipeScreen extends React.Component {
         this.setState({ recipes, firstSearch: false })
     }
 
-    header() {
-        return(
-            <Header searchbar style={GenericStyles.header} >
-                <Left style={GenericStyles.headerLeft}>
-                    <BackButton
-                        navigation={this.props.navigation}
-                    />
-                </Left>
-                <Body>
-                {
-                    (!this.state.ingredients || this.state.origin === 'welcome') && (
-                        <Input
-                            style={GenericStyles.headerTitle}
-                            autoFocus = {!this.state.inputText && this.state.origin !== 'welcome'}
-                            placeholder={'Je recherche des recettes...'}
-                            placeholderTextColor={Colors.counterTintColor}
-                            returnKeyType = { "search" }
-                            defaultValue={this.state.inputText}
-                            onChangeText={(text) => this.setState({inputText: text})}
-                            onSubmitEditing={(event) => this.handleSearch(event.nativeEvent.text)}
-                        />)
-                }
-                </Body>
-            </Header>
-        )
-    }
-
     render() {
         return (
             <Container>
-                {this.header()}
+                <SearchRecipesHeader
+                    navigation={this.props.navigation}
+                    ingredients={this.state.ingredients}
+                    origin={this.state.origin}
+                    handleSearch={this.handleSearch}
+                />
                 <SearchRecipeModal isModalVisible={this.state.isModalVisible} />
                 {
                     this.state.origin === 'welcome' && (
