@@ -1,16 +1,14 @@
 import React from 'react'
-import {Alert, Platform, ScrollView, View} from 'react-native'
-import {Body, Button, Container, Content, Header, Icon, Left, List, ListItem, Right, Spinner, ActionSheet, Text} from 'native-base'
-import {Badge} from 'react-native-elements'
-import { NetworkConsumer } from "react-native-offline"
+import {Alert, View} from 'react-native'
+import {Button, Container, Content, Header, Icon, Right, Spinner, ActionSheet, Text} from 'native-base'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from '../components/headers/SelectedIngredientHeader'
 import ShoppingListHeader from "../components/headers/ShoppingListHeader"
+import IngredientsList from "../components/contents/IngredientsList"
 import UpdateIngredientModal from "../components/contents/UpdateIngredientModal"
-import ClickableAvatar from '../components/common/ClickableAvatar'
 import { transferItemsFromShoppingListToFridge, deleteItemsFromShoppingList } from "../store/api/user"
 
 import GenericStyles from "../constants/Style"
@@ -31,6 +29,8 @@ class ShoppingListScreen extends React.Component {
             products: undefined,
             origin: props.navigation.getParam('origin', null)
         }
+        this.handlePress = this.handlePress.bind(this)
+        this.handleLongPress = this.handleLongPress.bind(this)
     }
 
     static navigationOptions = {
@@ -180,69 +180,6 @@ class ShoppingListScreen extends React.Component {
         this.setState({ shoppingMode: false, checkedIngredients: [] })
     }
 
-    renderList() {
-        return this.props.ingredients.map((item) => {
-            const isSelected = this.state.selectedIngredients.includes(item.ingredientID)
-
-            const isChecked = this.state.checkedIngredients.includes(item.ingredientID)
-            const iconLeft = isChecked ? (Platform.OS === 'ios' ? 'ios-checkbox-outline' : 'md-checkbox-outline') :
-                (Platform.OS === 'ios' ? 'ios-square-outline' : 'md-square-outline')
-            return (
-                <ListItem
-                    icon
-                    avatar
-                    key={item.ingredientID}
-                    onPress={() => this.handlePress(item)}
-                    onLongPress={() => this.handleLongPress(item.ingredientID)}
-                >
-                    <Left style={{height: 30}}>
-                        {
-                            this.state.shoppingMode ? (
-                                <Button
-                                    transparent
-                                    onPress={() => this.handlePress(item)}
-                                >
-                                    <Icon name={iconLeft} style={{color: '#2ed583'}} />
-                                </Button>) : (
-                                    <ClickableAvatar
-                                        title={item.ingredientName.charAt(0).toUpperCase()}
-                                        isSelect={isSelected}
-                                        onPress={() => this.handleLongPress(item.ingredientID)}
-                                    />)
-                        }
-                    </Left>
-                    <Body>
-                    <Text
-                        style={isChecked ? {textDecorationLine: 'line-through'} : {}}
-                    >{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)}</Text>
-                        {
-                            item.associatedProduct && (
-                                <Text
-                                    numberOfLines={1}
-                                    style={{ color: '#808080', fontSize: 12 }}>
-                                    {item.associatedProduct.name} - {item.associatedProduct.brand}
-                                </Text>
-                            )
-                        }
-                    </Body>
-                    <Right>
-                        {
-                            item.associatedProduct && item.associatedProduct.nutriscore && (
-                                <Badge
-                                    containerStyle={{
-                                        backgroundColor: Colors.getNutriscoreColor(item.associatedProduct.nutriscore)}}>
-                                    <Text
-                                        style={{color: "#fff", fontWeight: 'bold'}}
-                                    >{item.associatedProduct.nutriscore.toUpperCase()}</Text>
-                                </Badge>
-                            )
-                        }
-                    </Right>
-                </ListItem>
-            )
-        })
-    }
-
     render() {
         let header
         let content
@@ -304,7 +241,15 @@ class ShoppingListScreen extends React.Component {
             content = (<Text style={{margin: 10, textAlign: 'center'}}>
                 Votre liste de courses est vide, commencez dès maintenant à la compléter !</Text>)
         } else {
-            content = (<ScrollView><List>{this.renderList()}</List></ScrollView>)
+            content = (
+                <IngredientsList
+                    handlePress={this.handlePress}
+                    handleLongPress={this.handleLongPress}
+                    ingredients={this.props.ingredients}
+                    selectedIngredients={this.state.selectedIngredients}
+                    checkedIngredients={this.state.checkedIngredients}
+                    shoppingMode={this.state.shoppingMode}
+                />)
         }
         return (
             <Container>

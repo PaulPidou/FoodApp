@@ -1,7 +1,5 @@
 import React from 'react'
-import {ScrollView} from 'react-native'
-import {Body, Container, Content, Left, List, ListItem, Spinner, Text} from 'native-base'
-import moment from 'moment'
+import {Container, Content, Spinner, Text} from 'native-base'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Colors from "../constants/Colors"
@@ -9,8 +7,8 @@ import Colors from "../constants/Colors"
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from "../components/headers/SelectedIngredientHeader"
 import UpdateIngredientModal from "../components/contents/UpdateIngredientModal"
-import ClickableAvatar from '../components/common/ClickableAvatar'
 import { transferItemsFromFridgeToShoppingList, deleteItemsFromFridge } from "../store/api/user"
+import IngredientsList from "../components/contents/IngredientsList"
 
 class Fridge extends React.Component {
     constructor(props) {
@@ -23,6 +21,8 @@ class Fridge extends React.Component {
             ingredientClicked: null,
             isIngredientModalVisible: false
         }
+        this.handlePress = this.handlePress.bind(this)
+        this.handleLongPress = this.handleLongPress.bind(this)
     }
 
     static navigationOptions = {
@@ -85,39 +85,6 @@ class Fridge extends React.Component {
         this.setState({ requestDelete: false, selected: false, selectedIngredients: [] })
     }
 
-    renderList() {
-        return this.props.ingredients.map((item) => {
-            const isSelected = this.state.selectedIngredients.includes(item.ingredientID)
-            return (
-                <ListItem
-                    icon
-                    avatar
-                    key={item.ingredientID}
-                    onPress={() => this.handlePress(item)}
-                    onLongPress={() => this.handleLongPress(item.ingredientID)}
-                >
-                    <Left style={{height: 30}}>
-                        <ClickableAvatar
-                            title={item.ingredientName.charAt(0).toUpperCase()}
-                            isSelect={isSelected}
-                            onPress={() => this.handleLongPress(item.ingredientID)}
-                        />
-                    </Left>
-                    <Body>
-                        <Text>{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)}</Text>
-                        {
-                            item.expirationDate && (
-                                <Text style={{ color: '#808080', fontSize: 12 }}>
-                                    {"Périme le ".concat(moment(item.expirationDate).format('DD/MM/YYYY'))}
-                                </Text>
-                            )
-                        }
-                    </Body>
-                </ListItem>
-            )
-        })
-    }
-
     render() {
         let content
         if (this.props.ingredients === undefined) {
@@ -127,10 +94,12 @@ class Fridge extends React.Component {
                 Votre frigidaire est vide, commencez dès maintenant à la compléter !</Text>)
         } else {
             content = (
-                <ScrollView>
-                    <List>{this.renderList()}</List>
-                </ScrollView>
-            )
+                <IngredientsList
+                    handlePress={this.handlePress}
+                    handleLongPress={this.handleLongPress}
+                    ingredients={this.props.ingredients}
+                    selectedIngredients={this.state.selectedIngredients}
+                />)
         }
         return (
             <Container>

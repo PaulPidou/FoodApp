@@ -1,5 +1,5 @@
 import React from 'react'
-import {Platform, View} from 'react-native'
+import {View} from 'react-native'
 import {Container, Header, Left, Button, Icon, Input, Body, Text} from 'native-base'
 import {connect} from "react-redux"
 
