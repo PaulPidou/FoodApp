@@ -264,6 +264,7 @@ class ShoppingListScreen extends React.Component {
         } else if(this.state.shoppingMode) {
             header = (
                 <ShoppingListHeader
+                    navigation={this.props.navigation}
                     emptyChecked={() => this.emptyChecked()}
                     updateChecked={() => this.updateChecked()}
                     handleIngredientsManagement={() => this.handleIngredientsManagement()}
