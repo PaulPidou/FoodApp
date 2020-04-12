@@ -5,6 +5,7 @@ import { NetworkConsumer } from 'react-native-offline'
 import PropTypes from "prop-types"
 
 import MenuButton from "../components/common/MenuButton"
+import SelectedRecipeHeader from "../components/headers/SelectedRecipeHeader"
 import RecipesList from '../components/contents/RecipesList'
 import { ActivityIndicator, Alert, Platform } from "react-native"
 import { cookSavedRecipes, deleteSavedRecipes } from "../store/api/user"
@@ -112,104 +113,19 @@ class HomeScreen extends React.Component {
         )
     }
 
-    selectedHeader() {
-        const message = this.state.selectedRecipes.length > 1 ? 'les recettes' : 'la recette'
-        return (
-            <Header style={GenericStyles.header}>
-                <Left style={{flex: 1, flexDirection: 'row'}}>
-                    <Button transparent
-                            onPress={() => this.emptySelected()}
-                            style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
-                            type='Ionicons'
-                        />
-                    </Button>
-                    <Button transparent
-                            onPress={() => this.updateSelected()}
-                            style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-filing' : 'md-filing'}
-                        />
-                    </Button>
-                </Left>
-                <Right>
-                    {
-                        this.state.requestCook ? (
-                            <Button
-                                key={'color-fill'}
-                                transparent>
-                                <ActivityIndicator size="small" color={Colors.counterTintColor}/>
-                            </Button>
-                        ) : (
-                            <NetworkConsumer>
-                                {({ isConnected }) => (
-                                <Button
-                                    key={'color-fill'}
-                                    transparent
-                                    onPress={() => {
-                                        isConnected ? Alert.alert(
-                                            'Recette cusinée',
-                                            'Retirer '.concat(message, ' et les ingrédients associés de vos listes ?'),
-                                            [
-                                                {text: 'Annuler', style: 'cancel'},
-                                                {text: 'Oui', onPress: () => this.cookSelectedRecipes()}
-                                            ]) : Alert.alert(
-                                            'Serveur hors ligne',
-                                            'Vous ne pouvez pas effectuer cette action',
-                                        )
-                                    }}>
-                                    <Icon
-                                        style={GenericStyles.headerIcon}
-                                        name={Platform.OS === 'ios' ? 'ios-color-fill' : 'md-color-fill'}
-                                    />
-                                </Button>)}
-                            </NetworkConsumer>
-                        )
-                    }
-                    {
-                        this.state.requestDelete ? (
-                            <Button transparent>
-                                <ActivityIndicator size="small" color={Colors.counterTintColor} />
-                            </Button>
-                        ) : (
-                            <NetworkConsumer>
-                                {({ isConnected }) => (
-                                <Button
-                                    transparent
-                                    onPress={() => {
-                                        isConnected ? Alert.alert(
-                                            'Confirmation',
-                                            'Retirer '.concat(message, ' des recettes sauvegardées ?'),
-                                            [
-                                                {text: 'Annuler', style: 'cancel'},
-                                                {text: 'Oui', onPress: () => this.deleteSelectedRecipes()},
-                                            ]): Alert.alert(
-                                            'Serveur hors ligne',
-                                            'Vous ne pouvez pas effectuer cette action',
-                                        )
-                                    }}>
-                                    <Icon
-                                        style={GenericStyles.headerIcon}
-                                        name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
-                                    />
-                                </Button>)}
-                            </NetworkConsumer>
-                        )
-                    }
-                </Right>
-            </Header>
-        )
-    }
-
   render() {
       return (
           <Container>
-              {this.state.selected ? this.selectedHeader() : this.header()}
+              {this.state.selected ? (
+                  <SelectedRecipeHeader
+                      emptySelected={() => this.emptySelected()}
+                      updateSelected={() => this.updateSelected()}
+                      cookSelectedRecipes={() => this.cookSelectedRecipes()}
+                      deleteSelectedRecipes={() => this.deleteSelectedRecipes()}
+                      requestCook={this.state.requestCook}
+                      requestDelete={this.state.requestDelete}
+                      message={this.state.selectedRecipes.length > 1 ? 'les recettes' : 'la recette'}
+                  />) : this.header()}
               <RecipesList
                   origin={'home'}
                   recipes={this.props.savedRecipes}

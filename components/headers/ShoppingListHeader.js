@@ -4,30 +4,21 @@ import {Button, Header, Icon, Left, Right} from "native-base"
 import GenericStyles from "../../constants/Style"
 import {Alert, Platform} from "react-native"
 import {NetworkConsumer} from "react-native-offline"
+import SelectionButton from "../common/SelectionButton"
 
 export default class ShoppingListHeader extends React.Component {
     render() {
         return (
             <Header style={GenericStyles.header}>
                 <Left style={{flex: 1, flexDirection: 'row'}}>
-                    <Button transparent
-                            onPress={() => this.props.emptyChecked()}
-                            style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
-                        />
-                    </Button>
-                    <Button transparent
-                            onPress={() => this.props.updateChecked()}
-                            style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-filing' : 'md-filing'}
-                        />
-                    </Button>
+                    <SelectionButton
+                        onPress={() => this.props.emptyChecked()}
+                        isSelector={false}
+                    />
+                    <SelectionButton
+                        onPress={() => this.props.updateChecked()}
+                        isSelector={true}
+                    />
                 </Left>
                 <NetworkConsumer>
                     {({ isConnected }) => (

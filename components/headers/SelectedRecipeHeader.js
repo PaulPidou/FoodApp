@@ -1,99 +1,103 @@
 import React from "react"
-import PropTypes from "prop-types"
-import {Left, Right, Header, Button, Icon} from "native-base"
-
 import {ActivityIndicator, Alert, Platform} from "react-native"
+import {Left, Right, Header, Button, Icon} from "native-base"
+import {NetworkConsumer} from "react-native-offline"
+import PropTypes from "prop-types"
+
+import SelectionButton from "../common/SelectionButton"
 import GenericStyles from "../../constants/Style"
+import Colors from "../../constants/Colors"
 
 export default class SelectedRecipeHeader extends React.Component {
     render() {
         return (
             <Header style={GenericStyles.header}>
-                <Left style={GenericStyles.headerLeft}>
-                    <Button
-                        transparent
+                <Left style={{flex: 1, flexDirection: 'row'}}>
+                    <SelectionButton
                         onPress={() => this.props.emptySelected()}
-                    >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
-                        />
-                    </Button>
+                        isSelector={false}
+                    />
+                    <SelectionButton
+                        onPress={() => this.props.updateSelected()}
+                        isSelector={true}
+                    />
                 </Left>
-                {
-                    this.props.origin === 'home' ?
-                        (<Right>
-                            {
-                                this.props.requestAddToCart ? (
-                                    <Button transparent>
-                                        <ActivityIndicator size="small" color='#007aff'/>
-                                    </Button>
-                                ) : (
+                <Right>
+                    {
+                        this.props.requestCook ? (
+                            <Button
+                                key={'color-fill'}
+                                transparent>
+                                <ActivityIndicator size="small" color={Colors.counterTintColor}/>
+                            </Button>
+                        ) : (
+                            <NetworkConsumer>
+                                {({ isConnected }) => (
                                     <Button
-                                        transparent
-                                        onPress={() => this.props.addIngredientsToCart()}>
-                                        <Icon
-                                            style={GenericStyles.headerIcon}
-                                            name={Platform.OS === 'ios' ? 'ios-cart' : 'md-cart'}
-                                        />
-                                    </Button>)
-                            }
-                            {
-                                this.props.requestDeleteRecipe ? (
-                                        <Button transparent>
-                                            <ActivityIndicator size="small" color='#007aff'/>
-                                        </Button>
-                                    ) :
-                                    (<Button
+                                        key={'color-fill'}
                                         transparent
                                         onPress={() => {
-                                            Alert.alert(
+                                            isConnected ? Alert.alert(
+                                                'Recette cusinée',
+                                                'Retirer '.concat(this.props.message, ' et les ingrédients associés de vos listes ?'),
+                                                [
+                                                    {text: 'Annuler', style: 'cancel'},
+                                                    {text: 'Oui', onPress: () => this.props.cookSelectedRecipes()}
+                                                ]) : Alert.alert(
+                                                'Serveur hors ligne',
+                                                'Vous ne pouvez pas effectuer cette action',
+                                            )
+                                        }}>
+                                        <Icon
+                                            style={GenericStyles.headerIcon}
+                                            name={Platform.OS === 'ios' ? 'ios-color-fill' : 'md-color-fill'}
+                                        />
+                                    </Button>)}
+                            </NetworkConsumer>
+                        )
+                    }
+                    {
+                        this.props.requestDelete ? (
+                            <Button transparent>
+                                <ActivityIndicator size="small" color={Colors.counterTintColor} />
+                            </Button>
+                        ) : (
+                            <NetworkConsumer>
+                                {({ isConnected }) => (
+                                    <Button
+                                        transparent
+                                        onPress={() => {
+                                            isConnected ? Alert.alert(
                                                 'Confirmation',
-                                                'Confirmez vous la suppression ?',
+                                                'Retirer '.concat(this.props.message, ' des recettes sauvegardées ?'),
                                                 [
                                                     {text: 'Annuler', style: 'cancel'},
                                                     {text: 'Oui', onPress: () => this.props.deleteSelectedRecipes()},
-                                                ]
+                                                ]): Alert.alert(
+                                                'Serveur hors ligne',
+                                                'Vous ne pouvez pas effectuer cette action',
                                             )
-                                        }}
-                                    >
+                                        }}>
                                         <Icon
                                             style={GenericStyles.headerIcon}
-                                            name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
+                                            name={Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}
                                         />
-                                    </Button>)
-                            }
-                        </Right>) :
-                        (<Right>
-                            {
-                                this.props.requestSave ? (
-                                    <Button transparent>
-                                        <ActivityIndicator size="small" color='#007aff'/>
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        transparent
-                                        onPress={() => this.props.saveSelectedRecipes()}>
-                                        <Icon
-                                            style={GenericStyles.headerIcon}
-                                            name={Platform.OS === 'ios' ? 'ios-save' : 'md-save'}
-                                        />
-                                    </Button>)
-                            }
-                        </Right>)
-                }
+                                    </Button>)}
+                            </NetworkConsumer>
+                        )
+                    }
+                </Right>
             </Header>
         )
     }
 }
 
 SelectedRecipeHeader.propTypes = {
-    requestAddToCart: PropTypes.bool,
-    requestDeleteRecipe: PropTypes.bool,
-    requestSave: PropTypes.bool,
-    origin: PropTypes.string,
     emptySelected: PropTypes.func,
-    addIngredientsToCart: PropTypes.func,
+    updateSelected: PropTypes.func,
+    cookSelectedRecipes: PropTypes.func,
     deleteSelectedRecipes: PropTypes.func,
-    saveSelectedRecipes: PropTypes.func
+    requestCook: PropTypes.bool,
+    requestDelete: PropTypes.bool,
+    message: PropTypes.string
 }

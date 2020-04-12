@@ -1,34 +1,25 @@
 import React from "react"
-import PropTypes from 'prop-types'
-import { Left, Right, Header, Button, Icon } from "native-base"
-
 import {Alert, Platform, ActivityIndicator} from "react-native"
-import GenericStyles from "../../constants/Style"
+import { Left, Right, Header, Button, Icon } from "native-base"
 import {NetworkConsumer} from "react-native-offline"
+import PropTypes from 'prop-types'
+
+import SelectionButton from "../common/SelectionButton"
+import GenericStyles from "../../constants/Style"
 
 export default class SelectedIngredientHeader extends React.Component {
     render() {
         return (
             <Header style={GenericStyles.header}>
                 <Left style={{flex: 1, flexDirection: 'row'}}>
-                    <Button transparent
-                            onPress={() => this.props.emptySelected()}
-                            style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
-                        />
-                    </Button>
-                    <Button transparent
-                            onPress={() => this.props.updateSelected()}
-                            style={{flex: 0}}
-                    >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-filing' : 'md-filing'}
-                        />
-                    </Button>
+                    <SelectionButton
+                        onPress={() => this.props.emptySelected()}
+                        isSelector={false}
+                    />
+                    <SelectionButton
+                        onPress={() => this.props.updateSelected()}
+                        isSelector={true}
+                    />
                 </Left>
                 <Right>
                     {
