@@ -5,6 +5,8 @@ import { checkInternetConnection, NetworkConsumer } from "react-native-offline"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import BackButton from "../components/common/BackButton"
+import DeleteButton from "../components/common/DeleteButton"
 import RecipeTabs from '../components/contents/RecipeTabs'
 import { getRecipeFromId } from '../store/api/public'
 import { loadRecipesDetails } from "../store/actions/actions"
@@ -12,7 +14,6 @@ import { saveRecipes, deleteSavedRecipes, cookSavedRecipes } from '../store/api/
 import GenericStyles from '../constants/Style'
 import Colors from '../constants/Colors'
 import Constants from "../constants/Constants"
-import DeleteButton from "../components/common/DeleteButton"
 
 class RecipeScreen extends React.Component {
     constructor(props) {
@@ -147,14 +148,9 @@ class RecipeScreen extends React.Component {
                 style={GenericStyles.header}
                 hasTabs>
                 <Left style={GenericStyles.headerLeft}>
-                    <Button
-                        transparent
-                        onPress={() => this.props.navigation.goBack()}>
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
-                        />
-                    </Button>
+                    <BackButton
+                        navigation={this.props.navigation}
+                    />
                 </Left>
                 <Right>{rightButton}</Right>
             </Header>)

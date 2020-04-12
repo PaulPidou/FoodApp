@@ -1,14 +1,15 @@
 import React from 'react'
+import {ScrollView, View, TouchableOpacity, Dimensions, ActivityIndicator} from 'react-native'
+import { connect } from 'react-redux'
 import { Container, Content, Input, Button, Text, Header, Left, Right, Icon, Spinner, Toast } from 'native-base'
-import {Platform, ScrollView, View, TouchableOpacity, Dimensions, ActivityIndicator} from 'react-native'
 import { Avatar } from 'react-native-elements'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
-import GenericStyles from '../constants/Style'
+import BackButton from "../components/common/BackButton"
 import { getAllIngredients } from '../store/api/public'
 import { upsertItemsToShoppingList, upsertItemsToFridge } from '../store/api/user'
 import Colors from "../constants/Colors"
+import GenericStyles from '../constants/Style'
 
 class SearchIngredientScreen extends React.Component {
     constructor(props) {
@@ -143,14 +144,9 @@ class SearchIngredientScreen extends React.Component {
                     <Left style={GenericStyles.headerLeft}>
                         {
                             this.props.navigation.state.params.origin !== 'welcome' && (
-                                <Button
-                                    transparent
-                                    onPress={() => this.props.navigation.goBack()} >
-                                    <Icon
-                                        style={GenericStyles.headerIcon}
-                                        name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
-                                    />
-                                </Button>)
+                                <BackButton
+                                    navigation={this.props.navigation}
+                                />)
                         }
                     </Left>
                     <Input

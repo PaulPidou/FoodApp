@@ -3,6 +3,7 @@ import {Platform, View} from 'react-native'
 import {Container, Header, Left, Button, Icon, Input, Body, Text} from 'native-base'
 import {connect} from "react-redux"
 
+import BackButton from "../components/common/BackButton"
 import RecipesList from '../components/contents/RecipesList'
 import SearchRecipeModal from "../components/contents/SearchRecipeModal"
 
@@ -74,14 +75,9 @@ class SearchRecipeScreen extends React.Component {
         return(
             <Header searchbar style={GenericStyles.header} >
                 <Left style={GenericStyles.headerLeft}>
-                    <Button
-                        transparent
-                        onPress={() => this.props.navigation.goBack()} >
-                        <Icon
-                            style={GenericStyles.headerIcon}
-                            name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
-                        />
-                    </Button>
+                    <BackButton
+                        navigation={this.props.navigation}
+                    />
                 </Left>
                 <Body>
                 {
