@@ -100,8 +100,56 @@ export const getRecipesSummaryFromKeywords = async function(keywords) {
         })
 }
 
+export const getSeasonalRecipesSummaryFromKeywords = async function(keywords) {
+    return fetch(`${Constants.apiEndpoint}/public/seasonal/recipes/by/keywords`,
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                keywords: keywords,
+            }),
+        }).then((response) => {
+            return response.json()
+        })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            return []
+        })
+}
+
 export const getRecipesSummaryFromIngredients = async function(ingredientIDs) {
     return fetch(`${Constants.apiEndpoint}/public/recipes/by/ingredients`,
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ingredients: ingredientIDs,
+            }),
+        }).then((response) => {
+        return response.json()
+    })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+            return []
+        })
+}
+
+export const getSeasonalRecipesSummaryFromIngredients = async function(ingredientIDs) {
+    return fetch(`${Constants.apiEndpoint}/public/seasonal/recipes/by/ingredients`,
         {
             method: 'POST',
             headers: {

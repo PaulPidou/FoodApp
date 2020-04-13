@@ -9,6 +9,7 @@ import RecipesList from '../components/contents/RecipesList'
 import SearchRecipeModal from "../components/contents/SearchRecipeModal"
 
 import { getRecipesSummaryFromKeywords, getRecipesSummaryFromIngredients,
+    getSeasonalRecipesSummaryFromKeywords, getSeasonalRecipesSummaryFromIngredients,
     getMostFamousRecipesSummary, getMostFamousSeasonalRecipesSummary } from '../store/api/public'
 import Colors from "../constants/Colors"
 
@@ -49,26 +50,35 @@ class SearchRecipeScreen extends React.Component {
                     )
                 }
             } else {
-                getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item.ingredientID)).then(
-                    recipes => {
-                        this.setState({ recipes, firstSearch: false })
-                    })
+                if(this.props.seasonalRecipes) {
+                    getSeasonalRecipesSummaryFromIngredients(this.state.ingredients.map(item => item.ingredientID)).then(
+                        recipes => {
+                            this.setState({ recipes, firstSearch: false })
+                        })
+                } else {
+                    getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item.ingredientID)).then(
+                        recipes => {
+                            this.setState({ recipes, firstSearch: false })
+                        })
+                }
+
             }
         }
     }
 
     handlePress(itemID) {
-        if(this.state.selected) {
-            this._updateSelectedRecipes(itemID)
-        } else {
-            this.props.navigation.navigate('RecipeDetails', {recipeId: itemID, origin: 'search'})
-        }
+        this.props.navigation.navigate('RecipeDetails', {recipeId: itemID, origin: 'search'})
     }
 
     async handleSearch(keywords) {
+        let recipes = []
         this.setState({ recipes: undefined })
-        const recipes = await getRecipesSummaryFromKeywords(keywords)
-        this.setState({ recipes, firstSearch: false })
+        if(this.props.seasonalRecipes) {
+            recipes = await getSeasonalRecipesSummaryFromKeywords(keywords)
+        } else {
+            recipes = await getRecipesSummaryFromKeywords(keywords)
+        }
+        this.setState({ recipes: recipes.sort((a, b) => b.score - a.score), firstSearch: false })
     }
 
     render() {
