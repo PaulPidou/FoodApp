@@ -4,6 +4,7 @@ import {connect} from "react-redux"
 import {Container, Button, Icon, Text} from 'native-base'
 import PropTypes from "prop-types"
 
+import NoResultWarning from "../components/common/NoResultWarning"
 import SearchRecipesHeader from "../components/headers/SearchRecipesHeader"
 import RecipesList from '../components/contents/RecipesList'
 import SearchRecipeModal from "../components/contents/SearchRecipeModal"
@@ -20,6 +21,7 @@ class SearchRecipeScreen extends React.Component {
             inputText: null,
             recipes: [],
             firstSearch: true,
+            displayWarning: false,
             ingredients: props.navigation.getParam('ingredients', null),
             origin: props.navigation.getParam('origin', null),
             isModalVisible: props.navigation.getParam('origin', null) === 'welcome'
@@ -53,7 +55,16 @@ class SearchRecipeScreen extends React.Component {
                 if(this.props.seasonalRecipes) {
                     getSeasonalRecipesSummaryFromIngredients(this.state.ingredients.map(item => item.ingredientID)).then(
                         recipes => {
-                            this.setState({ recipes, firstSearch: false })
+                            if(recipes.length > 0) {
+                                this.setState({ recipes, firstSearch: false })
+                            } else {
+                                this.setState({ displayWarning: true })
+                                getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item.ingredientID))
+                                    .then(
+                                        recipes => {
+                                            this.setState({ recipes, firstSearch: false, displayWarning: false })
+                                        })
+                            }
                         })
                 } else {
                     getRecipesSummaryFromIngredients(this.state.ingredients.map(item => item.ingredientID)).then(
@@ -75,6 +86,11 @@ class SearchRecipeScreen extends React.Component {
         this.setState({ recipes: undefined })
         if(this.props.seasonalRecipes) {
             recipes = await getSeasonalRecipesSummaryFromKeywords(keywords)
+            if(recipes.length === 0) {
+                this.setState({ displayWarning: true })
+                recipes = await getRecipesSummaryFromKeywords(keywords)
+                this.setState({ displayWarning: false })
+            }
         } else {
             recipes = await getRecipesSummaryFromKeywords(keywords)
         }
@@ -91,6 +107,10 @@ class SearchRecipeScreen extends React.Component {
                     handleSearch={this.handleSearch}
                 />
                 <SearchRecipeModal isModalVisible={this.state.isModalVisible} />
+                {
+                    this.state.displayWarning && (<NoResultWarning
+                            message={'Nouvelle recherche sans contrainte de saisons sur les ingrédients en cours...'} />)
+                }
                 {
                     this.state.origin === 'welcome' && (
                         <View style={{alignItems: 'center'}}>
