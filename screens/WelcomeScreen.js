@@ -24,7 +24,7 @@ export default class WelcomeScreen extends React.Component {
                         style={{ height: 150, resizeMode: 'contain', marginTop: Constants.statusBarHeight + 10}}
                         source={require('../assets/images/icon_large.png')}
                     />
-                    <Text style={{color: '#286064', fontSize: 27, fontWeight: '100', marginBottom: 10}}>
+                    <Text style={{fontFamily: 'Showlove_Regular', color: '#333', fontSize: 40, marginBottom: 10}}>
                         Groceries (Re)Cycle</Text>
 
                     <Text style={{color: Colors.counterTintColor, fontSize: 24, fontWeight: '100'}}>
