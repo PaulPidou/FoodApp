@@ -143,6 +143,11 @@ const GenericStyles = StyleSheet.create({
     subText: {
         color: '#808080',
         fontSize: 12
+    },
+    warningMessage: {
+        alignItems: 'center',
+        backgroundColor: '#880000',
+        padding: 10
     }
 })
 
