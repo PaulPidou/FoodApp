@@ -6,6 +6,7 @@ import { Avatar } from 'react-native-elements'
 import PropTypes from 'prop-types'
 
 import BackButton from "../components/common/BackButton"
+import WelcomeProcessHeader from "../components/common/WelcomeProcessHeader"
 import { getAllIngredients } from '../store/api/public'
 import { upsertItemsToShoppingList, upsertItemsToFridge } from '../store/api/user'
 import Colors from "../constants/Colors"
@@ -170,32 +171,12 @@ class SearchIngredientScreen extends React.Component {
                 </Header>
                 {
                     this.props.navigation.state.params.origin === 'welcome' && (
-                        <View style={{alignItems: 'center'}}>
-                            <Text style={{marginTop: 5, marginBottom: 5}}>
-                                <Text style={{color: Colors.tintColor, textDecorationLine: 'underline'}}>Frigidaire</Text>
-                                <Text style={{color: '#286064'}}> > Recettes > Liste de courses</Text>
-                            </Text>
-                            {
-                                this.state.requestAdd ? (
-                                    <Button transparent
-                                            style={{
-                                                alignSelf: 'center',
-                                                bottom: 10,
-                                            }}
-                                    >
-                                        <ActivityIndicator size="small" color={Colors.tintColor}/>
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        style={{marginBottom: 5}}
-                                        onPress={() => this.handlePress()}
-                                        rounded success iconRight>
-                                        <Text>Prochaine étape</Text>
-                                        <Icon name='arrow-forward' />
-                                    </Button>
-                                )}
-                        </View>
-                    )
+                        <WelcomeProcessHeader
+                            step={1}
+                            buttonText={'Prochaine étape'}
+                            requestOnGoing={this.state.requestAdd}
+                            onPress={() => this.handlePress()}
+                        />)
                 }
                 <Content>
                     {

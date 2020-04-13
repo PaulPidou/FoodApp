@@ -1,9 +1,10 @@
 import React from 'react'
-import {Alert, View} from 'react-native'
+import {Alert} from 'react-native'
 import {Button, Container, Content, Header, Icon, Right, Spinner, ActionSheet, Text} from 'native-base'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
+import WelcomeProcessHeader from "../components/common/WelcomeProcessHeader"
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from '../components/headers/SelectedIngredientHeader'
 import ShoppingListHeader from "../components/headers/ShoppingListHeader"
@@ -256,22 +257,11 @@ class ShoppingListScreen extends React.Component {
                 {header}
                 {
                     this.state.origin === 'welcome' && (
-                        <View style={{alignItems: 'center'}}>
-                            <Text style={{marginTop: 5, marginBottom: 5}}>
-                                <Text style={{color: Colors.tintColor}}>Frigidaire > Recettes > </Text>
-                                <Text style={{color: Colors.tintColor, textDecorationLine: 'underline'}}>Liste de courses</Text>
-                            </Text>
-                            <Button
-                                style={{marginBottom: 5}}
-                                onPress={() => {
-                                    this.props.navigation.navigate('App')
-                                }}
-                                rounded success iconRight>
-                                <Text>Accéder à l'app</Text>
-                                <Icon name='arrow-forward' />
-                            </Button>
-                        </View>
-                    )
+                        <WelcomeProcessHeader
+                            step={3}
+                            buttonText={"Accéder à l'app"}
+                            onPress={() => { this.props.navigation.navigate('App') }}
+                        />)
                 }
                 <UpdateIngredientModal
                     isModalVisible={this.state.isIngredientModalVisible}

@@ -1,10 +1,10 @@
 import React from 'react'
-import {View} from 'react-native'
 import {connect} from "react-redux"
-import {Container, Button, Icon, Text} from 'native-base'
+import {Container} from 'native-base'
 import PropTypes from "prop-types"
 
 import NoResultWarning from "../components/common/NoResultWarning"
+import WelcomeProcessHeader from "../components/common/WelcomeProcessHeader"
 import SearchRecipesHeader from "../components/headers/SearchRecipesHeader"
 import RecipesList from '../components/contents/RecipesList'
 import SearchRecipeModal from "../components/contents/SearchRecipeModal"
@@ -12,7 +12,6 @@ import SearchRecipeModal from "../components/contents/SearchRecipeModal"
 import { getRecipesSummaryFromKeywords, getRecipesSummaryFromIngredients,
     getSeasonalRecipesSummaryFromKeywords, getSeasonalRecipesSummaryFromIngredients,
     getMostFamousRecipesSummary, getMostFamousSeasonalRecipesSummary } from '../store/api/public'
-import Colors from "../constants/Colors"
 
 class SearchRecipeScreen extends React.Component {
     constructor(props) {
@@ -113,23 +112,13 @@ class SearchRecipeScreen extends React.Component {
                 }
                 {
                     this.state.origin === 'welcome' && (
-                        <View style={{alignItems: 'center'}}>
-                            <Text style={{marginTop: 5, marginBottom: 5}}>
-                                <Text style={{color: Colors.tintColor}}>Frigidaire > </Text>
-                                <Text style={{color: Colors.tintColor, textDecorationLine: 'underline'}}>Recettes</Text>
-                                <Text style={{color: '#286064'}}> > Liste de courses</Text>
-                            </Text>
-                            <Button
-                                style={{marginBottom: 5}}
-                                onPress={() => {
-                                    this.props.navigation.navigate('ShoppingList', {origin: 'welcome'})
-                                }}
-                                rounded success iconRight>
-                                <Text>Prochaine étape</Text>
-                                <Icon name='arrow-forward' />
-                            </Button>
-                        </View>
-                    )
+                        <WelcomeProcessHeader
+                            step={2}
+                            buttonText={'Prochaine étape'}
+                            onPress={() => {
+                                this.props.navigation.navigate('ShoppingList', {origin: 'welcome'})
+                            }}
+                        />)
                 }
                 <RecipesList
                     origin={'search'}
