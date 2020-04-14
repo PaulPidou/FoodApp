@@ -48,7 +48,9 @@ class ShoppingListScreen extends React.Component {
             this.toggleModal()
             getProductsByIngredient(item.ingredientID).then(
                 products => {
-                    this.setState({ products: products })
+                    const index = products.findIndex(product => product.hasOwnProperty('nutriscore'))
+                    const sortedProducts = products.slice(index).concat(products.slice(0, index))
+                    this.setState({ products: sortedProducts })
                 })
         }
     }
