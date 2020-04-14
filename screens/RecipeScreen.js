@@ -1,20 +1,16 @@
 import React from 'react'
-import {ActivityIndicator, Alert, Text} from 'react-native'
+import {Text} from 'react-native'
 import { connect } from 'react-redux'
-import {Container, Left, Right, Button, Header} from 'native-base'
+import {Container} from 'native-base'
 import { checkInternetConnection } from "react-native-offline"
 import PropTypes from 'prop-types'
 
-import BackButton from "../components/common/BackButton"
-import DeleteButton from "../components/common/DeleteButton"
-import HeaderActionButton from "../components/common/HeaderActionButton"
+import RecipeScreenHeader from "../components/headers/RecipeScreenHeader"
 import RecipeTabs from '../components/contents/RecipeTabs'
 import { getRecipeFromId } from '../store/api/public'
 import { loadRecipesDetails } from "../store/actions/actions"
 import { saveRecipes, deleteSavedRecipes, cookSavedRecipes } from '../store/api/user'
 
-import GenericStyles from '../constants/Style'
-import Colors from '../constants/Colors'
 import Constants from "../constants/Constants"
 
 class RecipeScreen extends React.Component {
@@ -68,85 +64,35 @@ class RecipeScreen extends React.Component {
         this.setState({ requestSave: false })
     }
 
-    _getCommonIngredients(recipe) {
+    getCommonIngredients(recipe) {
         if (!recipe) { return [] }
         if (this.props.fridge === undefined) { return undefined }
         const ingredients = recipe.ingredients.map(ingredient => ingredient.ingredientID)
         return this.props.fridge.filter(value => ingredients.includes(value))
     }
 
-    header() {
-        const rightButton = this.state.recipeId &&
-            this.props.isSaved ? ([
-                this.state.requestCook ? (
-                    <Button
-                        key={'color-fill'}
-                        transparent>
-                        <ActivityIndicator size="small" color={Colors.counterTintColor}/>
-                    </Button>
-                ) : (
-                    <HeaderActionButton
-                        key={'color-fill'}
-                        actionFunction={() => Alert.alert('Recette cusinée',
-                            'Retirer la recette et ses ingrédients de vos listes ?',
-                            [
-                                {text: 'Annuler', style: 'cancel'},
-                                {text: 'Oui', onPress: () => this.cookRecipe()}
-                            ]
-                        )}
-                        icon={'color-fill'}
-                    />),
-                this.state.requestDelete ? (
-                    <Button
-                        key={'trash'}
-                        transparent>
-                        <ActivityIndicator size="small" color={Colors.counterTintColor}/>
-                    </Button>
-                ) : (
-                    <DeleteButton
-                        key={'trash'}
-                        onPress={() => this.deleteRecipe()}
-                        message={'Retirer la recette des recettes sauvegardées ?'}
-                        icon={'heart'}
-                    />)
-            ]) : (
-                this.state.requestSave || (this.props.isSaved === undefined) ? (
-                    <Button transparent>
-                        <ActivityIndicator size="small" color={Colors.counterTintColor}/>
-                    </Button>
-                ) : (
-                    <HeaderActionButton
-                        actionFunction={() => this.saveRecipe()}
-                        icon={'heart-empty'}
-                    />))
-
-        return (
-            <Header
-                style={GenericStyles.header}
-                hasTabs>
-                <Left style={GenericStyles.headerLeft}>
-                    <BackButton
-                        navigation={this.props.navigation}
-                    />
-                </Left>
-                <Right>{rightButton}</Right>
-            </Header>)
-    }
-
     render() {
         return (
             <Container>
-                {this.header()}
+                <RecipeScreenHeader
+                    navigation={this.props.navigation}
+                    recipeId={this.state.recipeId}
+                    isSaved={this.props.isSaved}
+                    requestCook={this.state.requestCook}
+                    cookRecipe={() => this.cookRecipe()}
+                    requestDelete={this.state.requestDelete}
+                    deleteRecipe={() => this.deleteRecipe()}
+                    requestSave={this.state.requestSave}
+                    saveRecipe={() => this.saveRecipe()}
+                />
                 {
                     this.state.recipeId ?
                         (<RecipeTabs
                             recipe={this.state.recipe}
-                            commonIngredientsWithFridge={this._getCommonIngredients(this.state.recipe)}
-                            showSubstitutes={this.state.showSubstitutes}
-                        />) :
+                            commonIngredientsWithFridge={this.getCommonIngredients(this.state.recipe)}
+                            showSubstitutes={this.state.showSubstitutes} />) :
                         (<Text style={{margin: 10, textAlign: 'center'}}>Un problème est survenu !</Text>)
                 }
-
             </Container>
         )
     }
