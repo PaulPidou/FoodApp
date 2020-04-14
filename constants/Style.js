@@ -8,7 +8,7 @@ const GenericStyles = StyleSheet.create({
     },
     header: {
         backgroundColor: Colors.tintColor,
-        marginTop: Constants.statusBarHeight
+        //marginTop: Constants.statusBarHeight
     },
     headerTab: {
         backgroundColor: Colors.tintColor,

@@ -10,6 +10,7 @@ import { Provider } from 'react-redux'
 import { NetworkProvider } from 'react-native-offline'
 import store  from './store/reducers/index'
 import Constants from './constants/Constants'
+import Colors from "./constants/Colors"
 
 export default class App extends React.Component {
   state = {
@@ -26,6 +27,7 @@ export default class App extends React.Component {
         />
       )
     } else {
+        StatusBar.setHidden(true)
         return (
             <Provider store={store}>
                 <NetworkProvider pingServerUrl={Constants.serverURL}>
