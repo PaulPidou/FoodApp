@@ -1,14 +1,17 @@
 import React from 'react'
-import {Container, Content, Spinner, Text} from 'native-base'
 import { connect } from 'react-redux'
+import {Container, Content, Spinner, Text} from 'native-base'
+import {checkInternetConnection} from "react-native-offline"
 import PropTypes from 'prop-types'
-import Colors from "../constants/Colors"
 
 import FoodListHeader from "../components/headers/FoodListHeader"
 import SelectedHeader from "../components/headers/SelectedIngredientHeader"
+import IngredientsList from "../components/contents/IngredientsList"
 import UpdateIngredientModal from "../components/contents/UpdateIngredientModal"
 import { transferItemsFromFridgeToShoppingList, deleteItemsFromFridge } from "../store/api/user"
-import IngredientsList from "../components/contents/IngredientsList"
+
+import Colors from "../constants/Colors"
+import Constants from "../constants/Constants"
 
 class Fridge extends React.Component {
     constructor(props) {
@@ -29,12 +32,15 @@ class Fridge extends React.Component {
         header: null
     }
 
-    handlePress(item) {
+    async handlePress(item) {
         if(this.state.selected) {
             this._updateStateArray(item.ingredientID)
         } else {
-            this.setState({ ingredientClicked: item })
-            this.toggleModal()
+            const isConnected = await checkInternetConnection(Constants.serverURL)
+            if(isConnected) {
+                this.setState({ingredientClicked: item})
+                this.toggleModal()
+            }
         }
     }
 

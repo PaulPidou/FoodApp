@@ -1,7 +1,8 @@
 import React from 'react'
 import {Alert} from 'react-native'
-import {Button, Container, Content, Header, Icon, Right, Spinner, ActionSheet, Text} from 'native-base'
 import { connect } from 'react-redux'
+import {Button, Container, Content, Header, Icon, Right, Spinner, ActionSheet, Text} from 'native-base'
+import { checkInternetConnection } from 'react-native-offline'
 import PropTypes from 'prop-types'
 
 import WelcomeProcessHeader from "../components/common/WelcomeProcessHeader"
@@ -10,11 +11,12 @@ import SelectedHeader from '../components/headers/SelectedIngredientHeader'
 import ShoppingListHeader from "../components/headers/ShoppingListHeader"
 import IngredientsList from "../components/contents/IngredientsList"
 import UpdateIngredientModal from "../components/contents/UpdateIngredientModal"
+import { getProductsByIngredient } from "../store/api/public"
 import { transferItemsFromShoppingListToFridge, deleteItemsFromShoppingList } from "../store/api/user"
 
 import GenericStyles from "../constants/Style"
 import Colors from '../constants/Colors'
-import {getProductsByIngredient} from "../store/api/public"
+import Constants from "../constants/Constants"
 
 class ShoppingListScreen extends React.Component {
     constructor(props) {
@@ -38,20 +40,23 @@ class ShoppingListScreen extends React.Component {
         header: null
     }
 
-    handlePress(item) {
+    async handlePress(item) {
         if(this.state.shoppingMode) {
             this._updateStateArray(item.ingredientID, 'checkedIngredients')
         } else if(this.state.selected) {
             this._updateStateArray(item.ingredientID, 'selectedIngredients')
         } else {
-            this.setState({ ingredientClicked: item })
-            this.toggleModal()
-            getProductsByIngredient(item.ingredientID).then(
-                products => {
-                    const index = products.findIndex(product => product.hasOwnProperty('nutriscore'))
-                    const sortedProducts = products.slice(index).concat(products.slice(0, index))
-                    this.setState({ products: sortedProducts })
-                })
+            const isConnected = await checkInternetConnection(Constants.serverURL)
+            if(isConnected) {
+                this.setState({ingredientClicked: item})
+                this.toggleModal()
+                getProductsByIngredient(item.ingredientID).then(
+                    products => {
+                        const index = products.findIndex(product => product.hasOwnProperty('nutriscore'))
+                        const sortedProducts = products.slice(index).concat(products.slice(0, index))
+                        this.setState({products: sortedProducts})
+                    })
+            }
         }
     }
 
@@ -254,6 +259,7 @@ class ShoppingListScreen extends React.Component {
                     shoppingMode={this.state.shoppingMode}
                 />)
         }
+
         return (
             <Container>
                 {header}
