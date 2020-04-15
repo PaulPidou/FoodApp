@@ -57,7 +57,7 @@ export const generalReducer = function(state = initialState, action) {
             AsyncStorage.setItem('recipesDetails', JSON.stringify(recipesDetails))
             return {
                 ...state,
-                recipesDetails: recipesDetails
+                recipesDetails: {...recipesDetails}
             }
         case LOAD_RECIPES_DETAILS:
             return {
@@ -71,7 +71,7 @@ export const generalReducer = function(state = initialState, action) {
             AsyncStorage.setItem('recipesDetails', JSON.stringify(recipesDetails))
             return {
                 ...state,
-                recipesDetails: recipesDetails
+                recipesDetails: {...recipesDetails}
             }
         case FETCH_SHOPPINGLIST_PENDING:
             return {

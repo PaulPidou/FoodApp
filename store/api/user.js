@@ -172,6 +172,7 @@ export const cookSavedRecipes = async function(recipeIDs) {
                 buttonText: 'Ok'
             })
             fetchSavedRecipes(userToken)
+            removeRecipesDetails(recipeIDs)
             fetchFridge(userToken)
         })
         .catch(() => {
