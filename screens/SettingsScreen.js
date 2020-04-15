@@ -69,21 +69,10 @@ export default class SettingsScreen extends React.Component {
                 </Header>
                 <Content>
                     <List>
-                        <ListItem icon>
-                            <Left>
-                                <Button style={GenericStyles.settingIcon}>
-                                    <Icon active name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'} />
-                                </Button>
-                            </Left>
-                            <Body>
-                                <Text>Ajouter automatiquement les ingrédients à la liste de courses à la sauvegarde d&apos;une recette</Text>
-                            </Body>
-                            <Right>
-                                <Switch
-                                    onValueChange={(value) => this.toggleAutomaticFilling(value)}
-                                    value={ this.state.switchValueAutomaticFilling }
-                                />
-                            </Right>
+                        <ListItem itemDivider>
+                            <Text
+                                style={{fontSize: 16}}
+                            >Paramètres locaux</Text>
                         </ListItem>
                         <ListItem icon>
                             <Left>
@@ -139,6 +128,25 @@ export default class SettingsScreen extends React.Component {
                                     <Picker.Item label="Supprimer les aliments de la liste de courses" value="DELETE" />
                                     <Picker.Item label="Garder les aliments dans la liste de courses" value="KEEP" />
                                 </Picker>
+                            </Right>
+                        </ListItem>
+                        <ListItem itemDivider>
+                            <Text style={{fontSize: 16}} >Paramètres serveur</Text>
+                        </ListItem>
+                        <ListItem icon>
+                            <Left>
+                                <Button style={GenericStyles.settingIcon}>
+                                    <Icon active name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'} />
+                                </Button>
+                            </Left>
+                            <Body>
+                                <Text>Ajouter automatiquement les ingrédients à la liste de courses à la sauvegarde d&apos;une recette</Text>
+                            </Body>
+                            <Right>
+                                <Switch
+                                    onValueChange={(value) => this.toggleAutomaticFilling(value)}
+                                    value={ this.state.switchValueAutomaticFilling }
+                                />
                             </Right>
                         </ListItem>
                     </List>

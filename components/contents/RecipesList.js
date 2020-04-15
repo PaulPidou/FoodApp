@@ -144,7 +144,7 @@ class RecipesList extends React.Component {
                                                         marginTop: 2,
                                                         bottom: 10,
                                                         height: 35,
-                                                        backgroundColor: '#36FF9B'
+                                                        backgroundColor: Colors.tintColor
                                                     }}
                                                     onPress={() => this._saveRecipe(item._id)}
                                             >

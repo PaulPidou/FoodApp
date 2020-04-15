@@ -1,8 +1,8 @@
-const tintColor = '#3cff9a' // #2f95dc
+const tintColor = '#2ba55d' // #2f95dc  #3cff9a
 
 export default {
   tintColor,
-  splashScreenColor: '#36FF9B',
+  splashScreenColor: tintColor, // '#36FF9B',
   tabIconDefault: '#dedede',
   tabIconSelected: '#fff',
   tabBar: '#fefefe',
