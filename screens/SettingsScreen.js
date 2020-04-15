@@ -1,22 +1,22 @@
 import React from 'react'
-import {Platform, Text} from 'react-native'
+import {Alert, Platform, Text} from 'react-native'
+import { connect } from 'react-redux'
+import {checkInternetConnection, NetworkConsumer} from "react-native-offline"
 import {Container, Header, Content, Left, Button, Icon, Body, Title, List, ListItem, Right, Switch, Picker} from 'native-base'
-import {checkInternetConnection} from "react-native-offline"
+import PropTypes from "prop-types"
 
 import MenuButton from "../components/common/MenuButton"
 import { getUserProfile, updateUserParameters } from '../store/api/user'
-import { toggleShowSubstitutes, toggleSeasonalRecipes, handleIngredientsManagement } from '../store/actions/actions'
+
+import {HANDLE_INGREDIENTS_MANAGEMENT, TOGGLE_SEASONAL_RECIPES, TOGGLE_SHOW_SUBSTITUTES} from "../store/actions/types"
 import GenericStyles from "../constants/Style"
 import Constants from "../constants/Constants"
 
-export default class SettingsScreen extends React.Component {
+class SettingsScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            switchValueAutomaticFilling: true,
-            switchValueSeasonalRecipes: true,
-            switchValueShowSubstitutes: true,
-            shoppingListManagement: 'ALWAYS_ASK'
+            switchValueAutomaticFilling: this.props.switchValueAutomaticFilling
         }
     }
 
@@ -27,31 +27,13 @@ export default class SettingsScreen extends React.Component {
     async componentDidMount() {
         const isConnected = await checkInternetConnection(Constants.serverURL)
         if(isConnected) {
-            const userProfile = await getUserProfile()
-            this.setState({ switchValueAutomaticFilling: !userProfile.parameters.keepFoodListsIndependent })
+            await getUserProfile()
         }
-
     }
 
     async toggleAutomaticFilling(value) {
         this.setState({ switchValueAutomaticFilling: value })
         await updateUserParameters({ keepFoodListsIndependent: !value })
-    }
-
-    async toggleSeasonalRecipes(value) {
-        this.setState({ switchValueSeasonalRecipes: value })
-        toggleSeasonalRecipes(value)
-        //await updateUserParameters({ keepFoodListsIndependent: !value }) No endpoint yet
-    }
-
-    toggleShowSubstitutes(value) {
-        this.setState({ switchValueShowSubstitutes: value })
-        toggleShowSubstitutes(value)
-    }
-
-    handleIngredientsManagement(value) {
-        this.setState({shoppingListManagement: value})
-        handleIngredientsManagement(value)
     }
 
     render() {
@@ -70,9 +52,7 @@ export default class SettingsScreen extends React.Component {
                 <Content>
                     <List>
                         <ListItem itemDivider>
-                            <Text
-                                style={{fontSize: 16}}
-                            >Paramètres locaux</Text>
+                            <Text style={{fontSize: 16}} >Paramètres locaux</Text>
                         </ListItem>
                         <ListItem icon>
                             <Left>
@@ -85,8 +65,8 @@ export default class SettingsScreen extends React.Component {
                             </Body>
                             <Right>
                                 <Switch
-                                    onValueChange={(value) => this.toggleSeasonalRecipes(value)}
-                                    value={ this.state.switchValueSeasonalRecipes }
+                                    onValueChange={(value) => this.props.toggleSeasonalRecipes(value)}
+                                    value={ this.props.switchValueSeasonalRecipes }
                                 />
                             </Right>
                         </ListItem>
@@ -101,8 +81,8 @@ export default class SettingsScreen extends React.Component {
                             </Body>
                             <Right>
                                 <Switch
-                                    onValueChange={(value) => this.toggleShowSubstitutes(value)}
-                                    value={this.state.switchValueShowSubstitutes}
+                                    onValueChange={(value) => this.props.toggleShowSubstitutes(value)}
+                                    value={this.props.switchValueShowSubstitutes}
                                 />
                             </Right>
                         </ListItem>
@@ -120,8 +100,8 @@ export default class SettingsScreen extends React.Component {
                                     note
                                     mode="dropdown"
                                     style={{ width: 120 }}
-                                    selectedValue={this.state.shoppingListManagement}
-                                    onValueChange={(value) => this.handleIngredientsManagement(value)}
+                                    selectedValue={this.props.shoppingListManagement}
+                                    onValueChange={(value) => this.props.handleIngredientsManagement(value)}
                                 >
                                     <Picker.Item label="Toujours demander" value="ALWAYS_ASK" />
                                     <Picker.Item label="Transférer les aliments dans le frigidaire" value="TRANSFER" />
@@ -133,25 +113,62 @@ export default class SettingsScreen extends React.Component {
                         <ListItem itemDivider>
                             <Text style={{fontSize: 16}} >Paramètres serveur</Text>
                         </ListItem>
-                        <ListItem icon>
-                            <Left>
-                                <Button style={GenericStyles.settingIcon}>
-                                    <Icon active name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'} />
-                                </Button>
-                            </Left>
-                            <Body>
-                                <Text>Ajouter automatiquement les ingrédients à la liste de courses à la sauvegarde d&apos;une recette</Text>
-                            </Body>
-                            <Right>
-                                <Switch
-                                    onValueChange={(value) => this.toggleAutomaticFilling(value)}
-                                    value={ this.state.switchValueAutomaticFilling }
-                                />
-                            </Right>
-                        </ListItem>
+                        <NetworkConsumer>
+                            {({ isConnected }) => (
+                            <ListItem icon>
+                                <Left>
+                                    <Button style={GenericStyles.settingIcon}>
+                                        <Icon active name={Platform.OS === 'ios' ? 'ios-bookmarks' : 'md-bookmarks'} />
+                                    </Button>
+                                </Left>
+                                <Body>
+                                    <Text>Ajouter automatiquement les ingrédients à la liste de courses à la sauvegarde d&apos;une recette</Text>
+                                </Body>
+                                <Right>
+                                    <Switch
+                                        onValueChange={(value) => { isConnected ?
+                                            this.toggleAutomaticFilling(value) : (
+                                                Alert.alert(
+                                                    'Serveur hors ligne',
+                                                    'Vous ne pouvez pas effectuer cette action')
+                                            )}}
+                                        value={ this.state.switchValueAutomaticFilling }
+                                    />
+                                </Right>
+                            </ListItem>)}
+                        </NetworkConsumer>
                     </List>
                 </Content>
             </Container>
         )
     }
 }
+
+SettingsScreen.propTypes = {
+    switchValueSeasonalRecipes: PropTypes.bool,
+    switchValueShowSubstitutes: PropTypes.bool,
+    shoppingListManagement: PropTypes.string,
+    switchValueAutomaticFilling: PropTypes.bool,
+    toggleSeasonalRecipes: PropTypes.func,
+    toggleShowSubstitutes: PropTypes.func,
+    handleIngredientsManagement: PropTypes.func
+}
+
+const mapStateToProps = (state) => {
+    return {
+        switchValueSeasonalRecipes: state.settingsReducer.seasonalRecipes,
+        switchValueShowSubstitutes: state.settingsReducer.showSubstitutes,
+        shoppingListManagement: state.settingsReducer.shoppingListManagement,
+        switchValueAutomaticFilling: state.settingsReducer.switchValueAutomaticFilling
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        toggleSeasonalRecipes: (value) => dispatch({ type: TOGGLE_SEASONAL_RECIPES, value: value }),
+        toggleShowSubstitutes: (value) => dispatch({ type: TOGGLE_SHOW_SUBSTITUTES, value: value }),
+        handleIngredientsManagement: (value) => dispatch({ type: HANDLE_INGREDIENTS_MANAGEMENT, value: value })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen)

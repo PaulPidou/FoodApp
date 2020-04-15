@@ -2,7 +2,7 @@ import { UPDATE_USER_LISTS, FETCH_RECIPES_PENDING, FETCH_RECIPES_SUCCESS, FETCH_
     FETCH_RECIPES_DETAILS_PENDING, FETCH_RECIPES_DETAILS_SUCCESS, LOAD_RECIPES_DETAILS, REMOVE_RECIPES_DETAILS,
     FETCH_SHOPPINGLIST_PENDING, FETCH_SHOPPINGLIST_SUCCESS, FETCH_SHOPPINGLIST_ERROR,
     FETCH_FRIDGE_PENDING, FETCH_FRIDGE_SUCCESS, FETCH_FRIDGE_ERROR, TOGGLE_SHOW_SUBSTITUTES, TOGGLE_SEASONAL_RECIPES,
-    HANDLE_INGREDIENTS_MANAGEMENT } from '../actions/types'
+    HANDLE_INGREDIENTS_MANAGEMENT, TOGGLE_FOOD_LISTS_INDEPENDENCE } from '../actions/types'
 import { AsyncStorage } from "react-native"
 
 const initialState = {
@@ -111,9 +111,10 @@ export const generalReducer = function(state = initialState, action) {
 }
 
 const initialUserSettings = {
-    showSubstitutes: true,
     seasonalRecipes: true,
-    shoppingListManagement: 'ALWAYS_ASK'
+    showSubstitutes: true,
+    shoppingListManagement: 'ALWAYS_ASK',
+    switchValueAutomaticFilling: true
 }
 
 export const settingsReducer = function(state = initialUserSettings, action) {
@@ -132,6 +133,11 @@ export const settingsReducer = function(state = initialUserSettings, action) {
             return {
                 ...state,
                 shoppingListManagement: action.value
+            }
+        case TOGGLE_FOOD_LISTS_INDEPENDENCE:
+            return {
+                ...state,
+                switchValueAutomaticFilling: action.value
             }
         default:
             return state

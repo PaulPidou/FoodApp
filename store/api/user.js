@@ -1,12 +1,12 @@
 import { AsyncStorage } from 'react-native'
 import { Toast } from 'native-base'
 
-import { fetchSavedRecipes, fetchRecipesDetails, removeRecipesDetails,
-    fetchShoppingList, fetchFridge } from '../actions/actions'
+import { fetchSavedRecipes, fetchRecipesDetails, removeRecipesDetails, fetchShoppingList, fetchFridge,
+    toggleFoodListsIndependence } from '../actions/actions'
 import Constants from "../../constants/Constants"
 
-let userParamaters = {
-    keepFoodListIndependent: false
+let userParameters = {
+    keepFoodListsIndependent: false
 }
 
 export const getUserProfile = async function() {
@@ -17,7 +17,8 @@ export const getUserProfile = async function() {
             headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
         }).then((response) => response.json())
         .then((responseJSON) => {
-            userParamaters.keepFoodListIndependent = responseJSON.parameters.keepFoodListIndependent
+            userParameters.keepFoodListsIndependent = responseJSON.parameters.keepFoodListsIndependent
+            toggleFoodListsIndependence(!responseJSON.parameters.keepFoodListsIndependent)
             return responseJSON
         })
         .catch(() => {
@@ -103,7 +104,7 @@ export const saveRecipes = async function(recipeIDs) {
             })
             fetchSavedRecipes(userToken)
             fetchRecipesDetails(recipeIDs)
-            if(!userParamaters.keepFoodListIndependent) {
+            if(!userParameters.keepFoodListsIndependent) {
                 fetchShoppingList(userToken)
             }
         })
@@ -138,7 +139,7 @@ export const deleteSavedRecipes = async function(recipeIDs) {
             })
             fetchSavedRecipes(userToken)
             removeRecipesDetails(recipeIDs)
-            if(!userParamaters.keepFoodListIndependent) {
+            if(!userParameters.keepFoodListsIndependent) {
                 fetchShoppingList(userToken)
             }
         })
