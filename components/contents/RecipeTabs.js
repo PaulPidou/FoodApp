@@ -4,6 +4,7 @@ import { Image, Platform, ScrollView, View, Text } from 'react-native'
 import { Tab, TabHeading, Icon, Tabs, Spinner, H1, List, ListItem, Left, Right, Body, Badge } from 'native-base'
 import { Avatar } from 'react-native-elements'
 
+import SubText from "../common/SubText"
 import GenericStyles from '../../constants/Style'
 import Colors from '../../constants/Colors'
 
@@ -175,9 +176,9 @@ export default class RecipeTabs extends React.Component {
                                         <Text>{item.display}</Text>
                                         {
                                             this.props.showSubstitutes && item.substitutes.length > 0 && (
-                                                <Text style={{ color: '#808080', fontSize: 12 }}>
-                                                    Peut être remplacé par : {item.substitutes[0].ingredientName}
-                                                </Text>
+                                                <SubText
+                                                    value={`Peut être remplacé par : ${item.substitutes[0].ingredientName}`}
+                                                />
                                             )
                                         }
                                     </Body>
