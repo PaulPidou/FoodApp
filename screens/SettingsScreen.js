@@ -6,9 +6,9 @@ import {Container, Header, Content, Left, Button, Icon, Body, Title, List, ListI
 import PropTypes from "prop-types"
 
 import MenuButton from "../components/common/MenuButton"
+import {toggleSeasonalRecipes, toggleShowSubstitutes, handleIngredientsManagement} from "../store/actions/actions"
 import { getUserProfile, updateUserParameters } from '../store/api/user'
 
-import {HANDLE_INGREDIENTS_MANAGEMENT, TOGGLE_SEASONAL_RECIPES, TOGGLE_SHOW_SUBSTITUTES} from "../store/actions/types"
 import GenericStyles from "../constants/Style"
 import Constants from "../constants/Constants"
 
@@ -163,11 +163,11 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = () => {
     return {
-        toggleSeasonalRecipes: (value) => dispatch({ type: TOGGLE_SEASONAL_RECIPES, value: value }),
-        toggleShowSubstitutes: (value) => dispatch({ type: TOGGLE_SHOW_SUBSTITUTES, value: value }),
-        handleIngredientsManagement: (value) => dispatch({ type: HANDLE_INGREDIENTS_MANAGEMENT, value: value })
+        toggleSeasonalRecipes: (value) => toggleSeasonalRecipes(value),
+        toggleShowSubstitutes: (value) => toggleShowSubstitutes(value),
+        handleIngredientsManagement: (value) => handleIngredientsManagement(value)
     }
 }
 

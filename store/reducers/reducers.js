@@ -120,21 +120,25 @@ const initialUserSettings = {
 export const settingsReducer = function(state = initialUserSettings, action) {
     switch(action.type) {
         case TOGGLE_SHOW_SUBSTITUTES:
+            AsyncStorage.setItem('settings', JSON.stringify({...state, showSubstitutes: action.value}))
             return {
                 ...state,
                 showSubstitutes: action.value
             }
         case TOGGLE_SEASONAL_RECIPES:
+            AsyncStorage.setItem('settings', JSON.stringify({...state, seasonalRecipes: action.value}))
             return {
                 ...state,
                 seasonalRecipes: action.value
             }
         case HANDLE_INGREDIENTS_MANAGEMENT:
+            AsyncStorage.setItem('settings', JSON.stringify({...state, shoppingListManagement: action.value}))
             return {
                 ...state,
                 shoppingListManagement: action.value
             }
         case TOGGLE_FOOD_LISTS_INDEPENDENCE:
+            AsyncStorage.setItem('settings', JSON.stringify({...state, switchValueAutomaticFilling: action.value}))
             return {
                 ...state,
                 switchValueAutomaticFilling: action.value

@@ -7,9 +7,11 @@ import GenericStyles from '../constants/Style'
 export default class SideBar extends React.Component {
     _signOutAsync = async () => {
         await AsyncStorage.removeItem('userToken')
-        await AsyncStorage.removeItem('savedRecipes')
         await AsyncStorage.removeItem('shoppingList')
         await AsyncStorage.removeItem('fridge')
+        await AsyncStorage.removeItem('savedRecipes')
+        await AsyncStorage.removeItem('recipesDetails')
+        await AsyncStorage.removeItem('settings')
         this.props.navigation.navigate('Auth')
     }
 

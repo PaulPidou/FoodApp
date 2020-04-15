@@ -4,7 +4,8 @@ import { checkInternetConnection } from 'react-native-offline'
 import { Toast } from "native-base"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { loadRecipesDetails } from "../store/actions/actions"
+import { loadRecipesDetails, fetchRecipesDetails, toggleSeasonalRecipes, toggleShowSubstitutes,
+    handleIngredientsManagement, toggleFoodListsIndependence } from "../store/actions/actions"
 import { getUserLists } from '../store/api/user'
 import Colors from "../constants/Colors"
 import Constants from "../constants/Constants"
@@ -24,7 +25,7 @@ class AuthLoadingScreen extends React.Component {
                 const userLists = await getUserLists()
                 action = { type: 'UPDATE_USER_LISTS', lists: userLists ?
                         userLists : { savedRecipes: [], shoppingList: [], fridge: []} }
-
+                fetchRecipesDetails(userLists.savedRecipes.map(recipe => recipe._id))
             } else {
                 Toast.show({
                     text: 'Serveur hors ligne! Récupération des données depuis le stockage local',
@@ -43,9 +44,14 @@ class AuthLoadingScreen extends React.Component {
                     }}
             }
             this.props.dispatch(action)
+            const settings = await AsyncStorage.getItem('settings')
+            toggleSeasonalRecipes(settings ? JSON.parse(settings).seasonalRecipes : true)
+            toggleShowSubstitutes(settings ? JSON.parse(settings).showSubstitutes : true)
+            handleIngredientsManagement(settings ? JSON.parse(settings).shoppingListManagement : 'ALWAYS_ASK')
+            toggleFoodListsIndependence(settings ? JSON.parse(settings).switchValueAutomaticFilling : true)
 
-            if(action.lists.savedRecipes.length === 0 && action.lists.shoppingList.length === 0 &&
-                action.lists.fridge.length === 0) {
+            if(isConnected && action.lists.savedRecipes.length === 0 &&
+                action.lists.shoppingList.length === 0 && action.lists.fridge.length === 0) {
                 this.props.navigation.navigate('EmptyLists')
             } else {
                 this.props.navigation.navigate('App')
@@ -53,7 +59,6 @@ class AuthLoadingScreen extends React.Component {
         } else {
             this.props.navigation.navigate('Auth')
         }
-
     }
 
     render() {
