@@ -17,7 +17,7 @@ export class LogInScreen extends React.Component {
     }
 
     static navigationOptions = {
-        header: null,
+        header: null
     }
 
     logInAsync = async () => {
@@ -37,6 +37,7 @@ export class LogInScreen extends React.Component {
         } else {
             Toast.show({
                 text: 'Vous devez fournir votre email et votre mot de passe !',
+                textStyle: { textAlign: 'center' },
                 duration: 3000,
             })
         }
@@ -50,7 +51,7 @@ export class LogInScreen extends React.Component {
                         style={GenericStyles.loginImage}
                         source={require('../assets/images/icon_large.png')}
                     />
-                    <Text style={{ fontFamily: 'Showlove_Regular', fontSize: 50, marginBottom: 20, color: '#fff'}}>
+                    <Text style={{ fontFamily: 'Showlove_Regular', fontSize: 50, marginBottom: 20, color: Colors.counterTintColor}}>
                         Groceries (Re)Cycle</Text>
                     <Form>
                         <Item style={GenericStyles.loginFormItem} regular>
@@ -74,7 +75,13 @@ export class LogInScreen extends React.Component {
                         </Item>
                     </Form>
                     {
-                        this.state.requestLogIn ? (<Spinner color={Colors.counterTintColor}/>) : (
+                        this.state.requestLogIn ? (
+                            <Button
+                                block
+                                style={GenericStyles.formBlockButton}>
+                                    <Spinner size={'small'} color={Colors.counterTintColor}/>
+                            </Button>
+                            ) : (
                             <Button
                                 block
                                 style={GenericStyles.formBlockButton}
@@ -109,11 +116,12 @@ export class SignUpScreen extends React.Component {
             email: null,
             password: null,
             confirmPassword: null,
+            requestRegister: false
         }
     }
 
     static navigationOptions = {
-        header: null,
+        header: null
     }
 
     handleSignUp = async () => {
@@ -121,20 +129,23 @@ export class SignUpScreen extends React.Component {
         if(!this.state.email || !this.state.password || !this.state.confirmPassword) {
             Toast.show({
                 text: 'Veuillez renseigner les différents champs !',
+                textStyle: { textAlign: 'center' },
                 duration: 3000,
             })
         } else if(this.state.password === this.state.confirmPassword) {
+            this.setState({requestRegister: true})
             const register = await signUpUser(this.state.email, this.state.password)
             if (register) {
                 const response = await logInUser(this.state.email, this.state.password)
                 if (response.hasOwnProperty('token')) {
                     await AsyncStorage.setItem('userToken', response.token)
                 }
-                this.props.navigation.navigate('AuthLoading')
             }
+            this.props.navigation.navigate('AuthLoading')
         } else {
             Toast.show({
                 text: 'Les deux mots de passe ne sont pas identiques !',
+                textStyle: { textAlign: 'center' },
                 duration: 3000,
             })
         }
@@ -148,7 +159,7 @@ export class SignUpScreen extends React.Component {
                         style={GenericStyles.loginImage}
                         source={require('../assets/images/icon_large.png')}
                     />
-                    <Text style={{ fontFamily: 'Showlove_Regular', fontSize: 50, marginBottom: 20, color: '#fff'}}>
+                    <Text style={{ fontFamily: 'Showlove_Regular', fontSize: 50, marginBottom: 20, color: Colors.counterTintColor}}>
                         Groceries (Re)Cycle</Text>
                     <Form>
                         <Item style={GenericStyles.loginFormItem} regular>
@@ -182,15 +193,24 @@ export class SignUpScreen extends React.Component {
                             />
                         </Item>
                     </Form>
-                    <Button
-                        block
-                        style={GenericStyles.formBlockButton}
-                        onPress={() => this.handleSignUp()}>
-                        <Icon
-                            name={Platform.OS === 'ios' ? 'ios-rocket' : 'md-rocket'}
-                        />
-                        <Text>Créer mon compte</Text>
-                    </Button>
+                    {
+                        this.state.requestRegister ? (
+                            <Button
+                                block
+                                style={GenericStyles.formBlockButton}>
+                                <Spinner size={'small'} color={Colors.counterTintColor}/>
+                            </Button>
+                        ) : (
+                            <Button
+                                block
+                                style={GenericStyles.formBlockButton}
+                                onPress={() => this.handleSignUp()}>
+                                <Icon
+                                    name={Platform.OS === 'ios' ? 'ios-rocket' : 'md-rocket'}
+                                />
+                                <Text>Créer mon compte</Text>
+                            </Button>)
+                    }
                 </Content>
             </Container>
         )

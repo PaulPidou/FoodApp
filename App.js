@@ -10,7 +10,6 @@ import { Provider } from 'react-redux'
 import { NetworkProvider } from 'react-native-offline'
 import store  from './store/reducers/index'
 import Constants from './constants/Constants'
-import Colors from "./constants/Colors"
 
 export default class App extends React.Component {
   state = {
