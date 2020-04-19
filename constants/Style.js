@@ -43,12 +43,13 @@ const GenericStyles = StyleSheet.create({
         fontSize: 26
     },
     loginContainer: {
-        marginTop: Constants.statusBarHeight,
+        //marginTop: Constants.statusBarHeight,
         backgroundColor: Colors.splashScreenColor
     },
     loginContent: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: Constants.statusBarHeight
     },
     loginImage: {
         width: 150,
@@ -72,7 +73,7 @@ const GenericStyles = StyleSheet.create({
         marginTop: 15,
         width: 350,
         alignSelf:'center',
-        backgroundColor: '#5D9599'
+        backgroundColor: '#1A4242'
     },
     ingredientBlock: {
         width: 150,

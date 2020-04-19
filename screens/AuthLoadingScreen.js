@@ -54,7 +54,8 @@ class AuthLoadingScreen extends React.Component {
                 action.lists.shoppingList.length === 0 && action.lists.fridge.length === 0) {
                 this.props.navigation.navigate('EmptyLists')
             } else {
-                this.props.navigation.navigate('App')
+                this.props.navigation.navigate('Auth')
+                //this.props.navigation.navigate('App')
             }
         } else {
             this.props.navigation.navigate('Auth')
