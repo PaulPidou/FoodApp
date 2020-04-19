@@ -110,11 +110,11 @@ const GenericStyles = StyleSheet.create({
     },
     welcomeScreenInstructionNumber: {
         fontSize: 35,
-        color: '#286064'
+        color: '#1A4242'
     },
     welcomeScreenInstructionText: {
         fontSize: 20,
-        color: '#286064',
+        color: '#1A4242',
         marginBottom: 5
     },
     modalText: {

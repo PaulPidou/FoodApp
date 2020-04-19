@@ -24,10 +24,11 @@ export default class WelcomeScreen extends React.Component {
                         style={{ height: 150, resizeMode: 'contain', marginTop: Constants.statusBarHeight + 10}}
                         source={require('../assets/images/icon_large.png')}
                     />
-                    <Text style={{fontFamily: 'Showlove_Regular', color: '#333', fontSize: 40, marginBottom: 10}}>
+                    <Text style={{fontFamily: 'Showlove_Regular', color: Colors.counterTintColor,
+                        fontSize: 40, marginBottom: 10}}>
                         Groceries (Re)Cycle</Text>
 
-                    <Text style={{color: Colors.counterTintColor, fontSize: 24, fontWeight: '100'}}>
+                    <Text style={{color: Colors.counterTintColor, fontSize: 22, fontWeight: '100'}}>
                         Bienvenue, vous allez être guidé pour effectuer les étapes suivantes:</Text>
                     <Text
                         style={GenericStyles.welcomeScreenInstructionNumber}
@@ -49,10 +50,9 @@ export default class WelcomeScreen extends React.Component {
                     >Vérifier votre liste de courses</Text>
                     <Button
                         onPress={() => this.props.navigation.navigate('SearchIngredient', {origin: 'welcome'})}
-                        style={{backgroundColor: '#5D9599', height: 50, marginTop: 15}}
+                        style={{backgroundColor: '#1A4242', height: 50, marginTop: 15}}
                         full>
-                        <Text style={{color:'#fff', fontSize: 22}}>
-                            C'est parti !</Text>
+                        <Text style={{color:'#fff', fontSize: 22}}>C'est parti !</Text>
                     </Button>
                     <Button
                         onPress={() => this.props.navigation.navigate('App')}
