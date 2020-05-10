@@ -62,15 +62,37 @@ export const updateUserParameters = async function(parameters) {
         })
 }
 
+export const addRecipe = async function(url) {
+    const userToken = await AsyncStorage.getItem('userToken')
+    return fetch(`${Constants.apiEndpoint}/user/add/recipe`,
+        {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + userToken,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                url: url,
+            }),
+        }).then((response) => response.json())
+        .then((response) => { return response })
+        .catch(() => {
+            Toast.show({
+                text: 'Un problème est survenu !',
+                textStyle: { textAlign: 'center' },
+                buttonText: 'Ok'
+            })
+        })
+}
+
 export const getUserLists = async function() {
     const userToken = await AsyncStorage.getItem('userToken')
     return fetch(`${Constants.apiEndpoint}/user/lists`,
         {
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + userToken, 'Content-Type': 'application/json' }
-        }).then((response) => {
-        return response.json()
-    })
+        }).then((response) => { return response.json() })
         .catch(() => {
             Toast.show({
                 text: 'Un problème est survenu !',
