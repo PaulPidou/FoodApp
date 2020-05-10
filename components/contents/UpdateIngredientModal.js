@@ -8,7 +8,7 @@ import PropTypes from "prop-types"
 import { updateFridgeItem, updateShoppingListItem } from '../../store/api/user'
 import Colors from "../../constants/Colors"
 
-export default class SearchRecipeModal extends React.Component {
+export default class UpdateIngredientModal extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -186,7 +186,7 @@ export default class SearchRecipeModal extends React.Component {
     }
 }
 
-SearchRecipeModal.propTypes = {
+UpdateIngredientModal.propTypes = {
     isModalVisible: PropTypes.bool,
     toggleModal: PropTypes.func,
     ingredient: PropTypes.object,

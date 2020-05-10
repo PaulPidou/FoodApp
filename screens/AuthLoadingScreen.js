@@ -25,7 +25,9 @@ class AuthLoadingScreen extends React.Component {
                 const userLists = await getUserLists()
                 action = { type: 'UPDATE_USER_LISTS', lists: userLists ?
                         userLists : { savedRecipes: [], shoppingList: [], fridge: []} }
-                fetchRecipesDetails(userLists.savedRecipes.map(recipe => recipe._id))
+                if(action.lists.savedRecipes.length > 0) {
+                    fetchRecipesDetails(userLists.savedRecipes.map(recipe => recipe._id))
+                }
             } else {
                 Toast.show({
                     text: 'Serveur hors ligne! Récupération des données depuis le stockage local',
