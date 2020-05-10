@@ -61,12 +61,26 @@ export default class AddRecipeFromUrlModal extends React.Component {
                                 />
                             </Item>
                         </Form>
-                        {
-                            this.state.badUrl && (<Text>BAD URL</Text>)
-                        }
-                        {
-                            this.state.requestFailed && (<Text>REQUEST FAILED</Text>)
-                        }
+                        <View>
+                            {
+                                this.state.badUrl && (
+                                    <View>
+                                        <Text style={{color: '#800', fontWeight: 'bold'}}>Mauvais format d'URL</Text>
+                                        <Text style={{color: '#800'}}>L'URL doit suivre le format :</Text>
+                                        <Text style={{color: '#800', fontStyle: 'italic'}}>
+                                                https://www.marmiton.org/recettes/recette</Text>
+                                    </View>
+                                )
+                            }
+                            {
+                                this.state.requestFailed && (
+                                    <View>
+                                        <Text style={{color: '#800', fontWeight: 'bold'}}>L'ajout de la recette a échoué</Text>
+                                        <Text style={{color: '#800'}}>Veuillez essayer avec une autre recette</Text>
+                                    </View>
+                                )
+                            }
+                        </View>
                         <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
                             <Button transparent style={{width: 100}} onPress={() => this.handleClose()}>
                                 <Text style={{fontSize: 14}}>Annuler</Text>
