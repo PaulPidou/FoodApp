@@ -1,8 +1,9 @@
 import React from "react"
-import {Header, Left, Input, Body} from 'native-base'
+import {Header, Left, Right, Input, Body} from 'native-base'
 import PropTypes from 'prop-types'
 
 import BackButton from "../common/BackButton"
+import HeaderActionButton from "../common/HeaderActionButton"
 import GenericStyles from '../../constants/Style'
 import Colors from "../../constants/Colors"
 
@@ -37,6 +38,12 @@ export default class SearchRecipesHeader extends React.Component {
                             />)
                     }
                 </Body>
+                <Right style={{flex: 0}}>
+                    <HeaderActionButton
+                        actionFunction={() => this.props.toggleModal()}
+                        icon={'add'}
+                    />
+                </Right>
             </Header>)
     }
 }
@@ -44,5 +51,6 @@ export default class SearchRecipesHeader extends React.Component {
 SearchRecipesHeader.propTypes = {
     ingredients: PropTypes.array,
     origin: PropTypes.string,
-    handleSearch: PropTypes.func
+    handleSearch: PropTypes.func,
+    toggleModal: PropTypes.func
 }

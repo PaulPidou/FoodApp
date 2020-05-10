@@ -8,6 +8,7 @@ import WelcomeProcessHeader from "../components/common/WelcomeProcessHeader"
 import SearchRecipesHeader from "../components/headers/SearchRecipesHeader"
 import RecipesList from '../components/contents/RecipesList'
 import SearchRecipeModal from "../components/contents/SearchRecipeModal"
+import AddRecipeFromUrlModal from "../components/contents/AddRecipeFromUrlModal"
 
 import { getRecipesSummaryFromKeywords, getRecipesSummaryFromIngredients,
     getSeasonalRecipesSummaryFromKeywords, getSeasonalRecipesSummaryFromIngredients,
@@ -23,7 +24,8 @@ class SearchRecipeScreen extends React.Component {
             displayWarning: false,
             ingredients: props.navigation.getParam('ingredients', null),
             origin: props.navigation.getParam('origin', null),
-            isModalVisible: props.navigation.getParam('origin', null) === 'welcome'
+            isModalVisible: props.navigation.getParam('origin', null) === 'welcome',
+            isAddRecipeModalVisible: false
         }
         this.handlePress = this.handlePress.bind(this)
         this.handleSearch = this.handleSearch.bind(this)
@@ -96,6 +98,10 @@ class SearchRecipeScreen extends React.Component {
         this.setState({ recipes: recipes.sort((a, b) => b.score - a.score), firstSearch: false })
     }
 
+    toggleAddRecipeModal() {
+        this.setState({ isAddRecipeModalVisible: !this.state.isAddRecipeModalVisible })
+    }
+
     render() {
         return (
             <Container>
@@ -104,8 +110,13 @@ class SearchRecipeScreen extends React.Component {
                     ingredients={this.state.ingredients}
                     origin={this.state.origin}
                     handleSearch={this.handleSearch}
+                    toggleModal={() => this.toggleAddRecipeModal()}
                 />
                 <SearchRecipeModal isModalVisible={this.state.isModalVisible} />
+                <AddRecipeFromUrlModal
+                    navigation={this.props.navigation}
+                    isModalVisible={this.state.isAddRecipeModalVisible }
+                    toggleModal={() => this.toggleAddRecipeModal()} />
                 {
                     this.state.displayWarning && (<NoResultWarning
                             message={'Nouvelle recherche sans contrainte de saisons sur les ingrédients en cours...'} />)
